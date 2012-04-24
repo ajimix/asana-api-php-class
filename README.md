@@ -44,9 +44,9 @@ Updating project info
 
 etc.
 
-Enjoy ;D
-
 Read comments on class for class magic and read [Asana API documentation](http://developer.asana.com/documentation/) if you want to be a master :D
+
+Enjoy ;D
 
 Author
 ------
