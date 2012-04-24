@@ -14,9 +14,7 @@ First declare the asana class
 
     $asana = new Asana("YOUR_COOL_API_KEY");
 
-Enjoy...
-
-Creating a task...
+Creating a task
 
     $asana->createTask(array(
        "workspace" => "176825", // Workspace ID
@@ -25,11 +23,28 @@ Creating a task...
        "followers" => array("3714136", "5900783") // We add some followers to the task... (this time by ID)
     ));
 
-Commenting on a task...
+Adding task to project
 
-    $asana->commentOnTask("MY_BEAUTIFUL_TASK_ID", "Please please! Don't assign me this task!")
+	$asana->addProjectToTask("THIS_TASK_ID_PLEASE", "TO_THIS_COOL_PROJECT_ID");
+
+Commenting on a task
+
+    $asana->commentOnTask("MY_BEAUTIFUL_TASK_ID", "Please please! Don't assign me this task!");
+
+Getting projects in all workspaces
+
+	$asana->getProjects();
+
+Updating project info
+
+    $asana->updateProject("COOL_PROJECT_ID", array(
+    	"name" => "This is a new cool project!",
+    	"notes" => "At first, it wasn't cool, but after this name change, it is!"
+    ));
 
 etc.
+
+Enjoy ;D
 
 Read comments on class for class magic and read [Asana API documentation](http://developer.asana.com/documentation/) if you want to be a master :D
 
