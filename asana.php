@@ -29,6 +29,7 @@ class Asana {
     private $storiesUrl;
 
     public function __construct($apiKey){
+        if(substr($apiKey, -1) != ":") $apiKey .= ":"; // If the API key is not ended by ":", we append them
         $this->apiKey = $apiKey;
         
         $this->endPointUrl = "https://app.asana.com/api/{$this->asanaApiVersion}/";
