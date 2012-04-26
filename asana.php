@@ -16,9 +16,11 @@ class Asana {
 
     private $timeout = 10;
     private $debug = false;
+    private $asanaApiVersion = "1.0";
 
-    private $endPointUrl = "https://app.asana.com/api/1.0/";
-    
+    public $responseCode;
+
+    private $endPointUrl;    
     private $apiKey;
     private $taskUrl;
     private $userUrl;
@@ -29,6 +31,7 @@ class Asana {
     public function __construct($apiKey){
         $this->apiKey = $apiKey;
         
+        $this->endPointUrl = "https://app.asana.com/api/{$this->asanaApiVersion}/";
         $this->taskUrl = $this->endPointUrl."tasks";
         $this->userUrl = $this->endPointUrl."users";
         $this->projectsUrl = $this->endPointUrl."projects";
@@ -352,6 +355,7 @@ class Asana {
 
         try {
             $return = curl_exec($curl);
+            $this->responseCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
             if($this->debug){ echo "<pre>"; print_r(curl_getinfo($curl)); echo "<pre>"; }  // Testing purposes
         } catch(Exception $ex){
             if($this->debug){

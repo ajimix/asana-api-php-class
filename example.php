@@ -14,9 +14,9 @@ $result = $asana->createTask(array(
 ));
 
 // We transform the string to json
-if(!is_null($result)){
+if($asana->responseCode == "200" && !is_null($result)){
 	$resultJson = json_decode($result);
 	echo "The id of the task created is: {$resultJson->data->id}";
 } else {
-	echo "Error while trying to connect to Asana";
+	echo "Error while trying to connect to Asana, response code: {$asana->responseCode}";
 }
