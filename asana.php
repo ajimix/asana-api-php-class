@@ -16,6 +16,7 @@ class Asana {
 
     private $timeout = 10;
     private $debug = false;
+    private $advDebug = false; // Note that enabling advanced debug will include debugging information inside the response breaking up your code
     private $asanaApiVersion = "1.0";
 
     public $responseCode;
@@ -341,7 +342,7 @@ class Asana {
         curl_setopt($curl, CURLOPT_USERPWD, $this->apiKey);
         curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
         curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: application/json")); // Send as JSON ;D
-        if($this->debug){
+        if($this->advDebug){
             curl_setopt($curl, CURLOPT_HEADER, true); // Display headers
             curl_setopt($curl, CURLOPT_VERBOSE, true); // Display communication with server
         }
@@ -357,9 +358,9 @@ class Asana {
         try {
             $return = curl_exec($curl);
             $this->responseCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-            if($this->debug){ echo "<pre>"; print_r(curl_getinfo($curl)); echo "<pre>"; }  // Testing purposes
+            if($this->debug || $this->advDebug){ echo "<pre>"; print_r(curl_getinfo($curl)); echo "<pre>"; }  // Testing purposes
         } catch(Exception $ex){
-            if($this->debug){
+            if($this->debug || $this->advDebug){
                 echo "<br>cURL error num: ".curl_errno($curl); // Testing purposes
                 echo "<br>cURL error: ".curl_error($curl);  // Testing purposes
             }
