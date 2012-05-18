@@ -334,6 +334,19 @@ class Asana {
         $data = json_encode($data);
         return $this->askAsana($this->workspaceUrl."/{$workspaceId}", $data, METHOD_PUT);
     }
+
+    /**
+     * Returns tasks of all workspace assigned to something.
+     * As Asana API says, you must specify an assignee when querying for workspace tasks.
+     *
+     * @param string $workspaceId The id of the workspace
+     * @param string $assignee Can be "me" or user ID
+     *
+     * @return string JSON or null
+     */
+    public function getWorkspaceTasks($workspaceId, $assignee = "me"){        
+        return $this->askAsana($this->taskUrl."?workspace={$workspaceId}&assignee={$assignee}");
+    }
     
 
     /**
