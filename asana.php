@@ -168,8 +168,11 @@ class Asana {
     
     /**
      * Returns task by a given filter.
+     * For now, you may limit your query either to a specific project or to an assignee and workspace
+     *
+     * NOTE: As Asana API says, if you filter by assignee, you MUST specify a workspaceId and viceversa.
      * 
-     * @param array $filter The filter with optional values
+     * @param array $filter The filter with optional values.
      * 
      * array(
      *     "assignee" => "",
@@ -294,7 +297,7 @@ class Asana {
     /**
      * This method returns the full record for a single story.
      * 
-     * @param type $storyId
+     * @param string $storyId
      * @return string JSON or null
      */
     public function getSingleStory($storyId){
