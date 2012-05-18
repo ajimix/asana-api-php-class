@@ -272,6 +272,17 @@ class Asana {
         $data = json_encode($data);
         return $this->askAsana($this->projectsUrl, $data, METHOD_PUT);
     }
+
+    /**
+     * Returns all unarchived tasks of a given project
+     * 
+     * @param string $projectId
+     * 
+     * @return string JSON or null
+     */
+    public function getProjectTasks($projectId){
+        return $this->askAsana($this->taskUrl."?project={$projectId}");
+    }
     
     
     /**
