@@ -16,7 +16,7 @@ class Asana {
 
     private $timeout = 10;
     private $debug = false;
-    private $advDebug = false; // Note that enabling advanced debug will include debugging information inside the response breaking up your code
+    private $advDebug = false; // Note that enabling advanced debug will include debugging information in the response possibly breaking up your code
     private $asanaApiVersion = "1.0";
 
     public $responseCode;
@@ -30,7 +30,7 @@ class Asana {
     private $storiesUrl;
 
     public function __construct($apiKey){
-        if(substr($apiKey, -1) != ":") $apiKey .= ":"; // If the API key is not ended by ":", we append them
+        if(substr($apiKey, -1) != ":") $apiKey .= ":"; // If the API key is not ended by ":", we append it
         $this->apiKey = $apiKey;
         
         $this->endPointUrl = "https://app.asana.com/api/{$this->asanaApiVersion}/";
@@ -53,11 +53,11 @@ class Asana {
      */
     
     /**
-     * This method returns the full user record for a single user.
+     * Returns the full user record for a single user.
      * Call it without parameters to get the users info of the owner of the API key.
      * 
      * @param string $userId
-     * @return boolean 
+     * @return string JSON or null 
      */
     public function getUserInfo($userId = null){
         if(is_null($userId)) $userId = "me";
@@ -65,9 +65,9 @@ class Asana {
     }
     
     /**
-     * This method returns the user records, for all users in all workspaces you may access.
+     * Returns the user records for all users in all workspaces you have access.
      * 
-     * @return type 
+     * @return string JSON or null 
      */
     public function getUsers(){
         return $this->askAsana($this->userUrl);
@@ -82,10 +82,10 @@ class Asana {
     
     /**
      * Function to create a task.
-     * For assigning or removing the task to a project, use the addProjectToTask and removeProjectToTask.
+     * For assign or remove the task to a project, use the addProjectToTask and removeProjectToTask.
      * 
      * 
-     * @param array $data Array of data for the task following the API documentation.
+     * @param array $data Array of data for the task following the Asana API documentation.
      * Example:
      * 
      * array(
@@ -121,7 +121,7 @@ class Asana {
      * Updates a task
      * 
      * @param string $taskId
-     * @param array $data See, createTask comments for proper parameter info.
+     * @param array $data See, createTask function comments for proper parameter info.
      * @return string JSON or null
      */
     public function updateTask($taskId, $data){
@@ -168,7 +168,7 @@ class Asana {
     
     /**
      * Returns task by a given filter.
-     * For now, you may limit your query either to a specific project or to an assignee and workspace
+     * For now (limited by Asana API), you may limit your query either to a specific project or to an assignee and workspace
      *
      * NOTE: As Asana API says, if you filter by assignee, you MUST specify a workspaceId and viceversa.
      * 
@@ -206,7 +206,7 @@ class Asana {
     }
     
     /**
-     * Adds a comment to an object.
+     * Adds a comment to a task.
      * The comment will be authored by the authorized user, and timestamped when the server receives the request.
      * 
      * @param string $taskId
@@ -231,7 +231,7 @@ class Asana {
      */
     
     /**
-     * This method returns the full record for a single project.
+     * Returns the full record for a single project.
      * 
      * @param string $projectId
      * @return string JSON or null
@@ -241,7 +241,7 @@ class Asana {
     }
     
     /**
-     * This method returns the projects, according to the filter criteria provided.
+     * Returns the projects in all workspaces containing archived ones or not.
      * 
      * @param boolean $archived Return archived projects or not
      */
@@ -251,7 +251,7 @@ class Asana {
     }
     
     /**
-     * This method returns the projects, according to the filter criteria provided.
+     * Returns the projects in provided workspace containing archived ones or not.
      * 
      * @param string $workspaceId
      * @param boolean $archived Return archived projects or not
@@ -265,7 +265,7 @@ class Asana {
      * This method modifies the fields of a project provided in the request, then returns the full updated record.
      * 
      * @param string $projectId
-     * @param array $data
+     * @param array $data An array containing fields to update, see Asana API if needed.
      * Example: array("name" => "Test", "notes" => "It's a test project");
      * 
      * @return string JSON or null
@@ -295,7 +295,7 @@ class Asana {
      */
     
     /**
-     * This method returns the full record for a single story.
+     * Returns the full record for a single story.
      * 
      * @param string $storyId
      * @return string JSON or null
@@ -312,7 +312,7 @@ class Asana {
      */
     
     /**
-     * This method returns the workspace records.
+     * Returns all the workspaces.
      * 
      * @return string JSON or null
      */
@@ -321,7 +321,7 @@ class Asana {
     }
     
     /**
-     * Currently the only field that can be modified for a workspace is its name.
+     * Currently the only field that can be modified for a workspace is its name (as Asana API says).
      * This method returns the complete updated workspace record.
      * 
      * @param array $data
@@ -336,8 +336,8 @@ class Asana {
     }
 
     /**
-     * Returns tasks of all workspace assigned to something.
-     * As Asana API says, you must specify an assignee when querying for workspace tasks.
+     * Returns tasks of all workspace assigned to someone.
+     * Note: As Asana API says, you must specify an assignee when querying for workspace tasks.
      *
      * @param string $workspaceId The id of the workspace
      * @param string $assignee Can be "me" or user ID
@@ -350,11 +350,12 @@ class Asana {
     
 
     /**
-     * This function communicates with asana REST API
+     * This function communicates with Asana REST API.
+     * You don't need to call this function directly. It's only for inner class working.
      * 
      * @param string $url
      * @param string $data Must be a json string
-     * @param int $method See constants defined
+     * @param int $method See constants defined at the beginning of the class
      * @return string JSON or null
      */
     private function askAsana($url, $data = null, $method = METHOD_GET){
@@ -368,7 +369,7 @@ class Asana {
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0); //         ""           ""
         curl_setopt($curl, CURLOPT_USERPWD, $this->apiKey);
         curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: application/json")); // Send as JSON ;D
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: application/json")); // Send as JSON
         if($this->advDebug){
             curl_setopt($curl, CURLOPT_HEADER, true); // Display headers
             curl_setopt($curl, CURLOPT_VERBOSE, true); // Display communication with server
@@ -385,13 +386,16 @@ class Asana {
         try {
             $return = curl_exec($curl);
             $this->responseCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-            if($this->debug || $this->advDebug){ echo "<pre>"; print_r(curl_getinfo($curl)); echo "<pre>"; }  // Testing purposes
+
+            if($this->debug || $this->advDebug){
+                echo "<pre>"; print_r(curl_getinfo($curl)); echo "</pre>";
+            }
         } catch(Exception $ex){
             if($this->debug || $this->advDebug){
-                echo "<br>cURL error num: ".curl_errno($curl); // Testing purposes
-                echo "<br>cURL error: ".curl_error($curl);  // Testing purposes
+                echo "<br>cURL error num: ".curl_errno($curl);
+                echo "<br>cURL error: ".curl_error($curl);
             }
-            e("Error on cURL");
+            echo "Error on cURL";
             $return = null;
         }
 
