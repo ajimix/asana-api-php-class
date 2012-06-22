@@ -286,6 +286,20 @@ class Asana {
     public function getProjectTasks($projectId){
         return $this->askAsana($this->taskUrl."?project={$projectId}");
     }
+
+    /**
+     * Returns the list of stories associated with the object.
+     * As usual with queries, stories are returned in compact form.
+     * However, the compact form for stories contains more 
+     * information by default than just the ID.
+     * There is presently no way to get a filtered set of stories.
+     * 
+     * @param string $projectId
+     * @return string JSON or null
+     */
+    public function getProjectStories($projectId){
+        return $this->askAsana($this->projectsUrl."/{$projectId}/stories");
+    }
     
     
     /**
