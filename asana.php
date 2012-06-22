@@ -28,6 +28,7 @@ class Asana {
     private $projectsUrl;
     private $workspaceUrl;
     private $storiesUrl;
+    private $tagsUrl;
 
     public function __construct($apiKey){
         if(substr($apiKey, -1) != ":") $apiKey .= ":"; // If the API key is not ended by ":", we append it
@@ -39,6 +40,7 @@ class Asana {
         $this->projectsUrl = $this->endPointUrl."projects";
         $this->workspaceUrl = $this->endPointUrl."workspaces";
         $this->storiesUrl = $this->endPointUrl."stories";
+        $this->tagsUrl = $this->endPointUrl."tags";
 
         define("METHOD_POST", 1);
         define("METHOD_PUT", 2);
@@ -300,8 +302,59 @@ class Asana {
     public function getProjectStories($projectId){
         return $this->askAsana($this->projectsUrl."/{$projectId}/stories");
     }
-    
-    
+
+
+    /**
+     * **********************************
+     * Tags functions 
+     * **********************************
+     */
+
+    /**
+     * Returns the full record for a single tag.
+     * 
+     * @param string $tagId
+     * @return string JSON or null
+     */
+    public function getTag($tagId){
+        return $this->askAsana($this->tagsUrl."/{$tagId}");
+    }
+
+    /**
+     * Returns the full record for all tags in all wrkspaces.
+     * 
+     * @return string JSON or null
+     */
+    public function getTags(){
+        return $this->askAsana($this->tagsUrl);
+    }
+
+    /**
+     * Modifies the fields of a tag provided in the request, then returns the full updated record.
+     * 
+     * @param string $tagId
+     * @param array $data An array containing fields to update, see Asana API if needed.
+     * Example: array("name" => "Test", "notes" => "It's a test project");
+     * 
+     * @return string JSON or null
+     */
+    public function updateTag($tagId, $data){
+        $data = array("data" => $data);
+        $data = json_encode($data);
+        return $this->askAsana($this->tagsUrl."/{$tagId}", $data, METHOD_PUT);
+    }
+
+    /**
+     * Returns the list of all tasks with this tag. Tasks can have more than one tag at a time.
+     * 
+     * @param string $tagId
+     * @return string JSON or null
+     */
+    public function getTasksWithTag($tagId){
+        return $this->askAsana($this->tagsUrl."/{$tagId}/tasks");
+    }
+
+
     /**
      * **********************************
      * Stories and comments functions 
@@ -358,8 +411,19 @@ class Asana {
      *
      * @return string JSON or null
      */
-    public function getWorkspaceTasks($workspaceId, $assignee = "me"){        
+    public function getWorkspaceTasks($workspaceId, $assignee = "me"){
         return $this->askAsana($this->taskUrl."?workspace={$workspaceId}&assignee={$assignee}");
+    }
+
+    /**
+     * Returns tags of all workspace.
+     *
+     * @param string $workspaceId The id of the workspace
+     *
+     * @return string JSON or null
+     */
+    public function getWorkspaceTags($workspaceId){
+        return $this->askAsana($this->workspaceUrl."/{$workspaceId}/tags");
     }
     
 
