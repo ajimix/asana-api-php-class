@@ -273,7 +273,7 @@ class Asana {
     public function updateProject($projectId, $data){
         $data = array("data" => $data);
         $data = json_encode($data);
-        return $this->askAsana($this->projectsUrl, $data, METHOD_PUT);
+        return $this->askAsana($this->projectsUrl."/{$projectId}", $data, METHOD_PUT);
     }
 
     /**
