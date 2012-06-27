@@ -224,9 +224,35 @@ class Asana {
         $data = json_encode($data);
         return $this->askAsana($this->taskUrl."/{$taskId}/stories", $data, METHOD_POST);
     }
+
+    /**
+     * Adds a tag to a task. If successful, will return success and an empty data block.
+     * 
+     * @param string $taskId
+     * @param string $tagId
+     * @return string JSON or null
+     */
+    public function addTagToTask($taskId, $tagId){
+        $data = array("data" => array("tag" => $tagId));
+        $data = json_encode($data);
+        return $this->askAsana($this->taskUrl."/{$taskId}/addTag", $data, METHOD_POST);
+    }
+
+    /**
+     * Removes a tag from a task. If successful, will return success and an empty data block.
+     * 
+     * @param string $taskId
+     * @param string $tagId
+     * @return string JSON or null
+     */
+    public function removeTagFromTask($taskId, $tagId){
+        $data = array("data" => array("tag" => $tagId));
+        $data = json_encode($data);
+        return $this->askAsana($this->taskUrl."/{$taskId}/removeTag", $data, METHOD_POST);
+    }
     
     
-     /**
+    /**
      * **********************************
      * Projects functions 
      * **********************************
@@ -321,7 +347,7 @@ class Asana {
     }
 
     /**
-     * Returns the full record for all tags in all wrkspaces.
+     * Returns the full record for all tags in all workspaces.
      * 
      * @return string JSON or null
      */
