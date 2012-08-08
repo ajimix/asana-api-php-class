@@ -329,6 +329,24 @@ class Asana {
         return $this->askAsana($this->projectsUrl."/{$projectId}/stories");
     }
 
+    /**
+     * Adds a comment to a project
+     * The comment will be authored by the authorized user, and timestamped when the server receives the request.
+     * 
+     * @param string $projectId
+     * @param string $text
+     * @return string JSON or null
+     */
+    public function commentOnProject($projectId, $text = ""){
+        $data = array(
+            "data" => array(
+                "text" => $text
+            )
+        );
+        $data = json_encode($data);
+        return $this->askAsana($this->projectsUrl."/{$projectId}/stories", $data, METHOD_POST);
+    }
+
 
     /**
      * **********************************
