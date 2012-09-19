@@ -469,7 +469,17 @@ class Asana {
     public function getWorkspaceTags($workspaceId){
         return $this->askAsana($this->workspaceUrl."/{$workspaceId}/tags");
     }
-    
+
+    /**
+     * Returns users of all workspace.
+     *
+     * @param string $workspaceId The id of the workspace
+     *
+     * @return string JSON or null
+     */
+    public function getWorkspaceUsers($workspaceId){
+        return $this->askAsana($this->workspaceUrl."/{$workspaceId}/users");
+    }
 
     /**
      * This function communicates with Asana REST API.
