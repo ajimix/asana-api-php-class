@@ -186,6 +186,7 @@ class Asana {
      */
     public function getTasksByFilter($filter = array("assignee" => "", "project" => "", "workspace" => "")){
         $url = "";
+        $filter = array_merge(array("assignee" => "", "project" => "", "workspace" => ""), $filter);
         $url .= $filter["assignee"] != ""?"&assignee={$filter["assignee"]}":"";
         $url .= $filter["project"] != ""?"&project={$filter["project"]}":"";
         $url .= $filter["workspace"] != ""?"&workspace={$filter["workspace"]}":"";
