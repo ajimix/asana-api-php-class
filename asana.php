@@ -259,6 +259,27 @@ class Asana {
      * **********************************
      */
     
+
+    /**
+     * Function to create a project.
+     *
+     * @param array $data Array of data for the project following the Asana API documentation.
+     * Example:
+     *
+     * array(
+     *     "workspace" => "1768",
+     *     "name" => "Foo Project!",
+     *     "notes" => "This is a test project"
+     * )
+     *
+     * @return string JSON or null
+     */
+    public function createProject($data){
+        $data = array("data" => $data);
+        $data = json_encode($data);
+        return $this->askAsana($this->projectsUrl, $data, METHOD_POST);
+    }
+
     /**
      * Returns the full record for a single project.
      * 
