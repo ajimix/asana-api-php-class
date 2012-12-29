@@ -1,5 +1,5 @@
 {
-    "name": "asana-api-php/asana-api-php",
+    "name": "ajimix/asana-api-php-class",
     "description": "A PHP class that acts as wrapper for Asana API. Lets make things easy! :)",
     "keywords": ["asana","api"],
     "homepage": "https://github.com/ajimix/asana-api-php-class",
