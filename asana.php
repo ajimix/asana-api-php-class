@@ -293,10 +293,12 @@ class Asana {
      * Returns the projects in all workspaces containing archived ones or not.
      * 
      * @param boolean $archived Return archived projects or not
+     * @param string  $opt_fields Return results with optional parameters
      */
-    public function getProjects($archived = false){
+    public function getProjects($archived = false, $opt_fields = ""){
         $archived = $archived?"true":"false";
-        return $this->askAsana($this->projectsUrl."?archived={$archived}");
+        $opt_fields = ($opt_fields<>"")?"&opt_fields=$opt_fields":"";
+        return $this->askAsana($this->projectsUrl."?archived={$archived}".$opt_fields);
     }
     
     /**

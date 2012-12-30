@@ -1,0 +1,17 @@
+{
+    "name": "ajimix/asana-api-php-class",
+    "description": "A PHP class that acts as wrapper for Asana API. Lets make things easy! :)",
+    "keywords": ["asana","api"],
+    "homepage": "https://github.com/ajimix/asana-api-php-class",
+    "license": "Apache License, Version 2.0",
+    "authors": [
+        {
+            "name": "Adria Jimenez",
+            "email": "ajimix@gmail.com",
+            "homepage": "http://www.ajimix.net"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    }
+}
