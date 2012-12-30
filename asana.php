@@ -299,6 +299,8 @@ class Asana {
         $archived = $archived?"true":"false";
         $opt_fields = ($opt_fields<>"")?"&opt_fields=$opt_fields":"";
         return $this->askAsana($this->projectsUrl."?archived={$archived}".$opt_fields);
+        $opt_fields = ($opt_fields != "")?"&opt_fields={$opt_fields}":"";
+        return $this->askAsana($this->projectsUrl."?archived={$archived}{$opt_fields}");
     }
     
     /**
