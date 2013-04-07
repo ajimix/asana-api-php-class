@@ -118,6 +118,16 @@ class Asana {
     public function getTask($taskId){
         return $this->askAsana($this->taskUrl."/{$taskId}");
     }
+    
+    /**
+     * Returns sub-task information
+     *
+     * @param string $taskId
+     * @return string JSON or null
+     */
+    public function getSubTasks($taskId){
+    	return $this->askAsana($this->taskUrl."/{$taskId}/subtasks");
+    }
 
     /**
      * Updates a task
