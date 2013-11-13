@@ -13,7 +13,7 @@ if($asana->responseCode == "200" && !is_null($result)){
 
 	// $resultJson contains an object in json with all projects
 	foreach($resultJson->data as $project){
-		echo "Project ID: {$project->id} is {$project->name}<br>";
+		echo "Project ID: {$project->id} is {$project->name}<br>" . PHP_EOL;
 	}
 
 } else {
