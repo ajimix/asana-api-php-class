@@ -59,11 +59,14 @@ class Asana {
      * Call it without parameters to get the users info of the owner of the API key.
      *
      * @param string $userId
+     * @param array $opt Array of options to pass
+     *  (@see http://developer.asana.com/documentation/#Options)
      * @return string JSON or null
      */
-    public function getUserInfo($userId = null){
+    public function getUserInfo($userId = null, array $opt = array()){
+        $options = http_build_query($opts);
         if(is_null($userId)) $userId = "me";
-        return $this->askAsana($this->userUrl."/{$userId}");
+        return $this->askAsana($this->userUrl."/{$userId}?{$options}");
     }
 
     /**
@@ -113,20 +116,26 @@ class Asana {
      * Returns task information
      *
      * @param string $taskId
+     * @param array $opt Array of options to pass
+     *  (@see http://developer.asana.com/documentation/#Options)
      * @return string JSON or null
      */
-    public function getTask($taskId){
-        return $this->askAsana($this->taskUrl."/{$taskId}");
+    public function getTask($taskId, array $opts = array()){
+        $options = http_build_query($opts);
+        return $this->askAsana($this->taskUrl."/{$taskId}?{$options}");
     }
     
     /**
      * Returns sub-task information
      *
      * @param string $taskId
+     * @param array $opt Array of options to pass
+     *  (@see http://developer.asana.com/documentation/#Options)
      * @return string JSON or null
      */
-    public function getSubTasks($taskId){
-    	return $this->askAsana($this->taskUrl."/{$taskId}/subtasks");
+    public function getSubTasks($taskId, array $opts = array()){
+        $options = http_build_query($opts);
+    	return $this->askAsana($this->taskUrl."/{$taskId}/subtasks?{$options}");
     }
 
     /**
@@ -146,10 +155,13 @@ class Asana {
      * Returns the projects associated to the task.
      *
      * @param string $taskId
+     * @param array $opt Array of options to pass
+     *  (@see http://developer.asana.com/documentation/#Options)
      * @return string JSON or null
      */
-    public function getProjectsForTask($taskId){
-        return $this->askAsana($this->taskUrl."/{$taskId}/projects");
+    public function getProjectsForTask($taskId, array $opts = array()){
+        $options = http_build_query($opts);
+        return $this->askAsana($this->taskUrl."/{$taskId}/projects?{$options}");
     }
 
     /**
@@ -212,10 +224,13 @@ class Asana {
      * There is presently no way to get a filtered set of stories.
      *
      * @param string $taskId
+     * @param array $opt Array of options to pass
+     *  (@see http://developer.asana.com/documentation/#Options)
      * @return string JSON or null
      */
-    public function getTaskStories($taskId){
-        return $this->askAsana($this->taskUrl."/{$taskId}/stories");
+    public function getTaskStories($taskId, array $opts = array()){
+        $options = http_build_query($opts);
+        return $this->askAsana($this->taskUrl."/{$taskId}/stories?{$options}");
     }
 
     /**
@@ -293,10 +308,13 @@ class Asana {
      * Returns the full record for a single project.
      *
      * @param string $projectId
+     * @param array $opt Array of options to pass
+     *  (@see http://developer.asana.com/documentation/#Options)
      * @return string JSON or null
      */
-    public function getProject($projectId){
-        return $this->askAsana($this->projectsUrl."/{$projectId}");
+    public function getProject($projectId, array $opts = array()){
+        $options = http_build_query($opts);
+        return $this->askAsana($this->projectsUrl."/{$projectId}?{$options}");
     }
 
     /**
@@ -316,10 +334,13 @@ class Asana {
      *
      * @param string $workspaceId
      * @param boolean $archived Return archived projects or not
+     * @param array $opt Array of options to pass
+     *  (@see http://developer.asana.com/documentation/#Options)
      */
-    public function getProjectsInWorkspace($workspaceId, $archived = false){
+    public function getProjectsInWorkspace($workspaceId, $archived = false, array $opts = array()){
         $archived = $archived?"true":"false";
-        return $this->askAsana($this->projectsUrl."?archived={$archived}&workspace={$workspaceId}");
+        $options = http_build_query($opts);
+        return $this->askAsana($this->projectsUrl."?archived={$archived}&workspace={$workspaceId}&{$options}");
     }
 
     /**
@@ -341,11 +362,14 @@ class Asana {
      * Returns all unarchived tasks of a given project
      *
      * @param string $projectId
+     * @param array $opt Array of options to pass
+     *  (@see http://developer.asana.com/documentation/#Options)
      *
      * @return string JSON or null
      */
-    public function getProjectTasks($projectId){
-        return $this->askAsana($this->taskUrl."?project={$projectId}");
+    public function getProjectTasks($projectId, array $opts = array()){
+        $options = http_build_query($opts);
+        return $this->askAsana($this->taskUrl."?project={$projectId}&{$options}");
     }
 
     /**
@@ -356,10 +380,13 @@ class Asana {
      * There is presently no way to get a filtered set of stories.
      *
      * @param string $projectId
+     * @param array $opt Array of options to pass
+     *  (@see http://developer.asana.com/documentation/#Options)
      * @return string JSON or null
      */
-    public function getProjectStories($projectId){
-        return $this->askAsana($this->projectsUrl."/{$projectId}/stories");
+    public function getProjectStories($projectId, array $opts = array()){
+        $options = http_build_query($opts);
+        return $this->askAsana($this->projectsUrl."/{$projectId}/stories?{$options}");
     }
 
     /**
@@ -391,10 +418,13 @@ class Asana {
      * Returns the full record for a single tag.
      *
      * @param string $tagId
+     * @param array $opt Array of options to pass
+     *  (@see http://developer.asana.com/documentation/#Options)
      * @return string JSON or null
      */
-    public function getTag($tagId){
-        return $this->askAsana($this->tagsUrl."/{$tagId}");
+    public function getTag($tagId, array $opts = array()){
+        $options = http_build_query($opts);
+        return $this->askAsana($this->tagsUrl."/{$tagId}?{$options}");
     }
 
     /**
@@ -425,10 +455,13 @@ class Asana {
      * Returns the list of all tasks with this tag. Tasks can have more than one tag at a time.
      *
      * @param string $tagId
+     * @param array $opt Array of options to pass
+     *  (@see http://developer.asana.com/documentation/#Options)
      * @return string JSON or null
      */
-    public function getTasksWithTag($tagId){
-        return $this->askAsana($this->tagsUrl."/{$tagId}/tasks");
+    public function getTasksWithTag($tagId, array $opt = array()){
+        $options = http_build_query($opts);
+        return $this->askAsana($this->tagsUrl."/{$tagId}/tasks?{$options}");
     }
 
 
@@ -442,10 +475,13 @@ class Asana {
      * Returns the full record for a single story.
      *
      * @param string $storyId
+     * @param array $opt Array of options to pass
+     *  (@see http://developer.asana.com/documentation/#Options)
      * @return string JSON or null
      */
-    public function getSingleStory($storyId){
-        return $this->askAsana($this->storiesUrl."/{$storyId}");
+    public function getSingleStory($storyId, array $opt = array()){
+        $options = http_build_query($opts);
+        return $this->askAsana($this->storiesUrl."/{$storyId}?{$options}");
     }
 
 
@@ -485,11 +521,14 @@ class Asana {
      *
      * @param string $workspaceId The id of the workspace
      * @param string $assignee Can be "me" or user ID
+     * @param array $opt Array of options to pass
+     *  (@see http://developer.asana.com/documentation/#Options)
      *
      * @return string JSON or null
      */
-    public function getWorkspaceTasks($workspaceId, $assignee = "me"){
-        return $this->askAsana($this->taskUrl."?workspace={$workspaceId}&assignee={$assignee}");
+    public function getWorkspaceTasks($workspaceId, $assignee = "me", array $opt = array()){
+        $options = http_build_query($opts);
+        return $this->askAsana($this->taskUrl."?workspace={$workspaceId}&assignee={$assignee}&{$options}");
     }
 
     /**
