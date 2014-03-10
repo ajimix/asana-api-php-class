@@ -63,7 +63,7 @@ class Asana {
      *  (@see http://developer.asana.com/documentation/#Options)
      * @return string JSON or null
      */
-    public function getUserInfo($userId = null, array $opt = array()){
+    public function getUserInfo($userId = null, array $opts = array()){
         $options = http_build_query($opts);
         if(is_null($userId)) $userId = "me";
         return $this->askAsana($this->userUrl."/{$userId}?{$options}");
@@ -459,7 +459,7 @@ class Asana {
      *  (@see http://developer.asana.com/documentation/#Options)
      * @return string JSON or null
      */
-    public function getTasksWithTag($tagId, array $opt = array()){
+    public function getTasksWithTag($tagId, array $opts = array()){
         $options = http_build_query($opts);
         return $this->askAsana($this->tagsUrl."/{$tagId}/tasks?{$options}");
     }
@@ -479,7 +479,7 @@ class Asana {
      *  (@see http://developer.asana.com/documentation/#Options)
      * @return string JSON or null
      */
-    public function getSingleStory($storyId, array $opt = array()){
+    public function getSingleStory($storyId, array $opts = array()){
         $options = http_build_query($opts);
         return $this->askAsana($this->storiesUrl."/{$storyId}?{$options}");
     }
@@ -526,7 +526,7 @@ class Asana {
      *
      * @return string JSON or null
      */
-    public function getWorkspaceTasks($workspaceId, $assignee = "me", array $opt = array()){
+    public function getWorkspaceTasks($workspaceId, $assignee = "me", array $opts = array()){
         $options = http_build_query($opts);
         return $this->askAsana($this->taskUrl."?workspace={$workspaceId}&assignee={$assignee}&{$options}");
     }
