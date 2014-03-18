@@ -30,10 +30,10 @@ class Asana {
     private $storiesUrl;
     private $tagsUrl;
 
-    public function __construct($apiKey){
+    public function __construct($apiKey, $apiToken){
         if(substr($apiKey, -1) != ":") $apiKey .= ":"; // If the API key is not ended by ":", we append it
         $this->apiKey = $apiKey;
-
+        $this->apiToken = $apiToken; // Support for the token retrieved using asana_oauth.php
         $this->endPointUrl = "https://app.asana.com/api/{$this->asanaApiVersion}/";
         $this->taskUrl = $this->endPointUrl."tasks";
         $this->userUrl = $this->endPointUrl."users";
@@ -571,9 +571,17 @@ class Asana {
         curl_setopt($curl, CURLOPT_FAILONERROR, true);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0); // Don't verify SSL connection
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0); //         ""           ""
-        curl_setopt($curl, CURLOPT_USERPWD, $this->apiKey);
-        curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: application/json")); // Send as JSON
+        if (!empty($this->apiKey)) {
+        	curl_setopt($curl, CURLOPT_USERPWD, $this->apiKey);
+			curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+		}
+        if (empty($this->apiToken)) {
+        	curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: application/json")); // Send as JSON
+        }
+        else {
+	        // Add token header
+	        curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: application/json", "Authorization: Bearer " . $this->apiToken));
+        }
         if($this->advDebug){
             curl_setopt($curl, CURLOPT_HEADER, true); // Display headers
             curl_setopt($curl, CURLOPT_VERBOSE, true); // Display communication with server
