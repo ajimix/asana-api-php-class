@@ -30,10 +30,24 @@ class Asana {
     private $storiesUrl;
     private $tagsUrl;
 
-    public function __construct($apiKey, $apiToken = ""){
-        if(substr($apiKey, -1) != ":") $apiKey .= ":"; // If the API key is not ended by ":", we append it
-        $this->apiKey = $apiKey;
-        $this->apiToken = $apiToken; // Support for the token retrieved using asana_oauth.php
+    public function __construct($options){
+        // For retro-compatibility purposes check if $options is a string,
+        // so if a user passes a string we use it as the app key.
+        if (is_string($options)) {
+            $this->apiKey = $options;
+        } else if (is_array($options) && isset($options["apiKey"])) {
+            $this->apiKey = $options["apiKey"];
+        } else if (is_array($options) && isset($options["accessToken"])) {
+            $this->accessToken = $options["accessToken"];
+        } else {
+            throw new Exception("You need to specify an API key or token");
+        }
+
+        // If the API key is not ended by ":", we append it.
+        if(!empty($this->apiKey) && substr($this->apiKey, -1) !== ":") {
+            $this->apiKey .= ":";
+        }
+
         $this->endPointUrl = "https://app.asana.com/api/{$this->asanaApiVersion}/";
         $this->taskUrl = $this->endPointUrl."tasks";
         $this->userUrl = $this->endPointUrl."users";
@@ -124,7 +138,7 @@ class Asana {
         $options = http_build_query($opts);
         return $this->askAsana($this->taskUrl."/{$taskId}?{$options}");
     }
-    
+
     /**
      * Returns sub-task information
      *
@@ -135,7 +149,7 @@ class Asana {
      */
     public function getSubTasks($taskId, array $opts = array()){
         $options = http_build_query($opts);
-    	return $this->askAsana($this->taskUrl."/{$taskId}/subtasks?{$options}");
+        return $this->askAsana($this->taskUrl."/{$taskId}/subtasks?{$options}");
     }
 
     /**
@@ -571,17 +585,20 @@ class Asana {
         curl_setopt($curl, CURLOPT_FAILONERROR, true);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0); // Don't verify SSL connection
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0); //         ""           ""
+
         if (!empty($this->apiKey)) {
-        	curl_setopt($curl, CURLOPT_USERPWD, $this->apiKey);
-			curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-		}
-        if (empty($this->apiToken)) {
-        	curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: application/json")); // Send as JSON
+            // Send with API key.
+            curl_setopt($curl, CURLOPT_USERPWD, $this->apiKey);
+            curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+            curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: application/json")); // Send as JSON
+        } else if (!empty($this->accessToken)) {
+            // Send with auth token.
+            curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+                "Content-Type: application/json",
+                "Authorization: Bearer " . $this->accessToken
+            ));
         }
-        else {
-	        // Add token header
-	        curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: application/json", "Authorization: Bearer " . $this->apiToken));
-        }
+
         if($this->advDebug){
             curl_setopt($curl, CURLOPT_HEADER, true); // Display headers
             curl_setopt($curl, CURLOPT_VERBOSE, true); // Display communication with server
@@ -602,7 +619,7 @@ class Asana {
             if($this->debug || $this->advDebug){
                 echo "<pre>"; print_r(curl_getinfo($curl)); echo "</pre>";
             }
-        } catch(Exception $ex){
+        } catch (Exception $ex){
             if($this->debug || $this->advDebug){
                 echo "<br>cURL error num: ".curl_errno($curl);
                 echo "<br>cURL error: ".curl_error($curl);
