@@ -30,7 +30,7 @@ class Asana {
     private $storiesUrl;
     private $tagsUrl;
 
-    public function __construct($apiKey, $apiToken){
+    public function __construct($apiKey, $apiToken = ""){
         if(substr($apiKey, -1) != ":") $apiKey .= ":"; // If the API key is not ended by ":", we append it
         $this->apiKey = $apiKey;
         $this->apiToken = $apiToken; // Support for the token retrieved using asana_oauth.php

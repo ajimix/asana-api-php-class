@@ -12,7 +12,9 @@ Working with the class
 
 First declare the asana class
 
-    $asana = new Asana("YOUR_COOL_API_KEY");
+    $asana = new Asana("YOUR_COOL_API_KEY", "YOUR_OAUTH_TOKEN");
+
+YOUR_OAUTH_TOKEN is an optional parameter that can be retrieved using the below instructions. It allows you to improve usability flows by not requiring the user to look up their API key on asana.com.
 
 Creating a task
 
