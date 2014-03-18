@@ -12,9 +12,11 @@ Working with the class
 
 First declare the asana class
 
-    $asana = new Asana("YOUR_COOL_API_KEY", "YOUR_OAUTH_TOKEN");
+    $asana = new Asana(array(
+        "apiKey" => YOUR_COOL_API_KEY"
+    ));
 
-YOUR_OAUTH_TOKEN is an optional parameter that can be retrieved using the below instructions. It allows you to improve usability flows by not requiring the user to look up their API key on asana.com.
+* Optionally you can pass an accessToken instead of an apiKey if you use OAuth. Read below for more info.
 
 Creating a task
 
@@ -27,7 +29,7 @@ Creating a task
 
 Adding task to project
 
-	$asana->addProjectToTask("THIS_TASK_ID_PLEASE", "TO_THIS_COOL_PROJECT_ID");
+    $asana->addProjectToTask("THIS_TASK_ID_PLEASE", "TO_THIS_COOL_PROJECT_ID");
 
 Commenting on a task
 
@@ -35,13 +37,13 @@ Commenting on a task
 
 Getting projects in all workspaces
 
-	$asana->getProjects();
+    $asana->getProjects();
 
 Updating project info
 
     $asana->updateProject("COOL_PROJECT_ID", array(
-    	"name" => "This is a new cool project!",
-    	"notes" => "At first, it wasn't cool, but after this name change, it is!"
+        "name" => "This is a new cool project!",
+        "notes" => "At first, it wasn't cool, but after this name change, it is!"
     ));
 
 etc.
@@ -55,31 +57,24 @@ Using Asana oAuth tokens
 
 To use this API you can also create an App on Asana, in order to get an oAuth access token that gives you the same access as with an API key. Include the class:
 
-	require_once('asana_oauth.php');
+    require_once('asana-oauth.php');
 
 Declare the oAuth class as:
 
-	$asana_auth = new AsanaAuth();
-	$url = $asana_auth->RequestAccessCode("YOUR_APP_ID", "CALLBACK_URL");
+    $asanaAuth = new AsanaAuth("YOUR_APP_ID", "YOUR_APP_SECRET", "CALLBACK_URL");
+    $url = $asanaAuth->getAuthorizeUrl();
 
-where YOUR_APP_ID you get from your App's details on Asana. Now, redirect the browser to the result held by $url. The user will be asked to login & accept your app, after which the browser will be returned to the CALLBACK_URL, which should process the result:
+Where YOUR_APP_ID, YOUR_APP_SECRET and "CALLBACK_URL" you get from your App's details on Asana. Now, redirect the browser to the result held by $url. The user will be asked to login & accept your app, after which the browser will be returned to the CALLBACK_URL, which should process the result:
 
-	$code = $_GET["code"];
-	$asana_auth = new AsanaAuth();
-	$json = $asana_auth->GetAccessToken("YOUR_APP_ID", "YOUR_APP_SECRET", $code, "CALLBACK_URL");
+    $code = $_GET["code"];
+    $asanaAuth->getAccessToken($code);
 
-YOUR_APP_SECRET you also get from your App's details. Now $json contains this:
+And you will receive an object with the access token and a refresh token
+The token expires after one hour so you can refresh it doing the following:
 
-	["access_token"]=> string(34) "0/39bd9b07b864acad1bbfdhfghsfy5" 
-	["token_type"]=> string(6) "bearer" 
-	["expires_in"]=> int(3600) 
-	["data"]=> object(stdClass)#3 (3) { 
-		["id"]=> int(5436345634567) 
-		["name"]=> string(11) "Steve Jobs" 
-		["email"]=> string(17) "steve@apple.com" } 
-	["refresh_token"]=> string(34) "0/16c6799312b280fdghs8dugsd890fh"
+    $asanaAuth->refreshAccessToken("ACCESS_TOKEN");
 
-Check Asana's docs on using the refresh token to get a new access token without requiring the user to login, as the default duration of a token is one hour.
+For a more detailes instructions on how to make oauth work check the example in examples/oauth.php
 
 Author
 ------
