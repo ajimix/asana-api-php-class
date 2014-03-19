@@ -233,10 +233,12 @@ class Asana {
      *     "project" => 0,
      *     "workspace" => 0
      * )
+     * @param array $opt Array of options to pass
+     *                   (@see http://developer.asana.com/documentation/#Options)
      *
      * @return string JSON or null
      */
-    public function getTasksByFilter($filter = array('assignee' => '', 'project' => '', 'workspace' => '')) {
+    public function getTasksByFilter($filter = array('assignee' => '', 'project' => '', 'workspace' => ''), array $opts = array()) {
         $url = '';
         $filter = array_merge(array('assignee' => '', 'project' => '', 'workspace' => ''), $filter);
 
@@ -244,6 +246,9 @@ class Asana {
         $url .= $filter['project'] !== '' ? '&project=' . $filter['project'] : '';
         $url .= $filter['workspace'] !== '' ? '&workspace=' . $filter['workspace'] : '';
 
+        if (count($opts) > 0) {
+            $url .= '&' . http_build_query($opts);
+        }
         if (strlen($url) > 0) {
             $url = '?' . substr($url, 1);
         }
