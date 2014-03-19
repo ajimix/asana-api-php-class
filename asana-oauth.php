@@ -9,7 +9,7 @@
  * Licensed under the Apache License 2.0
  *
  * Authors: Ajimix [github.com/ajimix], Puchol [https://github.com/puchol]
- * Version: 1.0
+ * Version: 2.0.0
  */
 class AsanaAuth {
 
@@ -113,5 +113,4 @@ class AsanaAuth {
 
         return $response;
     }
-
 }

@@ -4,7 +4,7 @@ Asana API PHP class
 A PHP class that acts as wrapper for Asana API.
 Lets make things easy! :)
 
-It is licensed under the Apache 2 license and is Copyrighted 2012 Ajimix
+It is licensed under the Apache 2 license and is Copyrighted 2014 Ajimix
 
 
 Working with the class
@@ -87,7 +87,7 @@ Author
 Copyright and license
 ---------------------
 
-Copyright 2012 Ajimix
+Copyright 2014 Ajimix
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this work except in compliance with the License.
