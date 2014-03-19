@@ -19,9 +19,18 @@ class AsanaAuth {
 
     public $responseCode;
 
-    private $asanaAuthorizeUrl = "https://app.asana.com/-/oauth_authorize"; // You shouldn't change this url.
-    private $asanaAccessTokenUrl = "https://app.asana.com/-/oauth_token"; // You shouldn't change this url.
+    private $asanaAuthorizeUrl = 'https://app.asana.com/-/oauth_authorize'; // You shouldn't change this url.
+    private $asanaAccessTokenUrl = 'https://app.asana.com/-/oauth_token'; // You shouldn't change this url.
+    private $clientId;
+    private $clientSecret;
+    private $redirectUrl;
 
+    /**
+     * Class constructor.
+     * @param string $clientId Client ID given by asana app creator.
+     * @param string $clientSecret Client secret given by asana app creator.
+     * @param string $redirectUrl Redirect url, must match the one given in asana app creator.
+     */
     public function __construct($clientId, $clientSecret, $redirectUrl) {
         $this->clientId = $clientId;
         $this->clientSecret = $clientSecret;
@@ -36,7 +45,7 @@ class AsanaAuth {
      * @return string The authorization url.
      */
     public function getAuthorizeUrl() {
-        return "{$this->asanaAuthorizeUrl}?client_id={$this->clientId}&response_type=code&redirect_uri={$this->redirectUrl}";
+        return $this->asanaAuthorizeUrl . '?client_id=' . $this->clientId . '&response_type=code&redirect_uri=' . $this->redirectUrl;
     }
 
     /**
@@ -46,7 +55,7 @@ class AsanaAuth {
      * @return string JSON or null.
      */
     public function getAccessToken($authCode) {
-        return $this->askAsana("get", $authCode);
+        return $this->askAsana('get', $authCode);
     }
 
     /**
@@ -56,7 +65,7 @@ class AsanaAuth {
      * @return string JSON or null.
      */
     public function refreshAccessToken($refreshToken) {
-        return $this->askAsana("refresh", $refreshToken);
+        return $this->askAsana('refresh', $refreshToken);
     }
 
     /**
@@ -79,14 +88,14 @@ class AsanaAuth {
 
         // Add client ID and client secret to the headers.
         curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-            "Authorization: Basic " . base64_encode($this->clientId . ":" . $this->clientSecret),
+            'Authorization: Basic ' . base64_encode($this->clientId . ':' . $this->clientSecret),
         ));
 
         // Assemble POST parameters for the request.
-        if ($action === "get") {
-            $postFields = "code=" . urlencode($token) . "&grant_type=authorization_code&redirect_uri={$this->redirectUrl}&client_id={$this->clientId}&client_secret={$this->clientSecret}";
-        } else if ($action === "refresh") {
-            $postFields = "refresh_token=" . urlencode($token) . "&grant_type=refresh_token&redirect_uri={$this->redirectUrl}&client_id={$this->clientId}&client_secret={$this->clientSecret}";
+        if ($action === 'get') {
+            $postFields = 'code=' . urlencode($token) . '&grant_type=authorization_code&redirect_uri=' . $this->redirectUrl . '&client_id=' . $this->clientId . '&client_secret=' . $this->clientSecret;
+        } else if ($action === 'refresh') {
+            $postFields = 'refresh_token=' . urlencode($token) . '&grant_type=refresh_token&redirect_uri=' . $this->redirectUrl . '&client_id=' . $this->clientId . '&client_secret=' . $this->clientSecret;
         }
 
         // Obtain and return the access token from the response.
@@ -98,14 +107,14 @@ class AsanaAuth {
             $this->responseCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
             if($this->debug || $this->advDebug){
-                echo "<pre>"; print_r(curl_getinfo($curl)); echo "</pre>";
+                echo '<pre>'; print_r(curl_getinfo($curl)); echo '</pre>';
             }
         } catch (Exception $ex){
             if ($this->debug || $this->advDebug) {
-                echo "<br>cURL error num: " . curl_errno($curl);
-                echo "<br>cURL error: " . curl_error($curl);
+                echo '<br>cURL error num: ' . curl_errno($curl);
+                echo '<br>cURL error: ' . curl_error($curl);
             }
-            echo "Error on cURL";
+            echo 'Error on cURL';
             $response = null;
         }
 

@@ -13,7 +13,7 @@ Working with the class
 First declare the asana class
 
     $asana = new Asana(array(
-        "apiKey" => YOUR_COOL_API_KEY"
+        'apiKey' => 'YOUR_COOL_API_KEY'
     ));
 
 * Optionally you can pass an accessToken instead of an apiKey if you use OAuth. Read below for more info.
@@ -21,19 +21,19 @@ First declare the asana class
 Creating a task
 
     $asana->createTask(array(
-       "workspace" => "176825", // Workspace ID
-       "name" => "Hello World!", // Name of task
-       "assignee" => "bigboss@bigcompany.com", // Assign task to...
-       "followers" => array("3714136", "5900783") // We add some followers to the task... (this time by ID)
+       'workspace' => '176825', // Workspace ID
+       'name' => 'Hello World!', // Name of task
+       'assignee' => 'bigboss@bigcompany.com', // Assign task to...
+       'followers' => array('3714136', '5900783') // We add some followers to the task... (this time by ID)
     ));
 
 Adding task to project
 
-    $asana->addProjectToTask("THIS_TASK_ID_PLEASE", "TO_THIS_COOL_PROJECT_ID");
+    $asana->addProjectToTask('THIS_TASK_ID_PLEASE', 'TO_THIS_COOL_PROJECT_ID');
 
 Commenting on a task
 
-    $asana->commentOnTask("MY_BEAUTIFUL_TASK_ID", "Please please! Don't assign me this task!");
+    $asana->commentOnTask('MY_BEAUTIFUL_TASK_ID', 'Please please! Don't assign me this task!');
 
 Getting projects in all workspaces
 
@@ -41,18 +41,18 @@ Getting projects in all workspaces
 
 Updating project info
 
-    $asana->updateProject("COOL_PROJECT_ID", array(
-        "name" => "This is a new cool project!",
-        "notes" => "At first, it wasn't cool, but after this name change, it is!"
+    $asana->updateProject('COOL_PROJECT_ID', array(
+        'name' => 'This is a new cool project!',
+        'notes' => 'At first, it wasn't cool, but after this name change, it is!'
     ));
 
 etc.
 
-Read comments on class for class magic and read [Asana API documentation](http://developer.asana.com/documentation/) if you want to be a master :D
+See the examples inside examples folder, read the comments on the class file for class magic and read [Asana API documentation](http://developer.asana.com/documentation/) if you want to be a master :D
 
 Enjoy ;D
 
-Using Asana oAuth tokens
+Using Asana OAuth tokens
 ------------------------
 
 To use this API you can also create an App on Asana, in order to get an oAuth access token that gives you the same access as with an API key. Include the class:
@@ -61,18 +61,18 @@ To use this API you can also create an App on Asana, in order to get an oAuth ac
 
 Declare the oAuth class as:
 
-    $asanaAuth = new AsanaAuth("YOUR_APP_ID", "YOUR_APP_SECRET", "CALLBACK_URL");
+    $asanaAuth = new AsanaAuth('YOUR_APP_ID', 'YOUR_APP_SECRET', 'CALLBACK_URL');
     $url = $asanaAuth->getAuthorizeUrl();
 
-Where YOUR_APP_ID, YOUR_APP_SECRET and "CALLBACK_URL" you get from your App's details on Asana. Now, redirect the browser to the result held by $url. The user will be asked to login & accept your app, after which the browser will be returned to the CALLBACK_URL, which should process the result:
+Where YOUR_APP_ID, YOUR_APP_SECRET and CALLBACK_URL you get from your App's details on Asana. Now, redirect the browser to the result held by $url. The user will be asked to login & accept your app, after which the browser will be returned to the CALLBACK_URL, which should process the result:
 
-    $code = $_GET["code"];
+    $code = $_GET['code'];
     $asanaAuth->getAccessToken($code);
 
 And you will receive an object with the access token and a refresh token
 The token expires after one hour so you can refresh it doing the following:
 
-    $asanaAuth->refreshAccessToken("ACCESS_TOKEN");
+    $asanaAuth->refreshAccessToken('ACCESS_TOKEN');
 
 For a more detailes instructions on how to make oauth work check the example in examples/oauth.php
 

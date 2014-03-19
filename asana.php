@@ -15,12 +15,13 @@ class Asana {
     private $timeout = 10;
     private $debug = false;
     private $advDebug = false; // Note that enabling advanced debug will include debugging information in the response possibly breaking up your code
-    private $asanaApiVersion = "1.0";
+    private $asanaApiVersion = '1.0';
 
     public $responseCode;
 
     private $endPointUrl;
     private $apiKey;
+    private $accessToken;
     private $taskUrl;
     private $userUrl;
     private $projectsUrl;
@@ -28,35 +29,42 @@ class Asana {
     private $storiesUrl;
     private $tagsUrl;
 
-    public function __construct($options){
+    /**
+     * Class constructor.
+     *
+     * @param array $options Array of options containing an apiKey OR and accessToken, not both.
+     *                       Can be also an string if you want to use an apiKey.
+     */
+    public function __construct($options) {
         // For retro-compatibility purposes check if $options is a string,
         // so if a user passes a string we use it as the app key.
         if (is_string($options)) {
             $this->apiKey = $options;
-        } else if (is_array($options) && isset($options["apiKey"])) {
-            $this->apiKey = $options["apiKey"];
-        } else if (is_array($options) && isset($options["accessToken"])) {
-            $this->accessToken = $options["accessToken"];
+        } else if (is_array($options) && !empty($options['apiKey'])) {
+            $this->apiKey = $options['apiKey'];
+        } else if (is_array($options) && !empty($options['accessToken'])) {
+            $this->accessToken = $options['accessToken'];
         } else {
-            throw new Exception("You need to specify an API key or token");
+            throw new Exception('You need to specify an API key or token');
         }
 
         // If the API key is not ended by ":", we append it.
-        if(!empty($this->apiKey) && substr($this->apiKey, -1) !== ":") {
-            $this->apiKey .= ":";
+        if (!empty($this->apiKey) && substr($this->apiKey, -1) !== ':') {
+            $this->apiKey .= ':';
         }
 
-        $this->endPointUrl = "https://app.asana.com/api/{$this->asanaApiVersion}/";
-        $this->taskUrl = $this->endPointUrl."tasks";
-        $this->userUrl = $this->endPointUrl."users";
-        $this->projectsUrl = $this->endPointUrl."projects";
-        $this->workspaceUrl = $this->endPointUrl."workspaces";
-        $this->storiesUrl = $this->endPointUrl."stories";
-        $this->tagsUrl = $this->endPointUrl."tags";
+        $this->endPointUrl = 'https://app.asana.com/api/' . $this->asanaApiVersion . '/';
+        $this->taskUrl = $this->endPointUrl . 'tasks';
+        $this->userUrl = $this->endPointUrl . 'users';
+        $this->projectsUrl = $this->endPointUrl . 'projects';
+        $this->workspaceUrl = $this->endPointUrl . 'workspaces';
+        $this->storiesUrl = $this->endPointUrl . 'stories';
+        $this->tagsUrl = $this->endPointUrl . 'tags';
 
-        define("METHOD_POST", 1);
-        define("METHOD_PUT", 2);
-        define("METHOD_GET", 3);
+        // Define some constants for later usage.
+        define('ASANA_METHOD_POST', 1);
+        define('ASANA_METHOD_PUT', 2);
+        define('ASANA_METHOD_GET', 3);
     }
 
 
@@ -72,13 +80,17 @@ class Asana {
      *
      * @param string $userId
      * @param array $opt Array of options to pass
-     *  (@see http://developer.asana.com/documentation/#Options)
+     *                   (@see http://developer.asana.com/documentation/#Options)
      * @return string JSON or null
      */
-    public function getUserInfo($userId = null, array $opts = array()){
+    public function getUserInfo($userId = null, array $opts = array()) {
         $options = http_build_query($opts);
-        if(is_null($userId)) $userId = "me";
-        return $this->askAsana($this->userUrl."/{$userId}?{$options}");
+
+        if (is_null($userId)) {
+            $userId = 'me';
+        }
+
+        return $this->askAsana($this->userUrl . '/' . $userId . '?' . $options);
     }
 
     /**
@@ -86,7 +98,7 @@ class Asana {
      *
      * @return string JSON or null
      */
-    public function getUsers(){
+    public function getUsers() {
         return $this->askAsana($this->userUrl);
     }
 
@@ -100,7 +112,6 @@ class Asana {
     /**
      * Function to create a task.
      * For assign or remove the task to a project, use the addProjectToTask and removeProjectToTask.
-     *
      *
      * @param array $data Array of data for the task following the Asana API documentation.
      * Example:
@@ -118,10 +129,11 @@ class Asana {
      *
      * @return string JSON or null
      */
-    public function createTask($data){
-        $data = array("data" => $data);
+    public function createTask($data) {
+        $data = array('data' => $data);
         $data = json_encode($data);
-        return $this->askAsana($this->taskUrl, $data, METHOD_POST);
+
+        return $this->askAsana($this->taskUrl, $data, ASANA_METHOD_POST);
     }
 
     /**
@@ -129,12 +141,13 @@ class Asana {
      *
      * @param string $taskId
      * @param array $opt Array of options to pass
-     *  (@see http://developer.asana.com/documentation/#Options)
+     *                   (@see http://developer.asana.com/documentation/#Options)
      * @return string JSON or null
      */
-    public function getTask($taskId, array $opts = array()){
+    public function getTask($taskId, array $opts = array()) {
         $options = http_build_query($opts);
-        return $this->askAsana($this->taskUrl."/{$taskId}?{$options}");
+
+        return $this->askAsana($this->taskUrl . '/' . $taskId . '?' . $options);
     }
 
     /**
@@ -142,12 +155,13 @@ class Asana {
      *
      * @param string $taskId
      * @param array $opt Array of options to pass
-     *  (@see http://developer.asana.com/documentation/#Options)
+     *                   (@see http://developer.asana.com/documentation/#Options)
      * @return string JSON or null
      */
-    public function getSubTasks($taskId, array $opts = array()){
+    public function getSubTasks($taskId, array $opts = array()) {
         $options = http_build_query($opts);
-        return $this->askAsana($this->taskUrl."/{$taskId}/subtasks?{$options}");
+
+        return $this->askAsana($this->taskUrl . '/' . $taskId . '/subtasks?' . $options);
     }
 
     /**
@@ -157,10 +171,11 @@ class Asana {
      * @param array $data See, createTask function comments for proper parameter info.
      * @return string JSON or null
      */
-    public function updateTask($taskId, $data){
-        $data = array("data" => $data);
+    public function updateTask($taskId, $data) {
+        $data = array('data' => $data);
         $data = json_encode($data);
-        return $this->askAsana($this->taskUrl."/{$taskId}", $data, METHOD_PUT);
+
+        return $this->askAsana($this->taskUrl . '/' . $taskId, $data, ASANA_METHOD_PUT);
     }
 
     /**
@@ -168,12 +183,13 @@ class Asana {
      *
      * @param string $taskId
      * @param array $opt Array of options to pass
-     *  (@see http://developer.asana.com/documentation/#Options)
+     *                   (@see http://developer.asana.com/documentation/#Options)
      * @return string JSON or null
      */
-    public function getProjectsForTask($taskId, array $opts = array()){
+    public function getProjectsForTask($taskId, array $opts = array()) {
         $options = http_build_query($opts);
-        return $this->askAsana($this->taskUrl."/{$taskId}/projects?{$options}");
+
+        return $this->askAsana($this->taskUrl . '/' . $taskId . '/projects?' . $options);
     }
 
     /**
@@ -183,10 +199,11 @@ class Asana {
      * @param string $projectId
      * @return string JSON or null
      */
-    public function addProjectToTask($taskId, $projectId){
-        $data = array("data" => array("project" => $projectId));
+    public function addProjectToTask($taskId, $projectId) {
+        $data = array('data' => array('project' => $projectId));
         $data = json_encode($data);
-        return $this->askAsana($this->taskUrl."/{$taskId}/addProject", $data, METHOD_POST);
+
+        return $this->askAsana($this->taskUrl . '/' . $taskId . '/addProject', $data, ASANA_METHOD_POST);
     }
 
     /**
@@ -196,10 +213,11 @@ class Asana {
      * @param string $projectId
      * @return string JSON or null
      */
-    public function removeProjectToTask($taskId, $projectId){
-        $data = array("data" => array("project" => $projectId));
+    public function removeProjectToTask($taskId, $projectId) {
+        $data = array('data' => array('project' => $projectId));
         $data = json_encode($data);
-        return $this->askAsana($this->taskUrl."/{$taskId}/removeProject", $data, METHOD_POST);
+
+        return $this->askAsana($this->taskUrl . '/' . $taskId . '/removeProject', $data, ASANA_METHOD_POST);
     }
 
     /**
@@ -218,15 +236,19 @@ class Asana {
      *
      * @return string JSON or null
      */
-    public function getTasksByFilter($filter = array("assignee" => "", "project" => "", "workspace" => "")){
-        $url = "";
-        $filter = array_merge(array("assignee" => "", "project" => "", "workspace" => ""), $filter);
-        $url .= $filter["assignee"] != ""?"&assignee={$filter["assignee"]}":"";
-        $url .= $filter["project"] != ""?"&project={$filter["project"]}":"";
-        $url .= $filter["workspace"] != ""?"&workspace={$filter["workspace"]}":"";
-        if(strlen($url) > 0) $url = "?".substr($url, 1);
+    public function getTasksByFilter($filter = array('assignee' => '', 'project' => '', 'workspace' => '')) {
+        $url = '';
+        $filter = array_merge(array('assignee' => '', 'project' => '', 'workspace' => ''), $filter);
 
-        return $this->askAsana($this->taskUrl.$url);
+        $url .= $filter['assignee'] !== '' ? '&assignee=' . $filter['assignee'] : '';
+        $url .= $filter['project'] !== '' ? '&project=' . $filter['project'] : '';
+        $url .= $filter['workspace'] !== '' ? '&workspace=' . $filter['workspace'] : '';
+
+        if (strlen($url) > 0) {
+            $url = '?' . substr($url, 1);
+        }
+
+        return $this->askAsana($this->taskUrl . $url);
     }
 
     /**
@@ -237,12 +259,13 @@ class Asana {
      *
      * @param string $taskId
      * @param array $opt Array of options to pass
-     *  (@see http://developer.asana.com/documentation/#Options)
+     *                   (@see http://developer.asana.com/documentation/#Options)
      * @return string JSON or null
      */
-    public function getTaskStories($taskId, array $opts = array()){
+    public function getTaskStories($taskId, array $opts = array()) {
         $options = http_build_query($opts);
-        return $this->askAsana($this->taskUrl."/{$taskId}/stories?{$options}");
+
+        return $this->askAsana($this->taskUrl . '/' . $taskId . '/stories?' . $options);
     }
 
     /**
@@ -253,14 +276,15 @@ class Asana {
      * @param string $text
      * @return string JSON or null
      */
-    public function commentOnTask($taskId, $text = ""){
+    public function commentOnTask($taskId, $text = '') {
         $data = array(
-            "data" => array(
-                "text" => $text
+            'data' => array(
+                'text' => $text
             )
         );
         $data = json_encode($data);
-        return $this->askAsana($this->taskUrl."/{$taskId}/stories", $data, METHOD_POST);
+
+        return $this->askAsana($this->taskUrl . '/' . $taskId . '/stories', $data, ASANA_METHOD_POST);
     }
 
     /**
@@ -270,10 +294,11 @@ class Asana {
      * @param string $tagId
      * @return string JSON or null
      */
-    public function addTagToTask($taskId, $tagId){
-        $data = array("data" => array("tag" => $tagId));
+    public function addTagToTask($taskId, $tagId) {
+        $data = array('data' => array('tag' => $tagId));
         $data = json_encode($data);
-        return $this->askAsana($this->taskUrl."/{$taskId}/addTag", $data, METHOD_POST);
+
+        return $this->askAsana($this->taskUrl . '/' . $taskId . '/addTag', $data, ASANA_METHOD_POST);
     }
 
     /**
@@ -283,10 +308,11 @@ class Asana {
      * @param string $tagId
      * @return string JSON or null
      */
-    public function removeTagFromTask($taskId, $tagId){
-        $data = array("data" => array("tag" => $tagId));
+    public function removeTagFromTask($taskId, $tagId) {
+        $data = array('data' => array('tag' => $tagId));
         $data = json_encode($data);
-        return $this->askAsana($this->taskUrl."/{$taskId}/removeTag", $data, METHOD_POST);
+
+        return $this->askAsana($this->taskUrl . '/' . $taskId . '/removeTag', $data, ASANA_METHOD_POST);
     }
 
 
@@ -310,10 +336,11 @@ class Asana {
      *
      * @return string JSON or null
      */
-    public function createProject($data){
-        $data = array("data" => $data);
+    public function createProject($data) {
+        $data = array('data' => $data);
         $data = json_encode($data);
-        return $this->askAsana($this->projectsUrl, $data, METHOD_POST);
+
+        return $this->askAsana($this->projectsUrl, $data, ASANA_METHOD_POST);
     }
 
     /**
@@ -321,12 +348,13 @@ class Asana {
      *
      * @param string $projectId
      * @param array $opt Array of options to pass
-     *  (@see http://developer.asana.com/documentation/#Options)
+     *                   (@see http://developer.asana.com/documentation/#Options)
      * @return string JSON or null
      */
-    public function getProject($projectId, array $opts = array()){
+    public function getProject($projectId, array $opts = array()) {
         $options = http_build_query($opts);
-        return $this->askAsana($this->projectsUrl."/{$projectId}?{$options}");
+
+        return $this->askAsana($this->projectsUrl . '/' . $projectId . '?' . $options);
     }
 
     /**
@@ -335,10 +363,11 @@ class Asana {
      * @param boolean $archived Return archived projects or not
      * @param string  $opt_fields Return results with optional parameters
      */
-    public function getProjects($archived = false, $opt_fields = ""){
-        $archived = $archived?"true":"false";
-        $opt_fields = ($opt_fields != "")?"&opt_fields={$opt_fields}":"";
-        return $this->askAsana($this->projectsUrl."?archived={$archived}{$opt_fields}");
+    public function getProjects($archived = false, $opt_fields = '') {
+        $archived = $archived ? 'true' : 'false';
+        $opt_fields = $opt_fields !== '' ? '&opt_fields=' . $opt_fields : '';
+
+        return $this->askAsana($this->projectsUrl . '?archived=' . $archived . $opt_fields);
     }
 
     /**
@@ -347,12 +376,14 @@ class Asana {
      * @param string $workspaceId
      * @param boolean $archived Return archived projects or not
      * @param array $opt Array of options to pass
-     *  (@see http://developer.asana.com/documentation/#Options)
+     *                   (@see http://developer.asana.com/documentation/#Options)
+     * @return string JSON or null
      */
-    public function getProjectsInWorkspace($workspaceId, $archived = false, array $opts = array()){
-        $archived = $archived?"true":"false";
+    public function getProjectsInWorkspace($workspaceId, $archived = false, array $opts = array()) {
+        $archived = $archived ? 'true' : 'false';
         $options = http_build_query($opts);
-        return $this->askAsana($this->projectsUrl."?archived={$archived}&workspace={$workspaceId}&{$options}");
+
+        return $this->askAsana($this->projectsUrl . '?archived=' . $archived . '&workspace=' . $workspaceId . '&' . $options);
     }
 
     /**
@@ -364,10 +395,11 @@ class Asana {
      *
      * @return string JSON or null
      */
-    public function updateProject($projectId, $data){
-        $data = array("data" => $data);
+    public function updateProject($projectId, $data) {
+        $data = array('data' => $data);
         $data = json_encode($data);
-        return $this->askAsana($this->projectsUrl."/{$projectId}", $data, METHOD_PUT);
+
+        return $this->askAsana($this->projectsUrl . '/' . $projectId, $data, ASANA_METHOD_PUT);
     }
 
     /**
@@ -375,13 +407,14 @@ class Asana {
      *
      * @param string $projectId
      * @param array $opt Array of options to pass
-     *  (@see http://developer.asana.com/documentation/#Options)
+     *                   (@see http://developer.asana.com/documentation/#Options)
      *
      * @return string JSON or null
      */
-    public function getProjectTasks($projectId, array $opts = array()){
+    public function getProjectTasks($projectId, array $opts = array()) {
         $options = http_build_query($opts);
-        return $this->askAsana($this->taskUrl."?project={$projectId}&{$options}");
+
+        return $this->askAsana($this->taskUrl . '?project=' . $projectId . '&' . $options);
     }
 
     /**
@@ -393,12 +426,13 @@ class Asana {
      *
      * @param string $projectId
      * @param array $opt Array of options to pass
-     *  (@see http://developer.asana.com/documentation/#Options)
+     *                   (@see http://developer.asana.com/documentation/#Options)
      * @return string JSON or null
      */
-    public function getProjectStories($projectId, array $opts = array()){
+    public function getProjectStories($projectId, array $opts = array()) {
         $options = http_build_query($opts);
-        return $this->askAsana($this->projectsUrl."/{$projectId}/stories?{$options}");
+
+        return $this->askAsana($this->projectsUrl . '/' . $projectId . '/stories?' . $options);
     }
 
     /**
@@ -409,14 +443,15 @@ class Asana {
      * @param string $text
      * @return string JSON or null
      */
-    public function commentOnProject($projectId, $text = ""){
+    public function commentOnProject($projectId, $text = '') {
         $data = array(
-            "data" => array(
-                "text" => $text
+            'data' => array(
+                'text' => $text
             )
         );
         $data = json_encode($data);
-        return $this->askAsana($this->projectsUrl."/{$projectId}/stories", $data, METHOD_POST);
+
+        return $this->askAsana($this->projectsUrl . '/' . $projectId . '/stories', $data, ASANA_METHOD_POST);
     }
 
 
@@ -431,12 +466,13 @@ class Asana {
      *
      * @param string $tagId
      * @param array $opt Array of options to pass
-     *  (@see http://developer.asana.com/documentation/#Options)
+     *                   (@see http://developer.asana.com/documentation/#Options)
      * @return string JSON or null
      */
-    public function getTag($tagId, array $opts = array()){
+    public function getTag($tagId, array $opts = array()) {
         $options = http_build_query($opts);
-        return $this->askAsana($this->tagsUrl."/{$tagId}?{$options}");
+
+        return $this->askAsana($this->tagsUrl . '/' . $tagId . '?' . $options);
     }
 
     /**
@@ -444,7 +480,7 @@ class Asana {
      *
      * @return string JSON or null
      */
-    public function getTags(){
+    public function getTags() {
         return $this->askAsana($this->tagsUrl);
     }
 
@@ -457,10 +493,11 @@ class Asana {
      *
      * @return string JSON or null
      */
-    public function updateTag($tagId, $data){
-        $data = array("data" => $data);
+    public function updateTag($tagId, $data) {
+        $data = array('data' => $data);
         $data = json_encode($data);
-        return $this->askAsana($this->tagsUrl."/{$tagId}", $data, METHOD_PUT);
+
+        return $this->askAsana($this->tagsUrl . '/' . $tagId, $data, ASANA_METHOD_PUT);
     }
 
     /**
@@ -468,12 +505,13 @@ class Asana {
      *
      * @param string $tagId
      * @param array $opt Array of options to pass
-     *  (@see http://developer.asana.com/documentation/#Options)
+     *                   (@see http://developer.asana.com/documentation/#Options)
      * @return string JSON or null
      */
-    public function getTasksWithTag($tagId, array $opts = array()){
+    public function getTasksWithTag($tagId, array $opts = array()) {
         $options = http_build_query($opts);
-        return $this->askAsana($this->tagsUrl."/{$tagId}/tasks?{$options}");
+
+        return $this->askAsana($this->tagsUrl . '/' . $tagId . '/tasks?' . $options);
     }
 
 
@@ -488,12 +526,13 @@ class Asana {
      *
      * @param string $storyId
      * @param array $opt Array of options to pass
-     *  (@see http://developer.asana.com/documentation/#Options)
+     *                   (@see http://developer.asana.com/documentation/#Options)
      * @return string JSON or null
      */
-    public function getSingleStory($storyId, array $opts = array()){
+    public function getSingleStory($storyId, array $opts = array()) {
         $options = http_build_query($opts);
-        return $this->askAsana($this->storiesUrl."/{$storyId}?{$options}");
+
+        return $this->askAsana($this->storiesUrl . '/' . $storyId . '?' . $options);
     }
 
 
@@ -508,7 +547,7 @@ class Asana {
      *
      * @return string JSON or null
      */
-    public function getWorkspaces(){
+    public function getWorkspaces() {
         return $this->askAsana($this->workspaceUrl);
     }
 
@@ -521,10 +560,11 @@ class Asana {
      *
      * @return string JSON or null
      */
-    public function updateWorkspace($workspaceId, $data = array("name" => "")){
-        $data = array("data" => $data);
+    public function updateWorkspace($workspaceId, $data = array('name' => '')) {
+        $data = array('data' => $data);
         $data = json_encode($data);
-        return $this->askAsana($this->workspaceUrl."/{$workspaceId}", $data, METHOD_PUT);
+
+        return $this->askAsana($this->workspaceUrl . '/' . $workspaceId, $data, ASANA_METHOD_PUT);
     }
 
     /**
@@ -534,35 +574,34 @@ class Asana {
      * @param string $workspaceId The id of the workspace
      * @param string $assignee Can be "me" or user ID
      * @param array $opt Array of options to pass
-     *  (@see http://developer.asana.com/documentation/#Options)
+     *                   (@see http://developer.asana.com/documentation/#Options)
      *
      * @return string JSON or null
      */
-    public function getWorkspaceTasks($workspaceId, $assignee = "me", array $opts = array()){
+    public function getWorkspaceTasks($workspaceId, $assignee = 'me', array $opts = array()) {
         $options = http_build_query($opts);
-        return $this->askAsana($this->taskUrl."?workspace={$workspaceId}&assignee={$assignee}&{$options}");
+
+        return $this->askAsana($this->taskUrl . '?workspace=' . $workspaceId . '&assignee=' . $assignee . '&' . $options);
     }
 
     /**
      * Returns tags of all workspace.
      *
      * @param string $workspaceId The id of the workspace
-     *
      * @return string JSON or null
      */
-    public function getWorkspaceTags($workspaceId){
-        return $this->askAsana($this->workspaceUrl."/{$workspaceId}/tags");
+    public function getWorkspaceTags($workspaceId) {
+        return $this->askAsana($this->workspaceUrl . '/' . $workspaceId . '/tags');
     }
 
     /**
      * Returns users of all workspace.
      *
      * @param string $workspaceId The id of the workspace
-     *
      * @return string JSON or null
      */
-    public function getWorkspaceUsers($workspaceId){
-        return $this->askAsana($this->workspaceUrl."/{$workspaceId}/users");
+    public function getWorkspaceUsers($workspaceId) {
+        return $this->askAsana($this->workspaceUrl . '/' . $workspaceId . '/users');
     }
 
     /**
@@ -574,7 +613,7 @@ class Asana {
      * @param int $method See constants defined at the beginning of the class
      * @return string JSON or null
      */
-    private function askAsana($url, $data = null, $method = METHOD_GET){
+    private function askAsana($url, $data = null, $method = ASANA_METHOD_GET) {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // Don't print the result
@@ -588,25 +627,26 @@ class Asana {
             // Send with API key.
             curl_setopt($curl, CURLOPT_USERPWD, $this->apiKey);
             curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-            curl_setopt($curl, CURLOPT_HTTPHEADER, array("Content-Type: application/json")); // Send as JSON
+            curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json')); // Send as JSON
         } else if (!empty($this->accessToken)) {
             // Send with auth token.
             curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-                "Content-Type: application/json",
-                "Authorization: Bearer " . $this->accessToken
+                'Content-Type: application/json',
+                'Authorization: Bearer ' . $this->accessToken
             ));
         }
 
-        if($this->advDebug){
+        if ($this->advDebug) {
             curl_setopt($curl, CURLOPT_HEADER, true); // Display headers
             curl_setopt($curl, CURLOPT_VERBOSE, true); // Display communication with server
         }
-        if($method == METHOD_POST){
+
+        if ($method == ASANA_METHOD_POST) {
             curl_setopt($curl, CURLOPT_POST, true);
-        } else if($method == METHOD_PUT){
-            curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
+        } else if ($method == ASANA_METHOD_PUT) {
+            curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'PUT');
         }
-        if(!is_null($data) && ($method == METHOD_POST || $method == METHOD_PUT)){
+        if (!is_null($data) && ($method == ASANA_METHOD_POST || $method == ASANA_METHOD_PUT)) {
             curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
         }
 
@@ -614,15 +654,15 @@ class Asana {
             $return = curl_exec($curl);
             $this->responseCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
-            if($this->debug || $this->advDebug){
-                echo "<pre>"; print_r(curl_getinfo($curl)); echo "</pre>";
+            if ($this->debug || $this->advDebug) {
+                echo '<pre>'; print_r(curl_getinfo($curl)); echo '</pre>';
             }
-        } catch (Exception $ex){
-            if($this->debug || $this->advDebug){
-                echo "<br>cURL error num: ".curl_errno($curl);
-                echo "<br>cURL error: ".curl_error($curl);
+        } catch (Exception $ex) {
+            if ($this->debug || $this->advDebug) {
+                echo '<br>cURL error num: ' . curl_errno($curl);
+                echo '<br>cURL error: ' . curl_error($curl);
             }
-            echo "Error on cURL";
+            echo 'Error on cURL';
             $return = null;
         }
 
