@@ -131,15 +131,12 @@ class Asana {
      *
      * @return string JSON or null
      */
-    
     public function createTask($data) {
         $data = array('data' => $data);
         $data = json_encode($data);
 
         return $this->askAsana($this->taskUrl, $data, ASANA_METHOD_POST);
     }
-    
-    
 
     /**
      * Returns task information
@@ -545,42 +542,41 @@ class Asana {
         return $this->askAsana($this->storiesUrl . '/' . $storyId . '?' . $options);
     }
 
-	
-	/**
+
+    /**
      * **********************************
      * Organizations functions
      * **********************************
      */
-	 /**
+
+    /**
      * Returns all teams in an Organization.
      *
+     * @param string $organizationId
      * @return string JSON or null
      */
-    public function getTeamsInOrganization($orgId) {
-        return $this->askAsana($this->organizationsUrl.'/'.$orgId.'/teams');
+    public function getTeamsInOrganization($organizationId) {
+        return $this->askAsana($this->organizationsUrl . '/' . $organizationId . '/teams');
     }
-	
-	
-	/**
+
+
+    /**
      * Function to create a team in an Organization.
-     
-     * @param array $data Array of data for the task following the Asana API documentation.
-     * Example:
      *
-     * array(
-     *     "name" => "Team Name"
-     * )
+     * @param string $organizationId
+     * @param array $data Array of data for the task following the Asana API documentation.
+     * Example: array("name" => "Team Name")
      *
      * @return string JSON or null
      */
-     public function createTeam($data,$orgId) {
+    public function createTeam($organizationId, $data) {
         $data = array('data' => $data);
         $data = json_encode($data);
 
-        return $this->askAsana($this->organizationsUrl.'/'.$orgId.'/teams', $data, ASANA_METHOD_POST);
+        return $this->askAsana($this->organizationsUrl . '/' . $organizationId . '/teams', $data, ASANA_METHOD_POST);
     }
-	
-	
+
+
     /**
      * **********************************
      * Workspaces functions
