@@ -131,12 +131,7 @@ class Asana {
      *
      * @return string JSON or null
      */
-     public function createTeam($data,$orgId) {
-        $data = array('data' => $data);
-        $data = json_encode($data);
-
-        return $this->askAsana($this->organizationsUrl.'/'.$orgId.'/teams', $data, ASANA_METHOD_POST);
-    }
+    
     public function createTask($data) {
         $data = array('data' => $data);
         $data = json_encode($data);
