@@ -28,6 +28,7 @@ class Asana {
     private $workspaceUrl;
     private $storiesUrl;
     private $tagsUrl;
+    private $organizationsUrl;
 
     /**
      * Class constructor.
@@ -60,6 +61,7 @@ class Asana {
         $this->workspaceUrl = $this->endPointUrl . 'workspaces';
         $this->storiesUrl = $this->endPointUrl . 'stories';
         $this->tagsUrl = $this->endPointUrl . 'tags';
+        $this->organizationsUrl = $this->endPointUrl . 'organizations';
 
         // Define some constants for later usage.
         define('ASANA_METHOD_POST', 1);
@@ -129,12 +131,15 @@ class Asana {
      *
      * @return string JSON or null
      */
+    
     public function createTask($data) {
         $data = array('data' => $data);
         $data = json_encode($data);
 
         return $this->askAsana($this->taskUrl, $data, ASANA_METHOD_POST);
     }
+    
+    
 
     /**
      * Returns task information
@@ -540,7 +545,42 @@ class Asana {
         return $this->askAsana($this->storiesUrl . '/' . $storyId . '?' . $options);
     }
 
+	
+	/**
+     * **********************************
+     * Organizations functions
+     * **********************************
+     */
+	 /**
+     * Returns all teams in an Organization.
+     *
+     * @return string JSON or null
+     */
+    public function getTeamsInOrganization($orgId) {
+        return $this->askAsana($this->organizationsUrl.'/'.$orgId.'/teams');
+    }
+	
+	
+	/**
+     * Function to create a team in an Organization.
+     
+     * @param array $data Array of data for the task following the Asana API documentation.
+     * Example:
+     *
+     * array(
+     *     "name" => "Team Name"
+     * )
+     *
+     * @return string JSON or null
+     */
+     public function createTeam($data,$orgId) {
+        $data = array('data' => $data);
+        $data = json_encode($data);
 
+        return $this->askAsana($this->organizationsUrl.'/'.$orgId.'/teams', $data, ASANA_METHOD_POST);
+    }
+	
+	
     /**
      * **********************************
      * Workspaces functions
