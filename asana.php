@@ -184,10 +184,10 @@ class Asana {
      * Moves a task within a project relative to another task.  This should let you take a task and move it below or
      * above another task as long as they are within the same project.
      *
-     * @param $projectId the project $taskReference is in and optionally $taskToMove is already in ($taskToMove will be
+     * @param string $projectId the project $taskReference is in and optionally $taskToMove is already in ($taskToMove will be
      *  added to the project if it's not already there)
-     * @param $taskToMove the task that will be moved (and possibly added to $projectId
-     * @param $taskReference the task that indicates a position for $taskToMove
+     * @param string $taskToMove the task that will be moved (and possibly added to $projectId
+     * @param string $taskReference the task that indicates a position for $taskToMove
      * @param bool $insertAfter true to insert after $taskReference, false to insert before
      * @return string JSON or null
      */
