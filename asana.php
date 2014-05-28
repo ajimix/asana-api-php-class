@@ -1,15 +1,15 @@
 <?php
 /**
-* A PHP class that acts as wrapper for Asana API. Lets make things easy! :)
-*
-* Read Asana API documentation for fully use this class http://developer.asana.com/documentation/
-*
-* Copyright 2014 Ajimix
-* Licensed under the Apache License 2.0
-*
-* Author: Ajimix [github.com/ajimix]
-* Version: 2.0.0
-*/
+ * A PHP class that acts as wrapper for Asana API. Lets make things easy! :)
+ *
+ * Read Asana API documentation for fully use this class http://developer.asana.com/documentation/
+ *
+ * Copyright 2014 Ajimix
+ * Licensed under the Apache License 2.0
+ *
+ * Author: Ajimix [github.com/ajimix] and the contributors [github.com/ajimix/asana-api-php-class/contributors]
+ * Version: 2.2.0
+ */
 class Asana {
 
     private $timeout = 10;
