@@ -1,3 +1,8 @@
+2.3.0, 2014-06-07
+-----------------
+- Added a method to delete a task.
+- Added a method to delete a project.
+
 2.2.0, 2014-05-28
 -----------------
 - Added a method to move tasks inside the project moveTaskWithinProject.

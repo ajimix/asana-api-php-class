@@ -8,7 +8,7 @@
  * Licensed under the Apache License 2.0
  *
  * Author: Ajimix [github.com/ajimix] and the contributors [github.com/ajimix/asana-api-php-class/contributors]
- * Version: 2.2.0
+ * Version: 2.3.0
  */
 class Asana {
 
@@ -67,6 +67,7 @@ class Asana {
         define('ASANA_METHOD_POST', 1);
         define('ASANA_METHOD_PUT', 2);
         define('ASANA_METHOD_GET', 3);
+        define('ASANA_METHOD_DELETE', 4);
     }
 
 
@@ -112,7 +113,7 @@ class Asana {
      */
 
     /**
-     * Function to create a task.
+     * Creates a task.
      * For assign or remove the task to a project, use the addProjectToTask and removeProjectToTask.
      *
      * @param array $data Array of data for the task following the Asana API documentation.
@@ -178,6 +179,16 @@ class Asana {
         $data = json_encode($data);
 
         return $this->askAsana($this->taskUrl . '/' . $taskId, $data, ASANA_METHOD_PUT);
+    }
+
+    /**
+     * Deletes a task.
+     *
+     * @param string $taskId
+     * @return string Empty if success
+     */
+    public function deleteTask($taskId) {
+        return $this->askAsana($this->taskUrl . '/' . $taskId, null, ASANA_METHOD_DELETE);
     }
 
     /**
@@ -430,6 +441,16 @@ class Asana {
         $data = json_encode($data);
 
         return $this->askAsana($this->projectsUrl . '/' . $projectId, $data, ASANA_METHOD_PUT);
+    }
+
+    /**
+     * Deletes a project.
+     *
+     * @param string $projectId
+     * @return string Empty if success
+     */
+    public function deleteProject($projectId) {
+        return $this->askAsana($this->projectsUrl . '/' . $projectId, null, ASANA_METHOD_DELETE);
     }
 
     /**
@@ -709,6 +730,8 @@ class Asana {
             curl_setopt($curl, CURLOPT_POST, true);
         } else if ($method == ASANA_METHOD_PUT) {
             curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'PUT');
+        } else if ($method == ASANA_METHOD_DELETE) {
+            curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'DELETE');
         }
         if (!is_null($data) && ($method == ASANA_METHOD_POST || $method == ASANA_METHOD_PUT)) {
             curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
