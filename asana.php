@@ -356,6 +356,18 @@ class Asana {
         return $this->askAsana($this->taskUrl . '/' . $taskId . '/removeTag', $data, ASANA_METHOD_POST);
     }
 
+     /**
+     * Add attachment to a task
+     * 
+     * @param string $taskId
+     * @param array $data See, Uploading an attachment to a task function comments for proper parameter info.
+     * @return string JSON or null
+     */
+    
+    public function addAttachmentToTask($taskId, $data ){                          
+        $data['file'] = new CurlFile($data["file"]);                
+        return $this->askAsana($this->taskUrl . '/' . $taskId . '/attachments', $data, ASANA_METHOD_POST, true);                       
+    }
 
     /**
      * **********************************
@@ -698,7 +710,7 @@ class Asana {
      * @param int $method See constants defined at the beginning of the class
      * @return string JSON or null
      */
-    private function askAsana($url, $data = null, $method = ASANA_METHOD_GET) {
+    private function askAsana($url, $data = null, $method = ASANA_METHOD_GET, $uploadAttachment = false) {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // Don't print the result
@@ -712,7 +724,9 @@ class Asana {
             // Send with API key.
             curl_setopt($curl, CURLOPT_USERPWD, $this->apiKey);
             curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-            curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json')); // Send as JSON
+            if(!$uploadAttachment){
+                curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json')); // Send as JSON
+            }
         } else if (!empty($this->accessToken)) {
             // Send with auth token.
             curl_setopt($curl, CURLOPT_HTTPHEADER, array(
