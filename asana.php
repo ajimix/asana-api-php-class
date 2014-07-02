@@ -8,7 +8,7 @@
  * Licensed under the Apache License 2.0
  *
  * Author: Ajimix [github.com/ajimix] and the contributors [github.com/ajimix/asana-api-php-class/contributors]
- * Version: 2.3.0
+ * Version: 2.4.0
  */
 class Asana {
 
@@ -356,17 +356,17 @@ class Asana {
         return $this->askAsana($this->taskUrl . '/' . $taskId . '/removeTag', $data, ASANA_METHOD_POST);
     }
 
-     /**
+    /**
      * Add attachment to a task
-     * 
+     *
      * @param string $taskId
-     * @param array $data See, Uploading an attachment to a task function comments for proper parameter info.
+     * @param array $data See "Uploading an attachment to a task" in the ASANA developer documentation for proper parameter info.
      * @return string JSON or null
      */
-    
-    public function addAttachmentToTask($taskId, $data ){                          
-        $data['file'] = new CurlFile($data["file"]);                
-        return $this->askAsana($this->taskUrl . '/' . $taskId . '/attachments', $data, ASANA_METHOD_POST, true);                       
+    public function addAttachmentToTask($taskId, array $data = array()){
+        $data['file'] = new CurlFile($data['file']);
+
+        return $this->askAsana($this->taskUrl . '/' . $taskId . '/attachments', $data, ASANA_METHOD_POST);
     }
 
     /**
@@ -710,7 +710,7 @@ class Asana {
      * @param int $method See constants defined at the beginning of the class
      * @return string JSON or null
      */
-    private function askAsana($url, $data = null, $method = ASANA_METHOD_GET, $uploadAttachment = false) {
+    private function askAsana($url, $data = null, $method = ASANA_METHOD_GET) {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // Don't print the result
@@ -724,7 +724,8 @@ class Asana {
             // Send with API key.
             curl_setopt($curl, CURLOPT_USERPWD, $this->apiKey);
             curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-            if(!$uploadAttachment){
+            // Don't send as json when attaching files to tasks.
+            if (is_null($data) || empty($data['file'])){
                 curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json')); // Send as JSON
             }
         } else if (!empty($this->accessToken)) {

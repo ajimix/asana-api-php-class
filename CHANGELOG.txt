@@ -1,3 +1,7 @@
+2.4.0, 2014-07-02
+-----------------
+- Added a method to add attachments to a task.
+
 2.3.0, 2014-06-07
 -----------------
 - Added a method to delete a task.
