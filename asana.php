@@ -738,6 +738,7 @@ class Asana {
 
         if ($this->advDebug) {
             curl_setopt($curl, CURLOPT_HEADER, true); // Display headers
+            curl_setopt($curl, CURLINFO_HEADER_OUT, true); // Display output headers
             curl_setopt($curl, CURLOPT_VERBOSE, true); // Display communication with server
         }
 
@@ -758,6 +759,7 @@ class Asana {
 
             if ($this->debug || $this->advDebug) {
                 echo '<pre>'; print_r(curl_getinfo($curl)); echo '</pre>';
+                echo '<br>Sent info:<br><pre>'; print_r($data); echo '</pre>';
             }
         } catch (Exception $ex) {
             if ($this->debug || $this->advDebug) {
