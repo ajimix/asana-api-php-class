@@ -11,6 +11,12 @@
             "homepage": "http://www.ajimix.net"
         }
     ],
+	"autoload": {
+		"classmap": [
+			"asana.php",
+			"asana-oauth.php"
+		]
+	},
     "require": {
         "php": ">=5.3.0"
     }
