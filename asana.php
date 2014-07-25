@@ -356,17 +356,39 @@ class Asana {
         return $this->askAsana($this->taskUrl . '/' . $taskId . '/removeTag', $data, ASANA_METHOD_POST);
     }
 
-    /**
+    **
      * Add attachment to a task
-     *
+     * 
      * @param string $taskId
-     * @param array $data See "Uploading an attachment to a task" in the ASANA developer documentation for proper parameter info.
+     * @param array $data (src of file, mymetype, finalfilename) See, Uploading an attachment to a task function comments for proper parameter info. 
      * @return string JSON or null
      */
-    public function addAttachmentToTask($taskId, array $data = array()){
-        $data['file'] = new CurlFile($data['file']);
-
-        return $this->askAsana($this->taskUrl . '/' . $taskId . '/attachments', $data, ASANA_METHOD_POST);
+       
+     public function addAttachmentToTask($taskId, array $data = array()){
+        // $data['file'] = new CurlFile($data['file']); // Only for PHP5.5
+        
+       if(key_exists("mymeType", $data)){
+           $mymeType = $data["mymeType"];               
+       }  else {
+           $mymeType = null;
+       }
+       if(key_exists("filename", $data)){
+           $finalFilename = $data["finalFilename"];              
+       }  else {
+           $finalFilename = null;
+       }
+       if(class_exists('CurlFile', false)){
+          $data['file'] = new CURLFile($data['file'], $data["mymeType"], $data["finalFilename"]);
+       }else{
+           $data['file'] = "@{$data['file']}";
+           if($finalFilename!=null){
+               $data['file'] .= ";filename=" . $finalFilename;
+           }
+           if($mymeType!=null){
+               $data['file'] .= ";type=" . $mymeType;
+           }
+       }                              
+       return $this->askAsana($this->taskUrl . '/' . $taskId . '/attachments', $data, ASANA_METHOD_POST);
     }
 
     /**
