@@ -365,7 +365,7 @@ class Asana {
      */
      public function addAttachmentToTask($taskId, array $data = array()) {
        $mymeType = array_key_exists('mymeType', $data) ? $data['mimeType'] : null;
-       $finalFilename = array_key_exists('filename', $data) ? $data["finalFilename"] : null;
+       $finalFilename = array_key_exists('finalFilename', $data) ? $data["finalFilename"] : null;
 
        if (class_exists('CURLFile', false)) {
           $data['file'] = new CURLFile($data['file'], $data['mymeType'], $data['finalFilename']);
