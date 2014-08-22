@@ -310,6 +310,20 @@ class Asana {
     }
 
     /**
+     * Returns a compact list of tags associated with the object.
+     *
+     * @param string $taskId
+     * @param array $opt Array of options to pass
+     *                   (@see http://developer.asana.com/documentation/#Options)
+     * @return string JSON or null
+     */
+    public function getTaskTags($taskId, array $opts = array()) {
+        $options = http_build_query($opts);
+
+        return $this->askAsana($this->taskUrl . '/' . $taskId . '/tags?' . $options);
+    }
+
+    /**
      * Adds a comment to a task.
      * The comment will be authored by the authorized user, and timestamped when the server receives the request.
      *
