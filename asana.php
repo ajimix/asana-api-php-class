@@ -157,6 +157,35 @@ class Asana {
     }
 
     /**
+     * Creates a subtask in the parent task ID
+     *
+     * @param string $parentId The id of the parent task.
+     * @param array $data Array of data for the task following the Asana API documentation.
+     * Example:
+     *
+     * array(
+     *     "name" => "Hello World!",
+     *     "notes" => "This is a task for testing the Asana API :)",
+     *     "assignee" => "176822166183",
+     *     "followers" => array(
+     *         "37136",
+     *         "59083"
+     *     )
+     * )
+     *
+     * @param array $opt Array of options to pass
+     *                   (@see http://developer.asana.com/documentation/#Options)
+     * @return string JSON or null
+     */
+    public function createSubTask($parentId, $data, array $opts = array()) {
+        $data = array('data' => $data);
+        $data = json_encode($data);
+        $options = http_build_query($opts);
+
+        return $this->askAsana($this->taskUrl . '/' . $parentId . '/subtasks?' . $options, $data, ASANA_METHOD_POST);
+    }
+
+    /**
      * Returns sub-task information
      *
      * @param string $taskId
