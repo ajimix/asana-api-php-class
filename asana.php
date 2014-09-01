@@ -129,14 +129,17 @@ class Asana {
      *         "59083"
      *     )
      * )
+     * @param array $opt Array of options to pass
+     *                   (@see http://developer.asana.com/documentation/#Options)
      *
      * @return string JSON or null
      */
-    public function createTask($data) {
+    public function createTask($data, array $opts = array()) {
         $data = array('data' => $data);
         $data = json_encode($data);
+        $options = http_build_query($opts);
 
-        return $this->askAsana($this->taskUrl, $data, ASANA_METHOD_POST);
+        return $this->askAsana($this->taskUrl . '?' . $options, $data, ASANA_METHOD_POST);
     }
 
     /**
