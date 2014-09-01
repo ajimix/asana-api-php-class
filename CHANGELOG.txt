@@ -1,3 +1,9 @@
+2.6.0, 2014-09-01
+-----------------
+- Added a method for creating a subtask.
+- Added a method to change the parent of a task.
+- Now addTask accepts options.
+
 2.5.0, 2014-08-23
 -----------------
 - Added a method to retrieve the tags from a task getTaskTags.
