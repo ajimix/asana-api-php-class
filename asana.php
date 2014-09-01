@@ -200,6 +200,25 @@ class Asana {
     }
 
     /**
+     * Updated the parent from a task.
+     *
+     * @param string $taskId The task to update
+     * @param string $parentId The id of the new parent task.
+     * @param array $opt Array of options to pass
+     *                   (@see http://developer.asana.com/documentation/#Options)
+     * @return string JSON or null
+     */
+    public function updateTaskParent($taskId, $parentId, array $opts = array()) {
+        $data = array('data' => array(
+            'parent' => $parentId
+        ));
+        $data = json_encode($data);
+        $options = http_build_query($opts);
+
+        return $this->askAsana($this->taskUrl . '/' . $taskId . '/setParent?' . $options, $data, ASANA_METHOD_POST);
+    }
+
+    /**
      * Updates a task
      *
      * @param string $taskId
