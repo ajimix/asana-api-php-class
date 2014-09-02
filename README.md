@@ -83,6 +83,8 @@ Author
 
 **GitHub:** [github.com/ajimix](https://github.com/ajimix)
 
+** Contributors: ** [view contributors](https://github.com/ajimix/asana-api-php-class/graphs/contributors)
+
 
 Copyright and license
 ---------------------

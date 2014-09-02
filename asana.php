@@ -8,9 +8,9 @@
  * Licensed under the Apache License 2.0
  *
  * Author: Ajimix [github.com/ajimix] and the contributors [github.com/ajimix/asana-api-php-class/contributors]
- * Version: 2.6.0
+ * Version: 2.7.0
  */
- 
+
 // Define some constants for later usage.
 define('ASANA_METHOD_POST', 1);
 define('ASANA_METHOD_PUT', 2);
