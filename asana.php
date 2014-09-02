@@ -10,6 +10,13 @@
  * Author: Ajimix [github.com/ajimix] and the contributors [github.com/ajimix/asana-api-php-class/contributors]
  * Version: 2.6.0
  */
+ 
+// Define some constants for later usage.
+define('ASANA_METHOD_POST', 1);
+define('ASANA_METHOD_PUT', 2);
+define('ASANA_METHOD_GET', 3);
+define('ASANA_METHOD_DELETE', 4);
+
 class Asana {
 
     private $timeout = 10;
@@ -62,12 +69,6 @@ class Asana {
         $this->storiesUrl = $this->endPointUrl . 'stories';
         $this->tagsUrl = $this->endPointUrl . 'tags';
         $this->organizationsUrl = $this->endPointUrl . 'organizations';
-
-        // Define some constants for later usage.
-        define('ASANA_METHOD_POST', 1);
-        define('ASANA_METHOD_PUT', 2);
-        define('ASANA_METHOD_GET', 3);
-        define('ASANA_METHOD_DELETE', 4);
     }
 
 
