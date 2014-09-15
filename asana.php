@@ -805,7 +805,7 @@ class Asana {
             curl_setopt($curl, CURLOPT_USERPWD, $this->apiKey);
             curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
             // Don't send as json when attaching files to tasks.
-            if (is_null($data) || empty($data['file'])){
+            if (is_string($data) || empty($data['file'])){
                 curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json')); // Send as JSON
             }
         } else if (!empty($this->accessToken)) {
