@@ -1,3 +1,7 @@
+2.7.1, 2014-09-16
+-----------------
+- Fix json header was not being sent properly.
+
 2.7.0, 2014-09-02
 -----------------
 - Constant definitions are now outside of the class constructor.
