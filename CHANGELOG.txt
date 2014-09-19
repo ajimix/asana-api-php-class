@@ -1,3 +1,8 @@
+2.8.0, 2014-09-19
+-----------------
+- Added a method for getting attachment information.
+- Added a method for getting all the attachments from a task.
+
 2.7.1, 2014-09-16
 -----------------
 - Fix json header was not being sent properly.
