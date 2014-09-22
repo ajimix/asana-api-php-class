@@ -445,19 +445,19 @@ class Asana {
      * @return string JSON or null
      */
      public function addAttachmentToTask($taskId, array $data = array()) {
-       $mymeType = array_key_exists('mymeType', $data) ? $data['mimeType'] : null;
+       $mimeType = array_key_exists('mimeType', $data) ? $data['mimeType'] : null;
        $finalFilename = array_key_exists('finalFilename', $data) ? $data["finalFilename"] : null;
 
        if (class_exists('CURLFile', false)) {
-          $data['file'] = new CURLFile($data['file'], $data['mymeType'], $data['finalFilename']);
+          $data['file'] = new CURLFile($data['file'], $data['mimeType'], $data['finalFilename']);
        } else {
            $data['file'] = "@{$data['file']}";
 
            if (!is_null($finalFilename)) {
                $data['file'] .= ';filename=' . $finalFilename;
            }
-           if (!is_null($mymeType)) {
-               $data['file'] .= ';type=' . $mymeType;
+           if (!is_null($mimeType)) {
+               $data['file'] .= ';type=' . $mimeType;
            }
        }
 
@@ -868,6 +868,10 @@ class Asana {
 
             if ($this->debug || $this->advDebug) {
                 echo '<pre>'; print_r(curl_getinfo($curl)); echo '</pre>';
+                if($info['http_code'] == 0) {
+                    echo '<br>cURL error num: ' . curl_errno($curl);
+                    echo '<br>cURL error: ' . curl_error($curl); 
+                }                
                 echo '<br>Sent info:<br><pre>'; print_r($data); echo '</pre>';
             }
         } catch (Exception $ex) {
