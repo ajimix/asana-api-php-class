@@ -8,7 +8,7 @@
  * Licensed under the Apache License 2.0
  *
  * Author: Ajimix [github.com/ajimix] and the contributors [github.com/ajimix/asana-api-php-class/contributors]
- * Version: 2.8.0
+ * Version: 2.8.1
  */
 
 // Define some constants for later usage.
@@ -868,10 +868,10 @@ class Asana {
 
             if ($this->debug || $this->advDebug) {
                 echo '<pre>'; print_r(curl_getinfo($curl)); echo '</pre>';
-                if($info['http_code'] == 0) {
+                if ($info['http_code'] == 0) {
                     echo '<br>cURL error num: ' . curl_errno($curl);
-                    echo '<br>cURL error: ' . curl_error($curl); 
-                }                
+                    echo '<br>cURL error: ' . curl_error($curl);
+                }
                 echo '<br>Sent info:<br><pre>'; print_r($data); echo '</pre>';
             }
         } catch (Exception $ex) {

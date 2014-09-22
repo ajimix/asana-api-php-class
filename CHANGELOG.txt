@@ -1,3 +1,8 @@
+2.8.1, 2014-09-22
+-----------------
+- Fix typo in add attachment function.
+- Improved debug output.
+
 2.8.0, 2014-09-19
 -----------------
 - Added a method for getting attachment information.
