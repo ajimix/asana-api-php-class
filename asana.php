@@ -867,7 +867,11 @@ class Asana {
             $this->responseCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
             if ($this->debug || $this->advDebug) {
-                echo '<pre>'; print_r(curl_getinfo($curl)); echo '</pre>';              
+                echo '<pre>'; print_r(curl_getinfo($curl)); echo '</pre>';
+                if($info['http_code'] == 0) {
+                    echo '<br>cURL error num: ' . curl_errno($curl);
+                    echo '<br>cURL error: ' . curl_error($curl); 
+                }                
                 echo '<br>Sent info:<br><pre>'; print_r($data); echo '</pre>';
             }
         } catch (Exception $ex) {
