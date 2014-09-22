@@ -8,7 +8,7 @@
  * Licensed under the Apache License 2.0
  *
  * Author: Ajimix [github.com/ajimix] and the contributors [github.com/ajimix/asana-api-php-class/contributors]
- * Version: 2.7.0
+ * Version: 2.8.0
  */
 
 // Define some constants for later usage.
@@ -69,6 +69,7 @@ class Asana {
         $this->storiesUrl = $this->endPointUrl . 'stories';
         $this->tagsUrl = $this->endPointUrl . 'tags';
         $this->organizationsUrl = $this->endPointUrl . 'organizations';
+        $this->attachmentsUrl = $this->endPointUrl . 'attachments';
     }
 
 
@@ -423,6 +424,20 @@ class Asana {
     }
 
     /**
+     * Returns single attachment information
+     *
+     * @param string $attachmentId
+     * @param array $opt Array of options to pass
+     *                   (@see http://developer.asana.com/documentation/#Options)
+     * @return string JSON or null
+     */
+    public function getAttachment($attachmentId, array $opts = array()) {
+        $options = http_build_query($opts);
+
+        return $this->askAsana($this->attachmentsUrl . '/' . $attachmentId . '?' . $options);
+    }
+
+    /**
      * Add attachment to a task
      *
      * @param string $taskId
@@ -447,6 +462,20 @@ class Asana {
        }
 
        return $this->askAsana($this->taskUrl . '/' . $taskId . '/attachments', $data, ASANA_METHOD_POST);
+    }
+
+    /**
+     * Returns task attachments information
+     *
+     * @param string $taskId
+     * @param array $opt Array of options to pass
+     *                   (@see http://developer.asana.com/documentation/#Options)
+     * @return string JSON or null
+     */
+    public function getTaskAttachments($taskId, array $opts = array()) {
+        $options = http_build_query($opts);
+
+        return $this->askAsana($this->taskUrl . '/' . $taskId . '/attachments?' . $options);
     }
 
     /**

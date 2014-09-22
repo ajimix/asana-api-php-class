@@ -1,93 +1,118 @@
-Asana API PHP class
-===================
+# Asana API PHP class
 
-A PHP class that acts as wrapper for Asana API.
+A PHP class that acts as wrapper for Asana API.  
 Lets make things easy! :)
 
 It is licensed under the Apache 2 license and is Copyrighted 2014 Ajimix
 
+## Installing
 
-Working with the class
-----------------------
+Choose your favorite flavour
+
+- Download the php class from github.
+- Use [Packagist](https://packagist.org/packages/ajimix/asana-api-php-class) PHP package manager.
+
+Finally require the asana.php file.
+
+## Working with the class
 
 First declare the asana class
 
-    $asana = new Asana(array(
-        'apiKey' => 'YOUR_COOL_API_KEY'
-    ));
+```php
+$asana = new Asana(array(
+    'apiKey' => 'YOUR_COOL_API_KEY'
+));
+```
 
-* Optionally you can pass an accessToken instead of an apiKey if you use OAuth. Read below for more info.
+*Optionally you can pass an accessToken instead of an apiKey if you use OAuth. Read below for more info.*
 
-Creating a task
+#### Creating a task
 
-    $asana->createTask(array(
-       'workspace' => '176825', // Workspace ID
-       'name' => 'Hello World!', // Name of task
-       'assignee' => 'bigboss@bigcompany.com', // Assign task to...
-       'followers' => array('3714136', '5900783') // We add some followers to the task... (this time by ID)
-    ));
+```php
+$asana->createTask(array(
+   'workspace' => '176825', // Workspace ID
+   'name' => 'Hello World!', // Name of task
+   'assignee' => 'bigboss@bigcompany.com', // Assign task to...
+   'followers' => array('3714136', '5900783') // We add some followers to the task... (this time by ID)
+));
+```
 
-Adding task to project
+#### Adding task to project
 
-    $asana->addProjectToTask('THIS_TASK_ID_PLEASE', 'TO_THIS_COOL_PROJECT_ID');
+```php
+$asana->addProjectToTask('THIS_TASK_ID_PLEASE', 'TO_THIS_COOL_PROJECT_ID');
+```
 
-Commenting on a task
+#### Commenting on a task
 
-    $asana->commentOnTask('MY_BEAUTIFUL_TASK_ID', 'Please please! Don't assign me this task!');
+```php
+$asana->commentOnTask('MY_BEAUTIFUL_TASK_ID', 'Please please! Don't assign me this task!');
+```
 
-Getting projects in all workspaces
+#### Getting projects in all workspaces
 
-    $asana->getProjects();
+```php
+$asana->getProjects();
+```
 
-Updating project info
+#### Updating project info
 
-    $asana->updateProject('COOL_PROJECT_ID', array(
-        'name' => 'This is a new cool project!',
-        'notes' => 'At first, it wasn't cool, but after this name change, it is!'
-    ));
+```php
+$asana->updateProject('COOL_PROJECT_ID', array(
+    'name' => 'This is a new cool project!',
+    'notes' => 'At first, it wasn't cool, but after this name change, it is!'
+));
+```
 
-etc.
+#### Do more
 
-See the examples inside examples folder, read the comments on the class file for class magic and read [Asana API documentation](http://developer.asana.com/documentation/) if you want to be a master :D
+There are a [lot more methods](https://github.com/ajimix/asana-api-php-class/blob/master/asana.php) to do multiple things with asana.
+
+See the examples [inside examples folder](https://github.com/ajimix/asana-api-php-class/tree/master/examples), read the comments on the [class file]((https://github.com/ajimix/asana-api-php-class/blob/master/asana.php)) for class magic and read [Asana API documentation](http://developer.asana.com/documentation/) if you want to be a master :D
 
 Enjoy ;D
 
-Using Asana OAuth tokens
-------------------------
+## Using Asana OAuth tokens
 
 To use this API you can also create an App on Asana, in order to get an oAuth access token that gives you the same access as with an API key. Include the class:
 
-    require_once('asana-oauth.php');
+```php
+require_once('asana-oauth.php');
+```
 
 Declare the oAuth class as:
 
-    $asanaAuth = new AsanaAuth('YOUR_APP_ID', 'YOUR_APP_SECRET', 'CALLBACK_URL');
-    $url = $asanaAuth->getAuthorizeUrl();
+```php
+$asanaAuth = new AsanaAuth('YOUR_APP_ID', 'YOUR_APP_SECRET', 'CALLBACK_URL');
+$url = $asanaAuth->getAuthorizeUrl();
+```
 
 Where YOUR_APP_ID, YOUR_APP_SECRET and CALLBACK_URL you get from your App's details on Asana. Now, redirect the browser to the result held by $url. The user will be asked to login & accept your app, after which the browser will be returned to the CALLBACK_URL, which should process the result:
 
-    $code = $_GET['code'];
-    $asanaAuth->getAccessToken($code);
+```php
+$code = $_GET['code'];
+$asanaAuth->getAccessToken($code);
+```
 
 And you will receive an object with the access token and a refresh token
 The token expires after one hour so you can refresh it doing the following:
 
-    $asanaAuth->refreshAccessToken('ACCESS_TOKEN');
+```php
+$asanaAuth->refreshAccessToken('ACCESS_TOKEN');
+```
 
 For a more detailes instructions on how to make oauth work check the example in examples/oauth.php
 
-Author
-------
+## Author
 
 **Twitter:** [@ajimix](http://twitter.com/ajimix)
 
 **GitHub:** [github.com/ajimix](https://github.com/ajimix)
 
-** Contributors: ** [view contributors](https://github.com/ajimix/asana-api-php-class/graphs/contributors)
+**Contributors:** [view contributors](https://github.com/ajimix/asana-api-php-class/graphs/contributors)
 
 
-Copyright and license
----------------------
+### Copyright and license
 
 Copyright 2014 Ajimix
 
