@@ -16,7 +16,7 @@ $result = $asana->createTask(array(
 
 
 // As Asana API documentation says, when a task is created, 201 response code is sent back so...
-if($asana->responseCode != '201' || is_null($result)){
+if ($asana->responseCode != '201' || is_null($result)) {
     echo 'Error while trying to connect to Asana, response code: ' . $asana->responseCode;
     return;
 }
