@@ -37,6 +37,11 @@ $asana->createTask(array(
 ));
 ```
 
+Creating a task for another assignee than yourself will mark the task as private by 
+default. This results in the task not being available for modification through the 
+API anymore. Take a look at the [API Reference](https://asana.com/developers/api-reference/tasks) 
+for more fields of the Task you can directly pass to `createTask`.
+
 #### Adding task to project
 
 ```php
