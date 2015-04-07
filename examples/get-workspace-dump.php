@@ -20,7 +20,6 @@ if ($asana->responseCode != '200' || is_null($projectsJson)) {
 $projects = json_decode($projectsJson);
 
 foreach ($projects->data as $project) {
-
     echo '<strong>[ ' . $project->name . ' (id ' . $project->id . ')' . ' ]</strong><br>' . PHP_EOL;
     //if ($project->id != 42) { // Quickly filter on a project
     //  continue;
@@ -43,7 +42,6 @@ foreach ($projects->data as $project) {
         $stories = json_decode($asana->getTaskStories($task->id));
         $task->stories = $stories;
         //var_dump($stories);
-
     }
 }
 

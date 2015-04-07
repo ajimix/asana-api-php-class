@@ -11,8 +11,8 @@
  * Authors: Ajimix [github.com/ajimix], Puchol [https://github.com/puchol]
  * Version: 2.0.0
  */
-class AsanaAuth {
-
+class AsanaAuth
+{
     private $timeout = 10;
     private $debug = false;
     private $advDebug = false; // Note that enabling advanced debug will include debugging information in the response possibly breaking up your code.
@@ -31,7 +31,8 @@ class AsanaAuth {
      * @param string $clientSecret Client secret given by asana app creator.
      * @param string $redirectUrl Redirect url, must match the one given in asana app creator.
      */
-    public function __construct($clientId, $clientSecret, $redirectUrl) {
+    public function __construct($clientId, $clientSecret, $redirectUrl)
+    {
         $this->clientId = $clientId;
         $this->clientSecret = $clientSecret;
         $this->redirectUrl = $redirectUrl;
@@ -44,7 +45,8 @@ class AsanaAuth {
      * and then come back to your application with the token.
      * @return string The authorization url.
      */
-    public function getAuthorizeUrl() {
+    public function getAuthorizeUrl()
+    {
         return $this->asanaAuthorizeUrl . '?client_id=' . $this->clientId . '&response_type=code&redirect_uri=' . $this->redirectUrl;
     }
 
@@ -54,7 +56,8 @@ class AsanaAuth {
      * @param  string $authCode The authorization code provided via asana after the proper authorization.
      * @return string JSON or null.
      */
-    public function getAccessToken($authCode) {
+    public function getAccessToken($authCode)
+    {
         return $this->askAsana('get', $authCode);
     }
 
@@ -64,7 +67,8 @@ class AsanaAuth {
      * @param  string $refreshToken The refresh token provided by asana on getting the access token.
      * @return string JSON or null.
      */
-    public function refreshAccessToken($refreshToken) {
+    public function refreshAccessToken($refreshToken)
+    {
         return $this->askAsana('refresh', $refreshToken);
     }
 
@@ -76,7 +80,8 @@ class AsanaAuth {
      * @param string $token The token to send.
      * @return string JSON or null
      */
-    private function askAsana($action, $token) {
+    private function askAsana($action, $token)
+    {
         $curl = curl_init($this->asanaAccessTokenUrl);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // Don't print the result
         curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, $this->timeout);
@@ -94,7 +99,7 @@ class AsanaAuth {
         // Assemble POST parameters for the request.
         if ($action === 'get') {
             $postFields = 'code=' . urlencode($token) . '&grant_type=authorization_code&redirect_uri=' . $this->redirectUrl . '&client_id=' . $this->clientId . '&client_secret=' . $this->clientSecret;
-        } else if ($action === 'refresh') {
+        } elseif ($action === 'refresh') {
             $postFields = 'refresh_token=' . urlencode($token) . '&grant_type=refresh_token&redirect_uri=' . $this->redirectUrl . '&client_id=' . $this->clientId . '&client_secret=' . $this->clientSecret;
         }
 
@@ -106,10 +111,12 @@ class AsanaAuth {
             $response = curl_exec($curl);
             $this->responseCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
-            if($this->debug || $this->advDebug){
-                echo '<pre>'; print_r(curl_getinfo($curl)); echo '</pre>';
+            if ($this->debug || $this->advDebug) {
+                echo '<pre>';
+                print_r(curl_getinfo($curl));
+                echo '</pre>';
             }
-        } catch (Exception $ex){
+        } catch (Exception $ex) {
             if ($this->debug || $this->advDebug) {
                 echo '<br>cURL error num: ' . curl_errno($curl);
                 echo '<br>cURL error: ' . curl_error($curl);
