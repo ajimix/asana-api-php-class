@@ -1,3 +1,8 @@
+2.8.2, 2015-04-07
+-----------------
+- The standard PHP PSR-2-code applied.
+- Fix error when debugging the response.
+
 2.8.1, 2014-09-22
 -----------------
 - Fix typo in add attachment function.
