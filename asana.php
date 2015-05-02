@@ -639,6 +639,26 @@ class Asana
     }
 
     /**
+     * Returns the list of sections associated with the project.
+     * Sections are tasks whose names end with a colon character : .
+     * For instance sections will be included in query results for tasks and
+     * be represented with the same fields.
+     * The memberships property of a task contains the project/section
+     * pairs a task belongs to when applicable.
+     *
+     * @param string $projectId
+     * @param array $opt Array of options to pass
+     *                   (@see http://developer.asana.com/documentation/#Options)
+     * @return string JSON or null
+     */
+    public function getProjectSections($projectId, array $opts = array())
+    {
+        $options = http_build_query($opts);
+
+        return $this->askAsana($this->projectsUrl . '/' . $projectId . '/sections?' . $options);
+    }
+
+    /**
      * Adds a comment to a project
      * The comment will be authored by the authorized user, and timestamped when the server receives the request.
      *
