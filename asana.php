@@ -298,11 +298,13 @@ class Asana
      *
      * @param string $taskId
      * @param string $projectId
+     * @param array $opt Array of options to pass (insert_after, insert_before, section)
+     *                   (@see https://asana.com/developers/api-reference/tasks#projects)
      * @return string JSON or null
      */
-    public function addProjectToTask($taskId, $projectId)
+    public function addProjectToTask($taskId, $projectId, array $opts = array())
     {
-        $data = array('data' => array('project' => $projectId));
+        $data = array('data' => array_merge($opts, array('project' => $projectId)));
         $data = json_encode($data);
 
         return $this->askAsana($this->taskUrl . '/' . $taskId . '/addProject', $data, ASANA_METHOD_POST);
