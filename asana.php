@@ -2,7 +2,7 @@
 /**
  * A PHP class that acts as wrapper for Asana API. Lets make things easy! :)
  *
- * Read Asana API documentation for fully use this class http://developer.asana.com/documentation/
+ * Read Asana API documentation for fully use this class https://asana.com/developers/api-reference/
  *
  * Copyright 2014 Ajimix
  * Licensed under the Apache License 2.0
@@ -86,7 +86,7 @@ class Asana
      *
      * @param string $userId
      * @param array $opt Array of options to pass
-     *                   (@see http://developer.asana.com/documentation/#Options)
+     *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      * @return string JSON or null
      */
     public function getUserInfo($userId = null, array $opts = array())
@@ -135,7 +135,7 @@ class Asana
      *     )
      * )
      * @param array $opt Array of options to pass
-     *                   (@see http://developer.asana.com/documentation/#Options)
+     *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      *
      * @return string JSON or null
      */
@@ -153,7 +153,7 @@ class Asana
      *
      * @param string $taskId
      * @param array $opt Array of options to pass
-     *                   (@see http://developer.asana.com/documentation/#Options)
+     *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      * @return string JSON or null
      */
     public function getTask($taskId, array $opts = array())
@@ -181,7 +181,7 @@ class Asana
      * )
      *
      * @param array $opt Array of options to pass
-     *                   (@see http://developer.asana.com/documentation/#Options)
+     *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      * @return string JSON or null
      */
     public function createSubTask($parentId, $data, array $opts = array())
@@ -198,7 +198,7 @@ class Asana
      *
      * @param string $taskId
      * @param array $opt Array of options to pass
-     *                   (@see http://developer.asana.com/documentation/#Options)
+     *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      * @return string JSON or null
      */
     public function getSubTasks($taskId, array $opts = array())
@@ -214,7 +214,7 @@ class Asana
      * @param string $taskId The task to update
      * @param string $parentId The id of the new parent task.
      * @param array $opt Array of options to pass
-     *                   (@see http://developer.asana.com/documentation/#Options)
+     *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      * @return string JSON or null
      */
     public function updateTaskParent($taskId, $parentId, array $opts = array())
@@ -283,7 +283,7 @@ class Asana
      *
      * @param string $taskId
      * @param array $opt Array of options to pass
-     *                   (@see http://developer.asana.com/documentation/#Options)
+     *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      * @return string JSON or null
      */
     public function getProjectsForTask($taskId, array $opts = array())
@@ -339,7 +339,7 @@ class Asana
      *     "workspace" => 0
      * )
      * @param array $opt Array of options to pass
-     *                   (@see http://developer.asana.com/documentation/#Options)
+     *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      *
      * @return string JSON or null
      */
@@ -370,7 +370,7 @@ class Asana
      *
      * @param string $taskId
      * @param array $opt Array of options to pass
-     *                   (@see http://developer.asana.com/documentation/#Options)
+     *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      * @return string JSON or null
      */
     public function getTaskStories($taskId, array $opts = array())
@@ -385,7 +385,7 @@ class Asana
      *
      * @param string $taskId
      * @param array $opt Array of options to pass
-     *                   (@see http://developer.asana.com/documentation/#Options)
+     *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      * @return string JSON or null
      */
     public function getTaskTags($taskId, array $opts = array())
@@ -450,7 +450,7 @@ class Asana
      *
      * @param string $attachmentId
      * @param array $opt Array of options to pass
-     *                   (@see http://developer.asana.com/documentation/#Options)
+     *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      * @return string JSON or null
      */
     public function getAttachment($attachmentId, array $opts = array())
@@ -493,7 +493,7 @@ class Asana
      *
      * @param string $taskId
      * @param array $opt Array of options to pass
-     *                   (@see http://developer.asana.com/documentation/#Options)
+     *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      * @return string JSON or null
      */
     public function getTaskAttachments($taskId, array $opts = array())
@@ -536,7 +536,7 @@ class Asana
      *
      * @param string $projectId
      * @param array $opt Array of options to pass
-     *                   (@see http://developer.asana.com/documentation/#Options)
+     *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      * @return string JSON or null
      */
     public function getProject($projectId, array $opts = array())
@@ -566,7 +566,7 @@ class Asana
      * @param string $workspaceId
      * @param boolean $archived Return archived projects or not
      * @param array $opt Array of options to pass
-     *                   (@see http://developer.asana.com/documentation/#Options)
+     *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      * @return string JSON or null
      */
     public function getProjectsInWorkspace($workspaceId, $archived = false, array $opts = array())
@@ -610,7 +610,7 @@ class Asana
      *
      * @param string $projectId
      * @param array $opt Array of options to pass
-     *                   (@see http://developer.asana.com/documentation/#Options)
+     *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      *
      * @return string JSON or null
      */
@@ -622,7 +622,7 @@ class Asana
     }
 
     /**
-     * Returns the list of stories associated with the object.
+     * Returns the list of stories associated with the project.
      * As usual with queries, stories are returned in compact form.
      * However, the compact form for stories contains more
      * information by default than just the ID.
@@ -630,7 +630,7 @@ class Asana
      *
      * @param string $projectId
      * @param array $opt Array of options to pass
-     *                   (@see http://developer.asana.com/documentation/#Options)
+     *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      * @return string JSON or null
      */
     public function getProjectStories($projectId, array $opts = array())
@@ -650,7 +650,7 @@ class Asana
      *
      * @param string $projectId
      * @param array $opt Array of options to pass
-     *                   (@see http://developer.asana.com/documentation/#Options)
+     *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      * @return string JSON or null
      */
     public function getProjectSections($projectId, array $opts = array())
@@ -692,7 +692,7 @@ class Asana
      *
      * @param string $tagId
      * @param array $opt Array of options to pass
-     *                   (@see http://developer.asana.com/documentation/#Options)
+     *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      * @return string JSON or null
      */
     public function getTag($tagId, array $opts = array())
@@ -734,7 +734,7 @@ class Asana
      *
      * @param string $tagId
      * @param array $opt Array of options to pass
-     *                   (@see http://developer.asana.com/documentation/#Options)
+     *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      * @return string JSON or null
      */
     public function getTasksWithTag($tagId, array $opts = array())
@@ -756,7 +756,7 @@ class Asana
      *
      * @param string $storyId
      * @param array $opt Array of options to pass
-     *                   (@see http://developer.asana.com/documentation/#Options)
+     *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      * @return string JSON or null
      */
     public function getSingleStory($storyId, array $opts = array())
@@ -843,7 +843,7 @@ class Asana
      * @param string $workspaceId The id of the workspace
      * @param string $assignee Can be "me" or user ID
      * @param array $opt Array of options to pass
-     *                   (@see http://developer.asana.com/documentation/#Options)
+     *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      *
      * @return string JSON or null
      */
