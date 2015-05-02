@@ -1,3 +1,9 @@
+2.9.0, 2015-05-02
+-----------------
+- Added support for working with sections.
+- Now you can pass options when adding a project to a task so section, insert_before, or insert_after can be specified.
+- Updated the links in the documentation to point to the right ones.
+
 2.8.2, 2015-04-07
 -----------------
 - The standard PHP PSR-2-code applied.
