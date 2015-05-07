@@ -33,6 +33,7 @@ class Asana
     private $userUrl;
     private $projectsUrl;
     private $workspaceUrl;
+    private $teamsUrl;
     private $storiesUrl;
     private $tagsUrl;
     private $organizationsUrl;
@@ -68,6 +69,7 @@ class Asana
         $this->userUrl = $this->endPointUrl . 'users';
         $this->projectsUrl = $this->endPointUrl . 'projects';
         $this->workspaceUrl = $this->endPointUrl . 'workspaces';
+        $this->teamsUrl = $this->endPointUrl . 'teams';
         $this->storiesUrl = $this->endPointUrl . 'stories';
         $this->tagsUrl = $this->endPointUrl . 'tags';
         $this->organizationsUrl = $this->endPointUrl . 'organizations';
@@ -576,6 +578,23 @@ class Asana
         $options = http_build_query($opts);
 
         return $this->askAsana($this->projectsUrl . '?archived=' . $archived . '&workspace=' . $workspaceId . '&' . $options);
+    }
+
+    /**
+     * Returns the projects in provided workspace containing archived ones or not.
+     *
+     * @param string $teamId
+     * @param boolean $archived Return archived projects or not
+     * @param array $opt Array of options to pass
+     *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
+     * @return string JSON or null
+     */
+    public function getProjectsInTeam($teamId, $archived = false, array $opts = array())
+    {
+        $archived = $archived ? 'true' : 'false';
+        $options = http_build_query($opts);
+
+        return $this->askAsana($this->teamsUrl . '/' . $teamId . '/projects?archived=' . $archived . '&' . $options);
     }
 
     /**
