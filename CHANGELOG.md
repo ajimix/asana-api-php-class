@@ -1,3 +1,7 @@
+2.10.0, 2015-05-07
+------------------
+- New method for getting projects in a team.
+
 2.9.0, 2015-05-02
 -----------------
 - Added support for working with sections.
