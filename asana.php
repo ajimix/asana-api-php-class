@@ -36,6 +36,7 @@ class Asana
     private $storiesUrl;
     private $tagsUrl;
     private $organizationsUrl;
+    private $attachmentsUrl;
 
     /**
      * Class constructor.
