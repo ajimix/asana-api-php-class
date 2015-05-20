@@ -8,7 +8,7 @@
  * Licensed under the Apache License 2.0
  *
  * Author: Ajimix [github.com/ajimix] and the contributors [github.com/ajimix/asana-api-php-class/contributors]
- * Version: 2.10.0
+ * Version: 2.11.0
  */
 
 // Define some constants for later usage.
@@ -832,11 +832,16 @@ class Asana
     /**
      * Returns all the workspaces.
      *
+     * @param array $opt Array of options to pass
+     *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
+     *
      * @return string JSON or null
      */
-    public function getWorkspaces()
+    public function getWorkspaces(array $opts = array())
     {
-        return $this->askAsana($this->workspaceUrl);
+        $options = http_build_query($opts);
+
+        return $this->askAsana($this->workspaceUrl . '?' . $options);
     }
 
     /**

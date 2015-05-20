@@ -1,3 +1,7 @@
+2.11.0, 2015-05-20
+------------------
+- getWorkspaces now accepts an array of options.
+
 2.10.0, 2015-05-07
 ------------------
 - New method for getting projects in a team.
