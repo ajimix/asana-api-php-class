@@ -1,3 +1,7 @@
+2.12.0, 2015-05-20
+------------------
+- Added method createTag to create a tag in a workspace or organization.
+
 2.11.0, 2015-05-20
 ------------------
 - getWorkspaces now accepts an array of options.

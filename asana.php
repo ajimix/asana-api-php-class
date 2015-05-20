@@ -8,7 +8,7 @@
  * Licensed under the Apache License 2.0
  *
  * Author: Ajimix [github.com/ajimix] and the contributors [github.com/ajimix/asana-api-php-class/contributors]
- * Version: 2.11.0
+ * Version: 2.12.0
  */
 
 // Define some constants for later usage.
@@ -747,6 +747,27 @@ class Asana
         $data = json_encode($data);
 
         return $this->askAsana($this->tagsUrl . '/' . $tagId, $data, ASANA_METHOD_PUT);
+    }
+
+    /**
+     * This method creates a new tag and returns its full record.
+     *
+     * @param string $name Tag name
+     * @param array $data An array containing either workspace or organization and the id.
+     * Example: array("workspace" => "3242349871");
+     * @param array $opt Array of options to pass
+     *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
+     *
+     * @return string JSON or null
+     */
+    public function createTag($name, $data, array $opts = array())
+    {
+        $data = array('data' => $data);
+        $data['data']['name'] = $name;
+        $data = json_encode($data);
+        $options = http_build_query($opts);
+
+        return $this->askAsana($this->tagsUrl . '?' . $options, $data, ASANA_METHOD_POST);
     }
 
     /**
