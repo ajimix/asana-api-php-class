@@ -51,7 +51,7 @@ $asana->addProjectToTask('THIS_TASK_ID_PLEASE', 'TO_THIS_COOL_PROJECT_ID');
 #### Commenting on a task
 
 ```php
-$asana->commentOnTask('MY_BEAUTIFUL_TASK_ID', 'Please please! Don't assign me this task!');
+$asana->commentOnTask('MY_BEAUTIFUL_TASK_ID', 'Please please! Don\'t assign me this task!');
 ```
 
 #### Getting projects in all workspaces
@@ -65,7 +65,7 @@ $asana->getProjects();
 ```php
 $asana->updateProject('COOL_PROJECT_ID', array(
     'name' => 'This is a new cool project!',
-    'notes' => 'At first, it wasn't cool, but after this name change, it is!'
+    'notes' => 'At first, it wasn\'t cool, but after this name change, it is!'
 ));
 ```
 
