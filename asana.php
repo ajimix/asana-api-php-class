@@ -106,11 +106,17 @@ class Asana
     /**
      * Returns the user records for all users in all workspaces you have access.
      *
+     * @param array $opts Array of options to pass to the API
+     *                    (@see https://asana.com/developers/api-reference/users)
+     *
+     *                    Example: Returning additional fields with 'opt_fields'
+     *                    getUsers(['opt_fields' => 'name,email,photo,workspaces'])
+     *
      * @return string JSON or null
      */
-    public function getUsers()
+    public function getUsers(array $opts = array())
     {
-        return $this->askAsana($this->userUrl);
+        return $this->askAsana($this->userUrl . '?' . http_build_query($opts));
     }
 
 
