@@ -1,3 +1,7 @@
+2.13.0, 2015-06-13
+------------------
+- getUsers now accepts array of options
+
 2.12.0, 2015-05-20
 ------------------
 - Added method createTag to create a tag in a workspace or organization.
