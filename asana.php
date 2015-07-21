@@ -927,6 +927,23 @@ class Asana
     {
         return $this->askAsana($this->workspaceUrl . '/' . $workspaceId . '/users');
     }
+	
+	/* Returns search for objects from a single workspace.
+     * 
+     * @param string $workspaceId The id of the workspace
+     * @param string $type The type of object to look up
+	 * @param string $query The value to look up
+	 * @param string $count The number of results to return. The default is 20 if this parameter is omitted, with a minimum of 1 and a maximum of 100. 
+	 *						If there are fewer results found than requested, all will be returned
+     *
+     * @return string JSON or null
+     */
+    public function getWorkspaceTypeahead($workspaceId, $type, $query, $count = 1)
+    {
+		$opt = array("type" => $type, "query" => $query, "count" => $count);
+		$options = http_build_query($opt);
+        return $this->askAsana($this->workspaceUrl . '/' . $workspaceId . '/typeahead?' . $options);
+    }
 
     /**
      * This function communicates with Asana REST API.
