@@ -4,11 +4,11 @@
  *
  * Read Asana API documentation for fully use this class https://asana.com/developers/api-reference/
  *
- * Copyright 2014 Ajimix
+ * Copyright 2015 Ajimix
  * Licensed under the Apache License 2.0
  *
  * Author: Ajimix [github.com/ajimix] and the contributors [github.com/ajimix/asana-api-php-class/contributors]
- * Version: 2.13.0
+ * Version: 2.14.0
  */
 
 // Define some constants for later usage.
@@ -927,21 +927,31 @@ class Asana
     {
         return $this->askAsana($this->workspaceUrl . '/' . $workspaceId . '/users');
     }
-	
-	/* Returns search for objects from a single workspace.
-     * 
+
+    /**
+     * Returns search for objects from a single workspace.
+     *
      * @param string $workspaceId The id of the workspace
-     * @param string $type The type of object to look up
-	 * @param string $query The value to look up
-	 * @param string $count The number of results to return. The default is 20 if this parameter is omitted, with a minimum of 1 and a maximum of 100. 
-	 *						If there are fewer results found than requested, all will be returned
+     * @param string $type The type of object to look up. You can choose from one of the following: project, user, task, and tag.
+     *                     Note that unlike other endpoints, the types listed here are in singular form.
+     *                     Using multiple types is not yet supported.
+     * @param string $query The value to look up
+     * @param string $count The number of results to return with a minimum of 1 and a maximum of 100.
+     *                      The default is 1 if this parameter is omitted.
+     *                      If there are fewer results found than requested, all will be returned
+     * @param array $opt Array of options to pass
+     *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      *
      * @return string JSON or null
      */
-    public function getWorkspaceTypeahead($workspaceId, $type, $query, $count = 1)
+    public function getWorkspaceTypeahead($workspaceId, $type, $query, $count = 1, array $opts = array())
     {
-		$opt = array("type" => $type, "query" => $query, "count" => $count);
-		$options = http_build_query($opt);
+        $opts = array_merge($opts, array(
+            'type' => $type,
+            'query' => $query,
+            'count' => $count
+        ));
+        $options = http_build_query($opts);
         return $this->askAsana($this->workspaceUrl . '/' . $workspaceId . '/typeahead?' . $options);
     }
 

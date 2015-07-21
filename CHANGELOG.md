@@ -1,3 +1,7 @@
+2.14.0, 2015-07-21
+------------------
+- getWorkspaceTypeahead method added.
+
 2.13.0, 2015-06-13
 ------------------
 - getUsers now accepts array of options
