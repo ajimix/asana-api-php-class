@@ -16,6 +16,7 @@ define('ASANA_METHOD_POST', 1);
 define('ASANA_METHOD_PUT', 2);
 define('ASANA_METHOD_GET', 3);
 define('ASANA_METHOD_DELETE', 4);
+define('ASANA_RETURN_TYPE', 1); // 1- OBJECT | 2- ARRAY
 
 class Asana
 {
@@ -24,6 +25,7 @@ class Asana
     private $advDebug = false; // Note that enabling advanced debug will include debugging information in the response possibly breaking up your code
     private $asanaApiVersion = '1.0';
 
+    private $response;
     public $responseCode;
 
     private $endPointUrl;
@@ -1009,7 +1011,7 @@ class Asana
         }
 
         try {
-            $return = curl_exec($curl);
+            $this->response = curl_exec($curl);
             $this->responseCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
             if ($this->debug || $this->advDebug) {
@@ -1031,11 +1033,37 @@ class Asana
                 echo '<br>cURL error: ' . curl_error($curl);
             }
             echo 'Error on cURL';
-            $return = null;
+            $this->response = null;
         }
 
         curl_close($curl);
 
-        return $return;
+        return $this->response;
+    }
+
+    /**
+     * Checks for errors in the response.
+     * 
+     * @return boolean
+     */
+    public function hasError() {
+        return !in_array($this->responseCode, array(200, 201)) || is_null($this->response);
+    }
+
+    /**
+     * Decodes the response and returns as an object, array.
+     * 
+     * @return object, array, string  or null
+     */
+    public function getData() {
+        if (!$this->hasError()) {
+            $array  = 2 == ASANA_RETURN_TYPE;
+            $return = json_decode($this->response, $array);
+            if ($array && isset($return['data'])){
+                return $return['data'];
+            } elseif (1 == ASANA_RETURN_TYPE && isset($return->data)){
+                return $return->data;
+            }
+        }
     }
 }

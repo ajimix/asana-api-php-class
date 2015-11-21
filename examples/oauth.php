@@ -3,7 +3,6 @@ require_once('../asana.php');
 require_once('../asana-oauth.php');
 
 // See class comments and Asana API for extra info
-
 $asanaAuth = new AsanaAuth('CLIENT_ID', 'CLIENT_SECRET', 'REDIRECT_URL');
 
 if (!isset($_GET['code'])) {
@@ -19,30 +18,28 @@ if (!isset($_GET['code'])) {
 } else {
     // We have authorization from the user.
     // We have to get the access token.
-    $result = $asanaAuth->getAccessToken($_GET['code']);
+    $asanaAuth->getAccessToken($_GET['code']);
 
     // As Asana API documentation says, when response is successful, we receive a 200 in response so...
-    if ($asanaAuth->responseCode != '200' || is_null($result)) {
+    if ($asanaAuth->hasError()) {
         echo 'Error while trying to connect to Asana to get the access token, response code: ' . $asanaAuth->responseCode;
         return;
     }
 
-    $resultJson = json_decode($result);
+    $result = $asanaAuth->getData();
 
     // Now we can create a normal asana object with the access token.
-    $asana = new Asana(array('accessToken' => $resultJson->access_token));
-    $result = $asana->getProjects();
+    $asana = new Asana(array('accessToken' => $result->access_token));
+    $asana->getProjects();
 
     // As Asana API documentation says, when response is successful, we receive a 200 in response so...
-    if ($asana->responseCode != '200' && is_null($result)) {
+    if ($asana->hasError()) {
         echo 'Error while trying to connect to Asana, response code: ' . $asana->responseCode;
         return;
     }
 
-    $resultJson = json_decode($result);
-
-    // $resultJson contains an object in json with all projects
-    foreach ($resultJson->data as $project) {
+    // $asana->getData() contains an object in json with all projects
+    foreach ($asana->getData() as $project) {
         echo 'Project ID: ' . $project->id . ' is ' . $project->name . '<br>' . PHP_EOL;
     }
 }
