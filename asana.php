@@ -8,7 +8,7 @@
  * Licensed under the Apache License 2.0
  *
  * Author: Ajimix [github.com/ajimix] and the contributors [github.com/ajimix/asana-api-php-class/contributors]
- * Version: 2.14.0
+ * Version: 3.0.0
  */
 
 // Define some constants for later usage.
@@ -1049,12 +1049,12 @@ class Asana
     }
 
     /**
-     * Set the return type. 
+     * Set the return type.
      *
      * @param int $type Return type defined in the constants.
      * @return Asana
      */
-    public function setReturnType($type) 
+    public function setReturnType($type)
     {
         $this->returnType = $type;
 
@@ -1063,20 +1063,20 @@ class Asana
 
     /**
      * Checks for errors in the response.
-     * 
+     *
      * @return boolean
      */
-    public function hasError() 
+    public function hasError()
     {
         return !in_array($this->responseCode, array(200, 201)) || is_null($this->response);
     }
 
     /**
      * Decodes the response and returns as an object, array.
-     * 
+     *
      * @return object, array, string  or null
      */
-    public function getData() 
+    public function getData()
     {
         if (!$this->hasError()) {
             $array  = $this->returnType == ASANA_RETURN_TYPE_ARRAY;

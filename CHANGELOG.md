@@ -1,3 +1,9 @@
+3.0.0, 2015-11-23
+-----------------
+- Now return type can be set to ASANA_RETURN_TYPE_OBJECT, ASANA_RETURN_TYPE_JSON or ASANA_RETURN_TYPE_ARRAY
+- New method to get the latest returned data getData()
+- New method to check if there were errors hasError()
+
 2.14.0, 2015-07-21
 ------------------
 - getWorkspaceTypeahead method added.

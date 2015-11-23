@@ -133,20 +133,20 @@ class AsanaAuth
 
     /**
      * Checks for errors in the response.
-     * 
+     *
      * @return boolean
      */
-    public function hasError() 
+    public function hasError()
     {
         return $this->responseCode != 200 || is_null($this->response);
     }
 
     /**
      * Decodes the response and returns as an object.
-     * 
+     *
      * @return object or null
      */
-    public function getData() 
+    public function getData()
     {
         if(!$this->hasError()){
             return json_decode($this->response);

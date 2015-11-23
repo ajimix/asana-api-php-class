@@ -3,14 +3,14 @@
 A PHP class that acts as wrapper for Asana API.  
 Lets make things easy! :)
 
-It is licensed under the Apache 2 license and is Copyrighted 2014 Ajimix
+It is licensed under the Apache 2 license and is Copyrighted 2015 Ajimix
 
 ## Installing
 
 Choose your favorite flavour
 
 - Download the php class from github.
-- Use [Packagist](https://packagist.org/packages/ajimix/asana-api-php-class) PHP package manager.
+- Or use [Packagist](https://packagist.org/packages/ajimix/asana-api-php-class) PHP package manager.
 
 Finally require the asana.php file.
 
@@ -75,6 +75,12 @@ There are a [lot more methods](https://github.com/ajimix/asana-api-php-class/blo
 
 See the examples [inside examples folder](https://github.com/ajimix/asana-api-php-class/tree/master/examples), read the comments on the [class file]((https://github.com/ajimix/asana-api-php-class/blob/master/asana.php)) for class magic and read [Asana API documentation](http://developer.asana.com/documentation/) if you want to be a master :D
 
+If a method returned some data, you can always retrieve it by calling.
+
+```php
+$asana->getData();
+```
+
 Enjoy ;D
 
 ## Using Asana OAuth tokens
@@ -119,7 +125,7 @@ For a more detailes instructions on how to make oauth work check the example in 
 
 ### Copyright and license
 
-Copyright 2014 Ajimix
+Copyright 2015 Ajimix
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this work except in compliance with the License.

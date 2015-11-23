@@ -32,7 +32,7 @@ foreach ($projects as $project) {
     }
     foreach ($asana->getData() as $task) {
         echo '+ ' . $task->name . ' (id ' . $task->id . ')' . ' ]<br>' . PHP_EOL;
-        
+
         $asana->getTask($task->id);
         if(!$asana->hasError()){
             $task->details = $asana->getData();
