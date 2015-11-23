@@ -17,6 +17,7 @@ class AsanaAuth
     private $debug = false;
     private $advDebug = false; // Note that enabling advanced debug will include debugging information in the response possibly breaking up your code.
 
+    private $response;
     public $responseCode;
 
     private $asanaAuthorizeUrl = 'https://app.asana.com/-/oauth_authorize'; // You shouldn't change this url.
@@ -108,7 +109,7 @@ class AsanaAuth
         curl_setopt($curl, CURLOPT_POSTFIELDS, $postFields);
 
         try {
-            $response = curl_exec($curl);
+            $this->response = curl_exec($curl);
             $this->responseCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
             if ($this->debug || $this->advDebug) {
@@ -122,11 +123,35 @@ class AsanaAuth
                 echo '<br>cURL error: ' . curl_error($curl);
             }
             echo 'Error on cURL';
-            $response = null;
+            $this->response = null;
         }
 
         curl_close($curl);
 
-        return $response;
+        return $this->response;
+    }
+
+    /**
+     * Checks for errors in the response.
+     * 
+     * @return boolean
+     */
+    public function hasError() 
+    {
+        return $this->responseCode != 200 || is_null($this->response);
+    }
+
+    /**
+     * Decodes the response and returns as an object.
+     * 
+     * @return object or null
+     */
+    public function getData() 
+    {
+        if(!$this->hasError()){
+            return json_decode($this->response);
+        }
+
+        return null;
     }
 }
