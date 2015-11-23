@@ -16,7 +16,9 @@ define('ASANA_METHOD_POST', 1);
 define('ASANA_METHOD_PUT', 2);
 define('ASANA_METHOD_GET', 3);
 define('ASANA_METHOD_DELETE', 4);
-define('ASANA_RETURN_TYPE', 1); // 1- OBJECT | 2- ARRAY
+define('ASANA_RETURN_TYPE_JSON', 1);
+define('ASANA_RETURN_TYPE_OBJECT', 2);
+define('ASANA_RETURN_TYPE_ARRAY', 3);
 
 class Asana
 {
@@ -27,6 +29,7 @@ class Asana
 
     private $response;
     public $responseCode;
+    private $returnType = ASANA_RETURN_TYPE_OBJECT;
 
     private $endPointUrl;
     private $apiKey;
@@ -64,6 +67,10 @@ class Asana
         // If the API key is not ended by ":", we append it.
         if (!empty($this->apiKey) && substr($this->apiKey, -1) !== ':') {
             $this->apiKey .= ':';
+        }
+
+        if (is_array($options) && !empty($options['returnType'])) {
+            $this->setReturnType($options['returnType']);
         }
 
         $this->endPointUrl = 'https://app.asana.com/api/' . $this->asanaApiVersion . '/';
@@ -1042,11 +1049,25 @@ class Asana
     }
 
     /**
+     * Set the return type. 
+     *
+     * @param int $type Return type defined in the constants.
+     * @return Asana
+     */
+    public function setReturnType($type) 
+    {
+        $this->returnType = $type;
+
+        return $this;
+    }
+
+    /**
      * Checks for errors in the response.
      * 
      * @return boolean
      */
-    public function hasError() {
+    public function hasError() 
+    {
         return !in_array($this->responseCode, array(200, 201)) || is_null($this->response);
     }
 
@@ -1055,15 +1076,21 @@ class Asana
      * 
      * @return object, array, string  or null
      */
-    public function getData() {
+    public function getData() 
+    {
         if (!$this->hasError()) {
-            $array  = 2 == ASANA_RETURN_TYPE;
+            $array  = $this->returnType == ASANA_RETURN_TYPE_ARRAY;
             $return = json_decode($this->response, $array);
+
             if ($array && isset($return['data'])){
                 return $return['data'];
-            } elseif (1 == ASANA_RETURN_TYPE && isset($return->data)){
+            } elseif ($this->returnType == ASANA_RETURN_TYPE_OBJECT && isset($return->data)){
                 return $return->data;
+            } elseif ($this->returnType == ASANA_RETURN_TYPE_JSON){
+                return $this->response;
             }
         }
+
+        return null;
     }
 }

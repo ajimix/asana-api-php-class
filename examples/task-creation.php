@@ -20,4 +20,8 @@ if ($asana->hasError()) {
     return;
 }
 
-echo $asana->getData()->id; // Here we have the id of the task that have been created
+$result = $asana->getData();
+
+if (isset($result->id)) {
+	echo $result->id; // Here we have the id of the task that have been created
+}

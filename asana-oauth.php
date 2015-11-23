@@ -136,7 +136,8 @@ class AsanaAuth
      * 
      * @return boolean
      */
-    public function hasError() {
+    public function hasError() 
+    {
         return $this->responseCode != 200 || is_null($this->response);
     }
 
@@ -145,9 +146,12 @@ class AsanaAuth
      * 
      * @return object or null
      */
-    public function getData() {
+    public function getData() 
+    {
         if(!$this->hasError()){
             return json_decode($this->response);
         }
+
+        return null;
     }
 }

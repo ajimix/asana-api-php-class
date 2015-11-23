@@ -11,7 +11,7 @@ $projectId   = 'XXXXXXXXXXXXXXXXXXX'; // The project where we want to save our t
 $result = $asana->createTask(array(
 	'workspace' => $workspaceId, // Workspace ID
 	'name'      => 'Hello World!', // Name of task
-	'assignee'  => 'bigboss@bigcompany.com', // Assign task to...    
+	'assignee'  => 'bigboss@bigcompany.com', // Assign task to...
 	'followers' => array('XXXXX', 'XXXXXXXX') // We add some followers to the task... (this time by ID), this is totally optional
 ));
 
@@ -28,6 +28,6 @@ $asana->addProjectToTask($taskId, $projectId);
 
 if ($asana->hasError()) {
     echo 'Error while assigning project to task: ' . $asana->responseCode;
-}else{
+} else {
 	echo 'Success to add the task to a project.';
 }
