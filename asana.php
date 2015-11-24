@@ -83,6 +83,7 @@ class Asana
         $this->tagsUrl = $this->endPointUrl . 'tags';
         $this->organizationsUrl = $this->endPointUrl . 'organizations';
         $this->attachmentsUrl = $this->endPointUrl . 'attachments';
+        $this->webhooksUrl = $this->endPointUrl . 'webhooks';
     }
 
 
@@ -962,6 +963,40 @@ class Asana
         ));
         $options = http_build_query($opts);
         return $this->askAsana($this->workspaceUrl . '/' . $workspaceId . '/typeahead?' . $options);
+    }
+
+     /**
+     * **********************************
+     * Webhooks functions
+     * **********************************
+     */
+
+    public function createWebhook($resourceId, $target)
+    {
+        $data = array(
+            'resource' => $resourceId,
+            'target'   => $target
+        );
+        return $this->askAsana($this->webhooksUrl, $data, ASANA_METHOD_POST);
+    }
+
+    public function getWebhooks($workspaceId, array $opts = array())
+    {
+        $opts = array_merge($opts, array(
+            'workspace' => $workspaceId
+        ));
+        $options = http_build_query($opts);
+        return $this->askAsana($this->webhooksUrl . '?' . $options);
+    }
+
+    public function getWebhook($webhookId)
+    {
+        return $this->askAsana($this->webhooksUrl . '/' . $webhookId);
+    }
+
+    public function deleteWebhook($webhookId)
+    {
+        return $this->askAsana($this->webhooksUrl . '/' . $webhookId, null, ASANA_METHOD_DELETE);
     }
 
     /**
