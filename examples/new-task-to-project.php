@@ -9,10 +9,10 @@ $projectId   = 'XXXXXXXXXXXXXXXXXXX'; // The project where we want to save our t
 
 // First we create the task
 $result = $asana->createTask(array(
-	'workspace' => $workspaceId, // Workspace ID
-	'name'      => 'Hello World!', // Name of task
-	'assignee'  => 'bigboss@bigcompany.com', // Assign task to...
-	'followers' => array('XXXXX', 'XXXXXXXX') // We add some followers to the task... (this time by ID), this is totally optional
+    'workspace' => $workspaceId, // Workspace ID
+    'name'      => 'Hello World!', // Name of task
+    'assignee'  => 'bigboss@bigcompany.com', // Assign task to...
+    'followers' => array('XXXXX', 'XXXXXXXX') // We add some followers to the task... (this time by ID), this is totally optional
 ));
 
 // As Asana API documentation says, when a task is created, 201 response code is sent back so...
@@ -29,5 +29,5 @@ $asana->addProjectToTask($taskId, $projectId);
 if ($asana->hasError()) {
     echo 'Error while assigning project to task: ' . $asana->responseCode;
 } else {
-	echo 'Success to add the task to a project.';
+    echo 'Success to add the task to a project.';
 }

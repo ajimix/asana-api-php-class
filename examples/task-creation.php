@@ -8,9 +8,9 @@ $workspaceId = 'XXXXXXXXXXXXXXXXXXX'; // The workspace where we want to create o
 
 // First we create the task
 $asana->createTask(array(
-	'workspace' => $workspaceId, // Workspace ID
-	'name'      => 'Hello World!', // Name of task
-	'assignee'  => 'bigboss@bigcompany.com' // Assign task to...
+    'workspace' => $workspaceId, // Workspace ID
+    'name'      => 'Hello World!', // Name of task
+    'assignee'  => 'bigboss@bigcompany.com' // Assign task to...
 ));
 
 
@@ -23,5 +23,5 @@ if ($asana->hasError()) {
 $result = $asana->getData();
 
 if (isset($result->id)) {
-	echo $result->id; // Here we have the id of the task that have been created
+    echo $result->id; // Here we have the id of the task that have been created
 }
