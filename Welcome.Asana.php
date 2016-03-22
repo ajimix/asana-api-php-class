@@ -1,5 +1,5 @@
 <center><h2> Welcome To Asana Webservice Main page.</h2>
-<script src="js/jquery.js"> </script>
+<script src="jquery.js"> </script>
 
 <?php
 require_once('connection.php');
