@@ -16,58 +16,23 @@ Finally require the asana.php file.
 
 ## Working with the class
 
-First declare the asana class
+Go To connection.php
+you get this code....
 
-```php
+require 'vendor/autoload.php';
+require_once('asana.php');
+
 $asana = new Asana(array(
-    'apiKey' => 'YOUR_COOL_API_KEY'
+    'apiKey' => '*******************',
+	'client_id' => '***********************',
+    'client_secret' => '************************',
+    'redirect_uri' => '*******************************'
 ));
-```
 
-*Optionally you can pass an accessToken instead of an apiKey if you use OAuth. Read below for more info.*
 
-#### Creating a task
-
-```php
-$asana->createTask(array(
-   'workspace' => '176825', // Workspace ID
-   'name' => 'Hello World!', // Name of task
-   'assignee' => 'bigboss@bigcompany.com', // Assign task to...
-   'followers' => array('3714136', '5900783') // We add some followers to the task... (this time by ID)
-));
-```
-
-Creating a task for another assignee than yourself will mark the task as private by 
-default. This results in the task not being available for modification through the 
-API anymore. Take a look at the [API Reference](https://asana.com/developers/api-reference/tasks) 
-for more fields of the Task you can directly pass to `createTask`.
-
-#### Adding task to project
-
-```php
-$asana->addProjectToTask('THIS_TASK_ID_PLEASE', 'TO_THIS_COOL_PROJECT_ID');
-```
-
-#### Commenting on a task
-
-```php
-$asana->commentOnTask('MY_BEAUTIFUL_TASK_ID', 'Please please! Don\'t assign me this task!');
-```
-
-#### Getting projects in all workspaces
-
-```php
-$asana->getProjects();
-```
-
-#### Updating project info
-
-```php
-$asana->updateProject('COOL_PROJECT_ID', array(
-    'name' => 'This is a new cool project!',
-    'notes' => 'At first, it wasn\'t cool, but after this name change, it is!'
-));
-```
+insert your Api key , client_id,client_secret,redirect_uri
+save this with your credential and now go to 
+Welcome.Asana.php  now your app is working..
 
 #### Do more
 
