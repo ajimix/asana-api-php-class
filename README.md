@@ -14,10 +14,13 @@ Choose your favorite flavour
 
 Finally require the asana.php file.
 
-## Working with the class
+## Working with this files
 
 Go To connection.php
+
 you get this code....
+
+
 ```
 require 'vendor/autoload.php';
 require_once('asana.php');
@@ -28,11 +31,19 @@ $asana = new Asana(array(
 'client_secret' => '************************',
 'redirect_uri' => '*******************************'
 ));
+
 ```
 
-insert your Api key , client_id,client_secret,redirect_uri
-save this with your credential and now go to 
-Welcome.Asana.php  now your app is working..
+Now Insert Your credential For access your account..
+
+Insert Your
+apiKey......client_id.......client_secret.......redirect_uri....
+
+Now Save this file and go to ----->   Welcome.Asana.php    <-------- Page..
+
+Now just see you application is working..
+
+
 
 #### Do more
 
