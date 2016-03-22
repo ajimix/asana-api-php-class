@@ -18,17 +18,17 @@ Finally require the asana.php file.
 
 Go To connection.php
 you get this code....
-
+```
 require 'vendor/autoload.php';
 require_once('asana.php');
 
 $asana = new Asana(array(
-    'apiKey' => '*******************',
-	'client_id' => '***********************',
-    'client_secret' => '************************',
-    'redirect_uri' => '*******************************'
+'apiKey' => '*******************',
+'client_id' => '***********************',
+'client_secret' => '************************',
+'redirect_uri' => '*******************************'
 ));
-
+```
 
 insert your Api key , client_id,client_secret,redirect_uri
 save this with your credential and now go to 
@@ -41,43 +41,6 @@ There are a [lot more methods](https://github.com/ajimix/asana-api-php-class/blo
 See the examples [inside examples folder](https://github.com/ajimix/asana-api-php-class/tree/master/examples), read the comments on the [class file]((https://github.com/ajimix/asana-api-php-class/blob/master/asana.php)) for class magic and read [Asana API documentation](http://developer.asana.com/documentation/) if you want to be a master :D
 
 If a method returned some data, you can always retrieve it by calling.
-
-```php
-$asana->getData();
-```
-
-Enjoy ;D
-
-## Using Asana OAuth tokens
-
-To use this API you can also create an App on Asana, in order to get an oAuth access token that gives you the same access as with an API key. Include the class:
-
-```php
-require_once('asana-oauth.php');
-```
-
-Declare the oAuth class as:
-
-```php
-$asanaAuth = new AsanaAuth('YOUR_APP_ID', 'YOUR_APP_SECRET', 'CALLBACK_URL');
-$url = $asanaAuth->getAuthorizeUrl();
-```
-
-Where YOUR_APP_ID, YOUR_APP_SECRET and CALLBACK_URL you get from your App's details on Asana. Now, redirect the browser to the result held by $url. The user will be asked to login & accept your app, after which the browser will be returned to the CALLBACK_URL, which should process the result:
-
-```php
-$code = $_GET['code'];
-$asanaAuth->getAccessToken($code);
-```
-
-And you will receive an object with the access token and a refresh token
-The token expires after one hour so you can refresh it doing the following:
-
-```php
-$asanaAuth->refreshAccessToken('ACCESS_TOKEN');
-```
-
-For a more detailes instructions on how to make oauth work check the example in examples/oauth.php
 
 ## Author
 
