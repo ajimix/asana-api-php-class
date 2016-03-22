@@ -10,7 +10,6 @@
  * Author: Ajimix [github.com/ajimix] and the contributors [github.com/ajimix/asana-api-php-class/contributors]
  * Version: 3.0.0
  */
-
 // Define some constants for later usage.
 define('ASANA_METHOD_POST', 1);
 define('ASANA_METHOD_PUT', 2);
@@ -19,18 +18,15 @@ define('ASANA_METHOD_DELETE', 4);
 define('ASANA_RETURN_TYPE_JSON', 1);
 define('ASANA_RETURN_TYPE_OBJECT', 2);
 define('ASANA_RETURN_TYPE_ARRAY', 3);
-
 class Asana
 {
     private $timeout = 10;
     private $debug = false;
     private $advDebug = false; // Note that enabling advanced debug will include debugging information in the response possibly breaking up your code
     private $asanaApiVersion = '1.0';
-
     private $response;
     public $responseCode;
     private $returnType = ASANA_RETURN_TYPE_OBJECT;
-
     private $endPointUrl;
     private $apiKey;
     private $accessToken;
@@ -43,7 +39,6 @@ class Asana
     private $tagsUrl;
     private $organizationsUrl;
     private $attachmentsUrl;
-
     /**
      * Class constructor.
      *
@@ -61,18 +56,15 @@ class Asana
         } elseif (is_array($options) && !empty($options['accessToken'])) {
             $this->accessToken = $options['accessToken'];
         } else {
-            throw new Exception('You need to specify an API key or token');
+            throw new Exception('You need to specify an API key or accesstoken');
         }
-
         // If the API key is not ended by ":", we append it.
         if (!empty($this->apiKey) && substr($this->apiKey, -1) !== ':') {
             $this->apiKey .= ':';
         }
-
         if (is_array($options) && !empty($options['returnType'])) {
             $this->setReturnType($options['returnType']);
         }
-
         $this->endPointUrl = 'https://app.asana.com/api/' . $this->asanaApiVersion . '/';
         $this->taskUrl = $this->endPointUrl . 'tasks';
         $this->userUrl = $this->endPointUrl . 'users';
@@ -84,14 +76,11 @@ class Asana
         $this->organizationsUrl = $this->endPointUrl . 'organizations';
         $this->attachmentsUrl = $this->endPointUrl . 'attachments';
     }
-
-
     /**
      * **********************************
      * User functions
      * **********************************
      */
-
     /**
      * Returns the full user record for a single user.
      * Call it without parameters to get the users info of the owner of the API key.
@@ -104,14 +93,11 @@ class Asana
     public function getUserInfo($userId = null, array $opts = array())
     {
         $options = http_build_query($opts);
-
         if (is_null($userId)) {
             $userId = 'me';
         }
-
         return $this->askAsana($this->userUrl . '/' . $userId . '?' . $options);
     }
-
     /**
      * Returns the user records for all users in all workspaces you have access.
      *
@@ -127,14 +113,11 @@ class Asana
     {
         return $this->askAsana($this->userUrl . '?' . http_build_query($opts));
     }
-
-
     /**
      * **********************************
      * Task functions
      * **********************************
      */
-
     /**
      * Creates a task.
      * For assign or remove the task to a project, use the addProjectToTask and removeProjectToTask.
@@ -162,8 +145,8 @@ class Asana
         $data = array('data' => $data);
         $data = json_encode($data);
         $options = http_build_query($opts);
-
-        return $this->askAsana($this->taskUrl . '?' . $options, $data, ASANA_METHOD_POST);
+		
+		return $this->askAsana($this->taskUrl . '?' . $options, $data, ASANA_METHOD_POST);
     }
 
     /**
@@ -177,10 +160,8 @@ class Asana
     public function getTask($taskId, array $opts = array())
     {
         $options = http_build_query($opts);
-
         return $this->askAsana($this->taskUrl . '/' . $taskId . '?' . $options);
     }
-
     /**
      * Creates a subtask in the parent task ID
      *
@@ -207,10 +188,8 @@ class Asana
         $data = array('data' => $data);
         $data = json_encode($data);
         $options = http_build_query($opts);
-
         return $this->askAsana($this->taskUrl . '/' . $parentId . '/subtasks?' . $options, $data, ASANA_METHOD_POST);
     }
-
     /**
      * Returns sub-task information
      *
@@ -222,10 +201,8 @@ class Asana
     public function getSubTasks($taskId, array $opts = array())
     {
         $options = http_build_query($opts);
-
         return $this->askAsana($this->taskUrl . '/' . $taskId . '/subtasks?' . $options);
     }
-
     /**
      * Updated the parent from a task.
      *
@@ -242,10 +219,8 @@ class Asana
         ));
         $data = json_encode($data);
         $options = http_build_query($opts);
-
         return $this->askAsana($this->taskUrl . '/' . $taskId . '/setParent?' . $options, $data, ASANA_METHOD_POST);
     }
-
     /**
      * Updates a task
      *
@@ -257,10 +232,8 @@ class Asana
     {
         $data = array('data' => $data);
         $data = json_encode($data);
-
         return $this->askAsana($this->taskUrl . '/' . $taskId, $data, ASANA_METHOD_PUT);
     }
-
     /**
      * Deletes a task.
      *
@@ -271,7 +244,6 @@ class Asana
     {
         return $this->askAsana($this->taskUrl . '/' . $taskId, null, ASANA_METHOD_DELETE);
     }
-
     /**
      * Moves a task within a project relative to another task.  This should let you take a task and move it below or
      * above another task as long as they are within the same project.
@@ -292,10 +264,8 @@ class Asana
             $data['data']['insert_before'] = $taskReference;
         }
         $data = json_encode($data);
-
         return $this->askAsana($this->taskUrl . '/' . $taskToMove . '/addProject', $data, ASANA_METHOD_POST);
     }
-
     /**
      * Returns the projects associated to the task.
      *
@@ -307,10 +277,8 @@ class Asana
     public function getProjectsForTask($taskId, array $opts = array())
     {
         $options = http_build_query($opts);
-
         return $this->askAsana($this->taskUrl . '/' . $taskId . '/projects?' . $options);
     }
-
     /**
      * Adds a project to task. If successful, will return success and an empty data block.
      *
@@ -324,10 +292,8 @@ class Asana
     {
         $data = array('data' => array_merge($opts, array('project' => $projectId)));
         $data = json_encode($data);
-
         return $this->askAsana($this->taskUrl . '/' . $taskId . '/addProject', $data, ASANA_METHOD_POST);
     }
-
     /**
      * Removes project from task. If successful, will return success and an empty data block.
      *
@@ -339,10 +305,8 @@ class Asana
     {
         $data = array('data' => array('project' => $projectId));
         $data = json_encode($data);
-
         return $this->askAsana($this->taskUrl . '/' . $taskId . '/removeProject', $data, ASANA_METHOD_POST);
     }
-
     /**
      * Returns task by a given filter.
      * For now (limited by Asana API), you may limit your query either to a specific project or to an assignee and workspace
@@ -365,21 +329,17 @@ class Asana
     {
         $url = '';
         $filter = array_merge(array('assignee' => '', 'project' => '', 'workspace' => ''), $filter);
-
         $url .= $filter['assignee'] !== '' ? '&assignee=' . $filter['assignee'] : '';
         $url .= $filter['project'] !== '' ? '&project=' . $filter['project'] : '';
         $url .= $filter['workspace'] !== '' ? '&workspace=' . $filter['workspace'] : '';
-
         if (count($opts) > 0) {
             $url .= '&' . http_build_query($opts);
         }
         if (strlen($url) > 0) {
             $url = '?' . substr($url, 1);
         }
-
         return $this->askAsana($this->taskUrl . $url);
     }
-
     /**
      * Returns the list of stories associated with the object.
      * As usual with queries, stories are returned in compact form.
@@ -394,10 +354,8 @@ class Asana
     public function getTaskStories($taskId, array $opts = array())
     {
         $options = http_build_query($opts);
-
         return $this->askAsana($this->taskUrl . '/' . $taskId . '/stories?' . $options);
     }
-
     /**
      * Returns a compact list of tags associated with the object.
      *
@@ -409,10 +367,8 @@ class Asana
     public function getTaskTags($taskId, array $opts = array())
     {
         $options = http_build_query($opts);
-
         return $this->askAsana($this->taskUrl . '/' . $taskId . '/tags?' . $options);
     }
-
     /**
      * Adds a comment to a task.
      * The comment will be authored by the authorized user, and timestamped when the server receives the request.
@@ -429,10 +385,8 @@ class Asana
             )
         );
         $data = json_encode($data);
-
         return $this->askAsana($this->taskUrl . '/' . $taskId . '/stories', $data, ASANA_METHOD_POST);
     }
-
     /**
      * Adds a tag to a task. If successful, will return success and an empty data block.
      *
@@ -444,10 +398,8 @@ class Asana
     {
         $data = array('data' => array('tag' => $tagId));
         $data = json_encode($data);
-
         return $this->askAsana($this->taskUrl . '/' . $taskId . '/addTag', $data, ASANA_METHOD_POST);
     }
-
     /**
      * Removes a tag from a task. If successful, will return success and an empty data block.
      *
@@ -459,10 +411,8 @@ class Asana
     {
         $data = array('data' => array('tag' => $tagId));
         $data = json_encode($data);
-
         return $this->askAsana($this->taskUrl . '/' . $taskId . '/removeTag', $data, ASANA_METHOD_POST);
     }
-
     /**
      * Returns single attachment information
      *
@@ -474,10 +424,8 @@ class Asana
     public function getAttachment($attachmentId, array $opts = array())
     {
         $options = http_build_query($opts);
-
         return $this->askAsana($this->attachmentsUrl . '/' . $attachmentId . '?' . $options);
     }
-
     /**
      * Add attachment to a task
      *
@@ -489,12 +437,10 @@ class Asana
      {
          $mimeType = array_key_exists('mimeType', $data) ? $data['mimeType'] : null;
          $finalFilename = array_key_exists('finalFilename', $data) ? $data["finalFilename"] : null;
-
          if (class_exists('CURLFile', false)) {
              $data['file'] = new CURLFile($data['file'], $data['mimeType'], $data['finalFilename']);
          } else {
              $data['file'] = "@{$data['file']}";
-
              if (!is_null($finalFilename)) {
                  $data['file'] .= ';filename=' . $finalFilename;
              }
@@ -502,10 +448,8 @@ class Asana
                  $data['file'] .= ';type=' . $mimeType;
              }
          }
-
          return $this->askAsana($this->taskUrl . '/' . $taskId . '/attachments', $data, ASANA_METHOD_POST);
      }
-
     /**
      * Returns task attachments information
      *
@@ -517,16 +461,13 @@ class Asana
     public function getTaskAttachments($taskId, array $opts = array())
     {
         $options = http_build_query($opts);
-
         return $this->askAsana($this->taskUrl . '/' . $taskId . '/attachments?' . $options);
     }
-
     /**
      * **********************************
      * Projects functions
      * **********************************
      */
-
     /**
      * Function to create a project.
      *
@@ -545,10 +486,8 @@ class Asana
     {
         $data = array('data' => $data);
         $data = json_encode($data);
-
         return $this->askAsana($this->projectsUrl, $data, ASANA_METHOD_POST);
     }
-
     /**
      * Returns the full record for a single project.
      *
@@ -560,10 +499,8 @@ class Asana
     public function getProject($projectId, array $opts = array())
     {
         $options = http_build_query($opts);
-
         return $this->askAsana($this->projectsUrl . '/' . $projectId . '?' . $options);
     }
-
     /**
      * Returns the projects in all workspaces containing archived ones or not.
      *
@@ -574,10 +511,8 @@ class Asana
     {
         $archived = $archived ? 'true' : 'false';
         $opt_fields = $opt_fields !== '' ? '&opt_fields=' . $opt_fields : '';
-
         return $this->askAsana($this->projectsUrl . '?archived=' . $archived . $opt_fields);
     }
-
     /**
      * Returns the projects in provided workspace containing archived ones or not.
      *
@@ -591,10 +526,8 @@ class Asana
     {
         $archived = $archived ? 'true' : 'false';
         $options = http_build_query($opts);
-
         return $this->askAsana($this->projectsUrl . '?archived=' . $archived . '&workspace=' . $workspaceId . '&' . $options);
     }
-
     /**
      * Returns the projects in provided workspace containing archived ones or not.
      *
@@ -608,10 +541,8 @@ class Asana
     {
         $archived = $archived ? 'true' : 'false';
         $options = http_build_query($opts);
-
         return $this->askAsana($this->teamsUrl . '/' . $teamId . '/projects?archived=' . $archived . '&' . $options);
     }
-
     /**
      * This method modifies the fields of a project provided in the request, then returns the full updated record.
      *
@@ -625,10 +556,8 @@ class Asana
     {
         $data = array('data' => $data);
         $data = json_encode($data);
-
         return $this->askAsana($this->projectsUrl . '/' . $projectId, $data, ASANA_METHOD_PUT);
     }
-
     /**
      * Deletes a project.
      *
@@ -639,7 +568,6 @@ class Asana
     {
         return $this->askAsana($this->projectsUrl . '/' . $projectId, null, ASANA_METHOD_DELETE);
     }
-
     /**
      * Returns all unarchived tasks of a given project
      *
@@ -652,10 +580,8 @@ class Asana
     public function getProjectTasks($projectId, array $opts = array())
     {
         $options = http_build_query($opts);
-
         return $this->askAsana($this->taskUrl . '?project=' . $projectId . '&' . $options);
     }
-
     /**
      * Returns the list of stories associated with the project.
      * As usual with queries, stories are returned in compact form.
@@ -671,10 +597,8 @@ class Asana
     public function getProjectStories($projectId, array $opts = array())
     {
         $options = http_build_query($opts);
-
         return $this->askAsana($this->projectsUrl . '/' . $projectId . '/stories?' . $options);
     }
-
     /**
      * Returns the list of sections associated with the project.
      * Sections are tasks whose names end with a colon character : .
@@ -691,10 +615,8 @@ class Asana
     public function getProjectSections($projectId, array $opts = array())
     {
         $options = http_build_query($opts);
-
         return $this->askAsana($this->projectsUrl . '/' . $projectId . '/sections?' . $options);
     }
-
     /**
      * Adds a comment to a project
      * The comment will be authored by the authorized user, and timestamped when the server receives the request.
@@ -711,17 +633,13 @@ class Asana
             )
         );
         $data = json_encode($data);
-
         return $this->askAsana($this->projectsUrl . '/' . $projectId . '/stories', $data, ASANA_METHOD_POST);
     }
-
-
     /**
      * **********************************
      * Tags functions
      * **********************************
      */
-
     /**
      * Returns the full record for a single tag.
      *
@@ -733,10 +651,8 @@ class Asana
     public function getTag($tagId, array $opts = array())
     {
         $options = http_build_query($opts);
-
         return $this->askAsana($this->tagsUrl . '/' . $tagId . '?' . $options);
     }
-
     /**
      * Returns the full record for all tags in all workspaces.
      *
@@ -746,7 +662,6 @@ class Asana
     {
         return $this->askAsana($this->tagsUrl);
     }
-
     /**
      * Modifies the fields of a tag provided in the request, then returns the full updated record.
      *
@@ -760,10 +675,8 @@ class Asana
     {
         $data = array('data' => $data);
         $data = json_encode($data);
-
         return $this->askAsana($this->tagsUrl . '/' . $tagId, $data, ASANA_METHOD_PUT);
     }
-
     /**
      * This method creates a new tag and returns its full record.
      *
@@ -781,10 +694,8 @@ class Asana
         $data['data']['name'] = $name;
         $data = json_encode($data);
         $options = http_build_query($opts);
-
         return $this->askAsana($this->tagsUrl . '?' . $options, $data, ASANA_METHOD_POST);
     }
-
     /**
      * Returns the list of all tasks with this tag. Tasks can have more than one tag at a time.
      *
@@ -796,17 +707,13 @@ class Asana
     public function getTasksWithTag($tagId, array $opts = array())
     {
         $options = http_build_query($opts);
-
         return $this->askAsana($this->tagsUrl . '/' . $tagId . '/tasks?' . $options);
     }
-
-
     /**
      * **********************************
      * Stories and comments functions
      * **********************************
      */
-
     /**
      * Returns the full record for a single story.
      *
@@ -818,17 +725,13 @@ class Asana
     public function getSingleStory($storyId, array $opts = array())
     {
         $options = http_build_query($opts);
-
         return $this->askAsana($this->storiesUrl . '/' . $storyId . '?' . $options);
     }
-
-
     /**
      * **********************************
      * Organizations functions
      * **********************************
      */
-
     /**
      * Returns all teams in an Organization.
      *
@@ -839,8 +742,6 @@ class Asana
     {
         return $this->askAsana($this->organizationsUrl . '/' . $organizationId . '/teams');
     }
-
-
     /**
      * Function to create a team in an Organization.
      *
@@ -854,17 +755,13 @@ class Asana
     {
         $data = array('data' => $data);
         $data = json_encode($data);
-
         return $this->askAsana($this->organizationsUrl . '/' . $organizationId . '/teams', $data, ASANA_METHOD_POST);
     }
-
-
     /**
      * **********************************
      * Workspaces functions
      * **********************************
      */
-
     /**
      * Returns all the workspaces.
      *
@@ -876,10 +773,8 @@ class Asana
     public function getWorkspaces(array $opts = array())
     {
         $options = http_build_query($opts);
-
         return $this->askAsana($this->workspaceUrl . '?' . $options);
     }
-
     /**
      * Currently the only field that can be modified for a workspace is its name (as Asana API says).
      * This method returns the complete updated workspace record.
@@ -893,10 +788,8 @@ class Asana
     {
         $data = array('data' => $data);
         $data = json_encode($data);
-
         return $this->askAsana($this->workspaceUrl . '/' . $workspaceId, $data, ASANA_METHOD_PUT);
     }
-
     /**
      * Returns tasks of all workspace assigned to someone.
      * Note: As Asana API says, you must specify an assignee when querying for workspace tasks.
@@ -911,10 +804,8 @@ class Asana
     public function getWorkspaceTasks($workspaceId, $assignee = 'me', array $opts = array())
     {
         $options = http_build_query($opts);
-
         return $this->askAsana($this->taskUrl . '?workspace=' . $workspaceId . '&assignee=' . $assignee . '&' . $options);
     }
-
     /**
      * Returns tags of all workspace.
      *
@@ -925,7 +816,6 @@ class Asana
     {
         return $this->askAsana($this->workspaceUrl . '/' . $workspaceId . '/tags');
     }
-
     /**
      * Returns users of all workspace.
      *
@@ -936,7 +826,6 @@ class Asana
     {
         return $this->askAsana($this->workspaceUrl . '/' . $workspaceId . '/users');
     }
-
     /**
      * Returns search for objects from a single workspace.
      *
@@ -963,7 +852,6 @@ class Asana
         $options = http_build_query($opts);
         return $this->askAsana($this->workspaceUrl . '/' . $workspaceId . '/typeahead?' . $options);
     }
-
     /**
      * This function communicates with Asana REST API.
      * You don't need to call this function directly. It's only for inner class working.
@@ -983,7 +871,6 @@ class Asana
         curl_setopt($curl, CURLOPT_FAILONERROR, true);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0); // Don't verify SSL connection
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0); //         ""           ""
-
         if (!empty($this->apiKey)) {
             // Send with API key.
             curl_setopt($curl, CURLOPT_USERPWD, $this->apiKey);
@@ -999,13 +886,11 @@ class Asana
                 'Authorization: Bearer ' . $this->accessToken
             ));
         }
-
         if ($this->advDebug) {
             curl_setopt($curl, CURLOPT_HEADER, true); // Display headers
             curl_setopt($curl, CURLINFO_HEADER_OUT, true); // Display output headers
             curl_setopt($curl, CURLOPT_VERBOSE, true); // Display communication with server
         }
-
         if ($method == ASANA_METHOD_POST) {
             curl_setopt($curl, CURLOPT_POST, true);
         } elseif ($method == ASANA_METHOD_PUT) {
@@ -1016,11 +901,9 @@ class Asana
         if (!is_null($data) && ($method == ASANA_METHOD_POST || $method == ASANA_METHOD_PUT)) {
             curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
         }
-
         try {
             $this->response = curl_exec($curl);
             $this->responseCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-
             if ($this->debug || $this->advDebug) {
                 $info = curl_getinfo($curl);
                 echo '<pre>';
@@ -1042,12 +925,9 @@ class Asana
             echo 'Error on cURL';
             $this->response = null;
         }
-
         curl_close($curl);
-
         return $this->response;
     }
-
     /**
      * Set the return type.
      *
@@ -1057,10 +937,8 @@ class Asana
     public function setReturnType($type)
     {
         $this->returnType = $type;
-
         return $this;
     }
-
     /**
      * Checks for errors in the response.
      *
@@ -1070,7 +948,6 @@ class Asana
     {
         return !in_array($this->responseCode, array(200, 201)) || is_null($this->response);
     }
-
     /**
      * Decodes the response and returns as an object, array.
      *
@@ -1081,7 +958,6 @@ class Asana
         if (!$this->hasError()) {
             $array  = $this->returnType == ASANA_RETURN_TYPE_ARRAY;
             $return = json_decode($this->response, $array);
-
             if ($array && isset($return['data'])){
                 return $return['data'];
             } elseif ($this->returnType == ASANA_RETURN_TYPE_OBJECT && isset($return->data)){
@@ -1090,7 +966,6 @@ class Asana
                 return $this->response;
             }
         }
-
         return null;
     }
 }
