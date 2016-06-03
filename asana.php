@@ -8,7 +8,7 @@
  * Licensed under the Apache License 2.0
  *
  * Author: Ajimix [github.com/ajimix] and the contributors [github.com/ajimix/asana-api-php-class/contributors]
- * Version: 3.0.0
+ * Version: 3.0.1
  */
 
 // Define some constants for later usage.
@@ -994,10 +994,12 @@ class Asana
             }
         } elseif (!empty($this->accessToken)) {
             // Send with auth token.
-            curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-                'Content-Type: application/json',
-                'Authorization: Bearer ' . $this->accessToken
-            ));
+            $headerData = array('Authorization: Bearer ' . $this->accessToken);
+            // Don't send as json when attaching files to tasks.
+            if (is_string($data) || empty($data['file'])) {
+                array_push($headerData, 'Content-Type: application/json');
+            }
+            curl_setopt($curl, CURLOPT_HTTPHEADER, $headerData);
         }
 
         if ($this->advDebug) {

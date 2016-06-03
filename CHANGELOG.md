@@ -1,3 +1,7 @@
+3.0.1, 2016-06-03
+-----------------
+- Fix bug when using oauth and attaching files
+
 3.0.0, 2015-11-23
 -----------------
 - Now return type can be set to ASANA_RETURN_TYPE_OBJECT, ASANA_RETURN_TYPE_JSON or ASANA_RETURN_TYPE_ARRAY
