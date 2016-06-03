@@ -3,7 +3,7 @@
 A PHP class that acts as wrapper for Asana API.  
 Lets make things easy! :)
 
-It is licensed under the Apache 2 license and is Copyrighted 2015 Ajimix
+It is licensed under the Apache 2 license and is Copyrighted 2016 Ajimix
 
 ## Installing
 
