@@ -125,7 +125,7 @@ For a more detailes instructions on how to make oauth work check the example in 
 
 ### Copyright and license
 
-Copyright 2015 Ajimix
+Copyright 2016 Ajimix
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this work except in compliance with the License.
