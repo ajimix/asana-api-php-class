@@ -98,7 +98,7 @@ class Asana
      * Call it without parameters to get the users info of the owner of the API key.
      *
      * @param string $userId
-     * @param array $opt Array of options to pass
+     * @param array $opts Array of options to pass
      *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      * @return string JSON or null
      */
@@ -153,7 +153,7 @@ class Asana
      *         "59083"
      *     )
      * )
-     * @param array $opt Array of options to pass
+     * @param array $opts Array of options to pass
      *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      *
      * @return string JSON or null
@@ -171,7 +171,7 @@ class Asana
      * Returns task information
      *
      * @param string $taskId
-     * @param array $opt Array of options to pass
+     * @param array $opts Array of options to pass
      *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      * @return string JSON or null
      */
@@ -199,7 +199,7 @@ class Asana
      *     )
      * )
      *
-     * @param array $opt Array of options to pass
+     * @param array $opts Array of options to pass
      *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      * @return string JSON or null
      */
@@ -216,7 +216,7 @@ class Asana
      * Returns sub-task information
      *
      * @param string $taskId
-     * @param array $opt Array of options to pass
+     * @param array $opts Array of options to pass
      *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      * @return string JSON or null
      */
@@ -232,7 +232,7 @@ class Asana
      *
      * @param string $taskId The task to update
      * @param string $parentId The id of the new parent task.
-     * @param array $opt Array of options to pass
+     * @param array $opts Array of options to pass
      *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      * @return string JSON or null
      */
@@ -301,7 +301,7 @@ class Asana
      * Returns the projects associated to the task.
      *
      * @param string $taskId
-     * @param array $opt Array of options to pass
+     * @param array $opts Array of options to pass
      *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      * @return string JSON or null
      */
@@ -317,7 +317,7 @@ class Asana
      *
      * @param string $taskId
      * @param string $projectId
-     * @param array $opt Array of options to pass (insert_after, insert_before, section)
+     * @param array $opts Array of options to pass (insert_after, insert_before, section)
      *                   (@see https://asana.com/developers/api-reference/tasks#projects)
      * @return string JSON or null
      */
@@ -357,7 +357,7 @@ class Asana
      *     "project" => 0,
      *     "workspace" => 0
      * )
-     * @param array $opt Array of options to pass
+     * @param array $opts Array of options to pass
      *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      *
      * @return string JSON or null
@@ -388,7 +388,7 @@ class Asana
      * There is presently no way to get a filtered set of stories.
      *
      * @param string $taskId
-     * @param array $opt Array of options to pass
+     * @param array $opts Array of options to pass
      *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      * @return string JSON or null
      */
@@ -403,7 +403,7 @@ class Asana
      * Returns a compact list of tags associated with the object.
      *
      * @param string $taskId
-     * @param array $opt Array of options to pass
+     * @param array $opts Array of options to pass
      *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      * @return string JSON or null
      */
@@ -468,7 +468,7 @@ class Asana
      * Returns single attachment information
      *
      * @param string $attachmentId
-     * @param array $opt Array of options to pass
+     * @param array $opts Array of options to pass
      *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      * @return string JSON or null
      */
@@ -511,7 +511,7 @@ class Asana
      * Returns task attachments information
      *
      * @param string $taskId
-     * @param array $opt Array of options to pass
+     * @param array $opts Array of options to pass
      *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      * @return string JSON or null
      */
@@ -584,7 +584,7 @@ class Asana
      * Returns the full record for a single project.
      *
      * @param string $projectId
-     * @param array $opt Array of options to pass
+     * @param array $opts Array of options to pass
      *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      * @return string JSON or null
      */
@@ -614,7 +614,7 @@ class Asana
      *
      * @param string $workspaceId
      * @param boolean $archived Return archived projects or not
-     * @param array $opt Array of options to pass
+     * @param array $opts Array of options to pass
      *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      * @return string JSON or null
      */
@@ -631,7 +631,7 @@ class Asana
      *
      * @param string $teamId
      * @param boolean $archived Return archived projects or not
-     * @param array $opt Array of options to pass
+     * @param array $opts Array of options to pass
      *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      * @return string JSON or null
      */
@@ -675,7 +675,7 @@ class Asana
      * Returns all unarchived tasks of a given project
      *
      * @param string $projectId
-     * @param array $opt Array of options to pass
+     * @param array $opts Array of options to pass
      *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      *
      * @return string JSON or null
@@ -695,7 +695,7 @@ class Asana
      * There is presently no way to get a filtered set of stories.
      *
      * @param string $projectId
-     * @param array $opt Array of options to pass
+     * @param array $opts Array of options to pass
      *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      * @return string JSON or null
      */
@@ -715,7 +715,7 @@ class Asana
      * pairs a task belongs to when applicable.
      *
      * @param string $projectId
-     * @param array $opt Array of options to pass
+     * @param array $opts Array of options to pass
      *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      * @return string JSON or null
      */
@@ -757,7 +757,7 @@ class Asana
      * Returns the full record for a single tag.
      *
      * @param string $tagId
-     * @param array $opt Array of options to pass
+     * @param array $opts Array of options to pass
      *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      * @return string JSON or null
      */
@@ -801,7 +801,7 @@ class Asana
      * @param string $name Tag name
      * @param array $data An array containing either workspace or organization and the id.
      * Example: array("workspace" => "3242349871");
-     * @param array $opt Array of options to pass
+     * @param array $opts Array of options to pass
      *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      *
      * @return string JSON or null
@@ -820,7 +820,7 @@ class Asana
      * Returns the list of all tasks with this tag. Tasks can have more than one tag at a time.
      *
      * @param string $tagId
-     * @param array $opt Array of options to pass
+     * @param array $opts Array of options to pass
      *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      * @return string JSON or null
      */
@@ -842,7 +842,7 @@ class Asana
      * Returns the full record for a single story.
      *
      * @param string $storyId
-     * @param array $opt Array of options to pass
+     * @param array $opts Array of options to pass
      *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      * @return string JSON or null
      */
@@ -899,7 +899,7 @@ class Asana
     /**
      * Returns all the workspaces.
      *
-     * @param array $opt Array of options to pass
+     * @param array $opts Array of options to pass
      *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      *
      * @return string JSON or null
@@ -934,7 +934,7 @@ class Asana
      *
      * @param string $workspaceId The id of the workspace
      * @param string $assignee Can be "me" or user ID
-     * @param array $opt Array of options to pass
+     * @param array $opts Array of options to pass
      *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      *
      * @return string JSON or null
@@ -979,7 +979,7 @@ class Asana
      * @param string $count The number of results to return with a minimum of 1 and a maximum of 100.
      *                      The default is 1 if this parameter is omitted.
      *                      If there are fewer results found than requested, all will be returned
-     * @param array $opt Array of options to pass
+     * @param array $opts Array of options to pass
      *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
      *
      * @return string JSON or null
@@ -992,38 +992,73 @@ class Asana
             'count' => $count
         ));
         $options = http_build_query($opts);
+
         return $this->askAsana($this->workspaceUrl . '/' . $workspaceId . '/typeahead?' . $options);
     }
 
-     /**
+    /**
      * **********************************
      * Webhooks functions
      * **********************************
      */
 
+    /**
+     * Creates a webhook.
+     *
+     * @param string $resourceId A resource ID to subscribe to. The resource can be a task or project.
+     * @param string $target The URL to receive the HTTP POST.
+     * @return string JSON or null
+     */
     public function createWebhook($resourceId, $target)
     {
         $data = array(
             'resource' => $resourceId,
-            'target'   => $target
+            'target' => $target
         );
+
         return $this->askAsana($this->webhooksUrl, $data, ASANA_METHOD_POST);
     }
 
-    public function getWebhooks($workspaceId, array $opts = array())
+    /**
+     * Returns the compact representation of all webhooks your app has registered for the authenticated user in the given workspace.
+     *
+     * @param string $workspaceId The workspace to query for webhooks in.
+     * @param string $resource Optional: Only return webhooks for the given resource.
+     * @param array $opts Array of options to pass
+     *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
+     *
+     * @return string JSON or null
+     */
+    public function getWebhooks($workspaceId, $resource = null, array $opts = array())
     {
         $opts = array_merge($opts, array(
             'workspace' => $workspaceId
         ));
+        if (!is_null($resource)) {
+            $opts['resource'] = $resource;
+        }
         $options = http_build_query($opts);
+
         return $this->askAsana($this->webhooksUrl . '?' . $options);
     }
 
+    /**
+     * Returns the full record for the given webhook.
+     *
+     * @param string $webhookId The webhook to get.
+     * @return string JSON or null
+     */
     public function getWebhook($webhookId)
     {
         return $this->askAsana($this->webhooksUrl . '/' . $webhookId);
     }
 
+    /**
+     * This method permanently removes a webhook.
+     *
+     * @param string $webhookId The webhook to delete.
+     * @return string JSON or null
+     */
     public function deleteWebhook($webhookId)
     {
         return $this->askAsana($this->webhooksUrl . '/' . $webhookId, null, ASANA_METHOD_DELETE);
