@@ -522,6 +522,36 @@ class Asana
     }
 
     /**
+     * Adds followers to a task
+     *
+     * @param string $taskId
+     * @param array $followerIds Array of follower ids
+     * @return string JSON or null
+     */
+    public function addFollowersToTask($taskId, array $followerIds)
+    {
+        $data = array('data' => array('followers' => $followerIds));
+        $data = json_encode($data);
+
+        return $this->askAsana($this->taskUrl . '/' . $taskId . '/addFollowers', $data, ASANA_METHOD_POST);
+    }
+
+    /**
+     * Removes followers from a task
+     *
+     * @param string $taskId
+     * @param array $followerIds Array of follower ids
+     * @return string JSON or null
+     */
+    public function removeFollowersFromTask($taskId, array $followerIds)
+    {
+        $data = array('data' => array('followers' => $followerIds));
+        $data = json_encode($data);
+
+        return $this->askAsana($this->taskUrl . '/' . $taskId . '/removeFollowers', $data, ASANA_METHOD_POST);
+    }
+
+    /**
      * **********************************
      * Projects functions
      * **********************************
