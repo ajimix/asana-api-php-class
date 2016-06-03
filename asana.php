@@ -4,11 +4,11 @@
  *
  * Read Asana API documentation for fully use this class https://asana.com/developers/api-reference/
  *
- * Copyright 2015 Ajimix
+ * Copyright 2016 Ajimix
  * Licensed under the Apache License 2.0
  *
  * Author: Ajimix [github.com/ajimix] and the contributors [github.com/ajimix/asana-api-php-class/contributors]
- * Version: 3.0.1
+ * Version: 3.1.0
  */
 
 // Define some constants for later usage.

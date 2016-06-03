@@ -5,7 +5,7 @@
  * The use of this class is totally optional and you can use any
  * other oauth implementation if prefered.
  *
- * Copyright 2014 Ajimix
+ * Copyright 2016 Ajimix
  * Licensed under the Apache License 2.0
  *
  * Authors: Ajimix [github.com/ajimix], Puchol [https://github.com/puchol]
@@ -148,7 +148,7 @@ class AsanaAuth
      */
     public function getData()
     {
-        if(!$this->hasError()){
+        if (!$this->hasError()){
             return json_decode($this->response);
         }
 

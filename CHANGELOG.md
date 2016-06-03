@@ -1,3 +1,8 @@
+3.1.0, 2016-06-03
+-----------------
+- Adds methods for adding and removing followers from a task
+- Adds methods for managing Asana webhooks
+
 3.0.1, 2016-06-03
 -----------------
 - Fix bug when using oauth and attaching files
