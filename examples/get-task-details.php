@@ -2,7 +2,7 @@
 require_once('../asana.php');
 
 // See class comments and Asana API for full info
-$asana = new Asana(array('apiKey' => 'XXXXXXX.XXXXXXXXXXXXXXXXXXXXXXXX')); // Your API Key, you can get it in Asana
+$asana = new Asana(array('personalAccessToken' => 'xxxxxxxxxxxxxxxxxxxxx')); // Create a personal access token in Asana or use OAuth
 
 $taskId = 10924433056204;
 $asana->getTask($taskId);

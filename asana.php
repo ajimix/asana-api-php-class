@@ -8,7 +8,7 @@
  * Licensed under the Apache License 2.0
  *
  * Author: Ajimix [github.com/ajimix] and the contributors [github.com/ajimix/asana-api-php-class/contributors]
- * Version: 3.1.0
+ * Version: 4.0.0
  */
 
 // Define some constants for later usage.
@@ -33,6 +33,7 @@ class Asana
 
     private $endPointUrl;
     private $apiKey;
+    private $personalAccessToken;
     private $accessToken;
     private $taskUrl;
     private $userUrl;
@@ -47,7 +48,7 @@ class Asana
     /**
      * Class constructor.
      *
-     * @param array $options Array of options containing an apiKey OR and accessToken, not both.
+     * @param array $options Array of options containing an apiKey OR a personalAccessToken OR an accessToken. Just one of them.
      *                       Can be also an string if you want to use an apiKey.
      */
     public function __construct($options)
@@ -57,7 +58,10 @@ class Asana
         if (is_string($options)) {
             $this->apiKey = $options;
         } elseif (is_array($options) && !empty($options['apiKey'])) {
+            trigger_error('API Key has been deprecated by Asana. Please use OAuth or Personal Access Tokens instead', E_USER_DEPRECATED);
             $this->apiKey = $options['apiKey'];
+        } elseif (is_array($options) && !empty($options['personalAccessToken'])) {
+            $this->personalAccessToken = $options['personalAccessToken'];
         } elseif (is_array($options) && !empty($options['accessToken'])) {
             $this->accessToken = $options['accessToken'];
         } else {
@@ -1088,13 +1092,21 @@ class Asana
             // Send with API key.
             curl_setopt($curl, CURLOPT_USERPWD, $this->apiKey);
             curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+
             // Don't send as json when attaching files to tasks.
             if (is_string($data) || empty($data['file'])) {
                 curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json')); // Send as JSON
             }
-        } elseif (!empty($this->accessToken)) {
+        } elseif (!empty($this->accessToken) || !empty($this->personalAccessToken)) {
+            if (!empty($this->accessToken)) {
+                $accessToken = $this->accessToken;
+            } else {
+                $accessToken = $this->personalAccessToken;
+            }
+
             // Send with auth token.
-            $headerData = array('Authorization: Bearer ' . $this->accessToken);
+            $headerData = array('Authorization: Bearer ' . $accessToken);
+
             // Don't send as json when attaching files to tasks.
             if (is_string($data) || empty($data['file'])) {
                 array_push($headerData, 'Content-Type: application/json');

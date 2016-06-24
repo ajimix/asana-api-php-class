@@ -1,3 +1,8 @@
+4.0.0, 2016-06-24
+-----------------
+- Deprecates API Key
+- Adds Personal Access Tokens support
+
 3.1.0, 2016-06-03
 -----------------
 - Adds methods for adding and removing followers from a task

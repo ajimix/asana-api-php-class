@@ -2,7 +2,7 @@
 require_once('../asana.php');
 
 // See class comments and Asana API for full info
-$asana = new Asana(array('apiKey' => 'XXXXXXXXXXXXXXXXXXX')); // Your API Key, you can get it in Asana
+$asana = new Asana(array('personalAccessToken' => 'xxxxxxxxxxxxxxxxxxxxx')); // Create a personal access token in Asana or use OAuth
 
 $workspaceId = 'XXXXXXXXXXXXXXXXXXX'; // The workspace where we want to create our task
 $projectId   = 'XXXXXXXXXXXXXXXXXXX'; // The project where we want to save our task

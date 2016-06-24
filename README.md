@@ -20,11 +20,11 @@ First declare the asana class
 
 ```php
 $asana = new Asana(array(
-    'apiKey' => 'YOUR_COOL_API_KEY'
+    'personalAccessToken' => 'GET_IT_FROM_ASANA'
 ));
 ```
 
-*Optionally you can pass an accessToken instead of an apiKey if you use OAuth. Read below for more info.*
+*Optionally you can pass an accessToken instead of a personalAccessToken if you use OAuth. Read below for more info.*
 
 #### Creating a task
 
@@ -85,7 +85,7 @@ Enjoy ;D
 
 ## Using Asana OAuth tokens
 
-To use this API you can also create an App on Asana, in order to get an oAuth access token that gives you the same access as with an API key. Include the class:
+To use this API, you can also create an App on Asana to get an oAuth access token, then include the class:
 
 ```php
 require_once('asana-oauth.php');

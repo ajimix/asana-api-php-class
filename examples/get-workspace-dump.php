@@ -3,7 +3,7 @@
 require_once('../asana.php');
 
 // See class comments and Asana API for full info
-$asana = new Asana(array('apiKey' => 'XXXXXXXXXXXXX')); // Your API Key, you can get it in Asana
+$asana = new Asana(array('personalAccessToken' => 'xxxxxxxxxxxxxxxxxxxxx')); // Create a personal access token in Asana or use OAuth
 
 $workspaceId = 42; // The workspace to dump to JSON
 
