@@ -8,7 +8,7 @@
  * Licensed under the Apache License 2.0
  *
  * Author: Ajimix [github.com/ajimix] and the contributors [github.com/ajimix/asana-api-php-class/contributors]
- * Version: 4.0.0
+ * Version: 4.1.0
  */
 
 // Define some constants for later usage.
@@ -874,15 +874,16 @@ class Asana
     {
         return $this->askAsana($this->organizationsUrl . '/' . $organizationId . '/teams');
     }
-    
+
     /**
      * Returns all teams the logged in user is associated with
+     *
      * @param string $organizationId
+     * @return string JSON or null
      */
-
     public function getMyTeams($organizationId)
     {
-        return $this->askAsana($this->userUrl.'/me/teams?organization='.$organizationId);
+        return $this->askAsana($this->userUrl . '/me/teams?organization=' . $organizationId);
     }
 
     /**

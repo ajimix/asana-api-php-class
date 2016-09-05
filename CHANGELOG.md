@@ -1,3 +1,7 @@
+4.1.0, 2016-09-05
+-----------------
+- Adds method to return current user teams: getMyTeams
+
 4.0.0, 2016-06-24
 -----------------
 - Deprecates API Key
