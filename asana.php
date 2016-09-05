@@ -874,7 +874,16 @@ class Asana
     {
         return $this->askAsana($this->organizationsUrl . '/' . $organizationId . '/teams');
     }
+    
+    /**
+     * Returns all teams the logged in user is associated with
+     * @param string $organizationId
+     */
 
+    public function getMyTeams($organizationId)
+    {
+        return $this->askAsana($this->userUrl.'/me/teams?organization='.$organizationId);
+    }
 
     /**
      * Function to create a team in an Organization.
