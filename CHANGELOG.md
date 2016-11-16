@@ -1,3 +1,8 @@
+4.2.0, 2016-11-16
+-----------------
+- Adds fast API open beta option
+- $timeout, $debug and $advDebug are now public properties so they can be changed without the need to edit class code
+
 4.1.0, 2016-09-05
 -----------------
 - Adds method to return current user teams: getMyTeams

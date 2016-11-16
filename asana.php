@@ -8,7 +8,7 @@
  * Licensed under the Apache License 2.0
  *
  * Author: Ajimix [github.com/ajimix] and the contributors [github.com/ajimix/asana-api-php-class/contributors]
- * Version: 4.1.0
+ * Version: 4.2.0
  */
 
 // Define some constants for later usage.
@@ -22,9 +22,10 @@ define('ASANA_RETURN_TYPE_ARRAY', 3);
 
 class Asana
 {
-    private $timeout = 10;
-    private $debug = false;
-    private $advDebug = false; // Note that enabling advanced debug will include debugging information in the response possibly breaking up your code
+    public $fastAPI = false; // Use Asana fast API version, currently in open beta: https://asana.com/developers/feed/asana-fast-api-open-beta
+    public $timeout = 10;
+    public $debug = false;
+    public $advDebug = false; // Note that enabling advanced debug will include debugging information in the response possibly breaking up your code
     private $asanaApiVersion = '1.0';
 
     private $response;
@@ -1089,6 +1090,7 @@ class Asana
      */
     private function askAsana($url, $data = null, $method = ASANA_METHOD_GET)
     {
+        $headerData = array();
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // Don't print the result
@@ -1105,7 +1107,7 @@ class Asana
 
             // Don't send as json when attaching files to tasks.
             if (is_string($data) || empty($data['file'])) {
-                curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json')); // Send as JSON
+                array_push($headerData, 'Content-Type: application/json'); // Send as JSON
             }
         } elseif (!empty($this->accessToken) || !empty($this->personalAccessToken)) {
             if (!empty($this->accessToken)) {
@@ -1115,13 +1117,12 @@ class Asana
             }
 
             // Send with auth token.
-            $headerData = array('Authorization: Bearer ' . $accessToken);
+            array_push($headerData, 'Authorization: Bearer ' . $accessToken);
 
             // Don't send as json when attaching files to tasks.
             if (is_string($data) || empty($data['file'])) {
                 array_push($headerData, 'Content-Type: application/json');
             }
-            curl_setopt($curl, CURLOPT_HTTPHEADER, $headerData);
         }
 
         if ($this->advDebug) {
@@ -1139,6 +1140,14 @@ class Asana
         }
         if (!is_null($data) && ($method == ASANA_METHOD_POST || $method == ASANA_METHOD_PUT)) {
             curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+        }
+
+        if ($this->fastAPI) {
+            array_push($headerData, 'Asana-Fast-Api: true');
+        }
+
+        if (sizeof($headerData) > 0) {
+            curl_setopt($curl, CURLOPT_HTTPHEADER, $headerData);
         }
 
         try {
