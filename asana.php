@@ -1213,7 +1213,7 @@ class Asana
     {
         if (!$this->hasError()) {
             $array  = $this->returnType == ASANA_RETURN_TYPE_ARRAY;
-            $return = json_decode($this->response, $array);
+            $return = json_decode($this->response, $array, 512, JSON_BIGINT_AS_STRING);
 
             if ($array && isset($return['data'])){
                 return $return['data'];
