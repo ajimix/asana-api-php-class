@@ -1010,6 +1010,48 @@ class Asana
 
         return $this->askAsana($this->workspaceUrl . '/' . $workspaceId . '/typeahead?' . $options);
     }
+	
+	
+	/* Returns search for objects within page limit. Get list of tasks within project.
+     * 
+     * @param string $projectId The id of the project
+     * @param string $pageLimit The number of objects to return per page. The value must be between 1 and 100
+     * @param string $pageOffset An offset to the next page returned by the API
+     * @return string JSON or null
+     */
+    public function getProjectsTaskWithPageLimit($projectId, $pageLimit, $pageOffset)
+    {
+        if($pageLimit > 100){
+            return "limit: Value must be <= 100: $pageLimit is not accepted";
+        }
+        if($pageOffset == ""){
+            return $this->askAsana($this->taskUrl . '?project=' . $projectId . '&limit=' . $pageLimit);
+        }else{
+            return $this->askAsana($this->taskUrl . '?project=' . $projectId . '&limit=' . $pageLimit . '&offset=' . $pageOffset);
+        }
+    }
+    
+	
+    /* Returns search for objects within page limit. Get list of tasks having certain tag.
+     * 
+     * @param string $tagId The id of the tag
+     * @param string $pageLimit The number of objects to return per page. The value must be between 1 and 100
+     * @param string $pageOffset An offset to the next page returned by the API
+     * @return string JSON or null
+     */
+    public function getTagsTaskWithPageLimit($tagId, $pageLimit, $pageOffset)
+    {
+        if($pageLimit > 100){
+            return "limit: Value must be <= 100: $pageLimit is not accepted";
+        }
+        
+        if($pageOffset == ""){
+            return $this->askAsana($this->taskUrl . '?tag=' . $tagId . '&limit=' . $pageLimit);
+        }else{
+            return $this->askAsana($this->taskUrl . '?tag=' . $tagId . '&limit=' . $pageLimit . '&offset=' . $pageOffset);
+        }
+    }
+	
 
     /**
      * **********************************
