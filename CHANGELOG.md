@@ -1,3 +1,7 @@
+4.3.0, 2017-02-10
+-----------------
+- getData now converts floats to strings inside the array, so ID's are returned as a proper string
+
 4.2.0, 2016-11-16
 -----------------
 - Adds fast API open beta option
