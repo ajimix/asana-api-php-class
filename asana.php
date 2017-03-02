@@ -88,6 +88,7 @@ class Asana
         $this->tagsUrl = $this->endPointUrl . 'tags';
         $this->organizationsUrl = $this->endPointUrl . 'organizations';
         $this->attachmentsUrl = $this->endPointUrl . 'attachments';
+        $this->customFieldsUrl = $this->endPointUrl . 'custom_fields';
         $this->webhooksUrl = $this->endPointUrl . 'webhooks';
     }
 
@@ -738,6 +739,21 @@ class Asana
     }
 
     /**
+     * Returns the list of all custom fields associated with the project.
+     *
+     * @param string $projectId
+     * @param array $opts Array of options to pass
+     *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
+     * @return string JSON or null
+     */
+    public function getProjectCustomFields($projectId, array $opts = array())
+    {
+        $options = http_build_query($opts);
+
+        return $this->askAsana($this->projectsUrl . '/' . $projectId . '/custom_field_settings?' . $options);
+    }
+
+    /**
      * Adds a comment to a project
      * The comment will be authored by the authorized user, and timestamped when the server receives the request.
      *
@@ -990,6 +1006,18 @@ class Asana
     }
 
     /**
+     * Returns all custom fields in a workspace.
+     * NOTE: Custom fields are only available for Asana premium accounts.
+     *
+     * @param string $workspaceId The id of the workspace
+     * @return string JSON or null
+     */
+    public function getWorkspaceCustomFields($workspaceId)
+    {
+        return $this->askAsana($this->workspaceUrl . '/' . $workspaceId . '/custom_fields');
+    }
+
+    /**
      * Returns search for objects from a single workspace.
      *
      * @param string $workspaceId The id of the workspace
@@ -1016,6 +1044,74 @@ class Asana
 
         return $this->askAsana($this->workspaceUrl . '/' . $workspaceId . '/typeahead?' . $options);
     }
+
+
+    /**
+     * **********************************
+     * Custom Fields functions
+     * **********************************
+     */
+
+     /**
+      * Returns custom field information
+      *
+      * @param string $customFieldId
+      * @param array $opts Array of options to pass
+      *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
+      * @return string JSON or null
+      */
+     public function getCustomField($customFieldId, array $opts = array())
+     {
+         $options = http_build_query($opts);
+
+         return $this->askAsana($this->customFieldsUrl . '/' . $customFieldId . '?' . $options);
+     }
+
+     /**
+      * Adds a custom field to a project. If successful, will return success and an empty data block.
+      *
+      * @param string $projectId The project to associate the custom field with
+      * @param string $customFieldId The id of the custom field to associate with this project.
+      * @param boolean $isImportant Whether this field should be considered important to this project.
+      * @param string $insertBefore An id of a Custom Field Settings on this project, before which the new Custom Field Settings will be added.
+      *                             insert_before and insert_after parameters cannot both be specified.
+      * @param string $insertAfter An id of a Custom Field Settings on this project, after which the new Custom Field Settings will be added.
+      *                            insert_before and insert_after parameters cannot both be specified.
+      * @return string JSON or null
+      */
+     public function addCustomFieldToProject($projectId, $customFieldId, $isImportant, $insertBefore = null, $insertAfter = null)
+     {
+         $data = array(
+           'custom_field' => $customFieldId,
+           'is_important' => is_bool($isImportant) ? var_export($isImportant, true) : $isImportant
+         );
+         if (!is_null($insertBefore)) {
+           $data['insert_before'] = $insertBefore;
+         } else if (!is_null($insertAfter)) {
+           $data['insert_after'] = $insertAfter;
+         }
+         $data = json_encode(array('data' => $data));
+
+         return $this->askAsana($this->projectsUrl . '/' . $projectId . '/addCustomFieldSetting', $data, ASANA_METHOD_POST);
+     }
+
+     /**
+      * Removes a custom field from a project. If successful, will return success and an empty data block.
+      *
+      * @param string $projectId The project from where to remove the custom field
+      * @param string $customFieldId The id of the custom field to remove from the project
+      * @return string JSON or null
+      */
+     public function removeCustomFieldFromProject($projectId, $customFieldId)
+     {
+         $data = array('data' => array(
+           'custom_field' => $customFieldId
+         ));
+         $data = json_encode($data);
+
+         return $this->askAsana($this->projectsUrl . '/' . $projectId . '/removeCustomFieldSetting', $data, ASANA_METHOD_POST);
+     }
+
 
     /**
      * **********************************
