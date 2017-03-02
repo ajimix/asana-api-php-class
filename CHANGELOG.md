@@ -1,3 +1,10 @@
+5.0.0, 2017-03-02
+-----------------
+- Drop support for PHP 5.3, minimum requirement now is PHP 5.4
+- Adds custom fields support (only available for Asana premium accounts)
+- getProjects now can receive an array of options
+- removeProjectToTask deprecated, please use removeProjectFromTask
+
 4.3.0, 2017-02-10
 -----------------
 - getData now converts floats to strings inside the array, so ID's are returned as a proper string
