@@ -19,9 +19,9 @@ Finally require the asana.php file.
 First declare the asana class
 
 ```php
-$asana = new Asana(array(
+$asana = new Asana([
     'personalAccessToken' => 'GET_IT_FROM_ASANA'
-));
+]);
 ```
 
 *Optionally you can pass an accessToken instead of a personalAccessToken if you use OAuth. Read below for more info.*
@@ -29,17 +29,17 @@ $asana = new Asana(array(
 #### Creating a task
 
 ```php
-$asana->createTask(array(
+$asana->createTask([
    'workspace' => '176825', // Workspace ID
    'name' => 'Hello World!', // Name of task
    'assignee' => 'bigboss@bigcompany.com', // Assign task to...
-   'followers' => array('3714136', '5900783') // We add some followers to the task... (this time by ID)
-));
+   'followers' => ['3714136', '5900783'] // We add some followers to the task... (this time by ID)
+]);
 ```
 
-Creating a task for another assignee than yourself will mark the task as private by 
-default. This results in the task not being available for modification through the 
-API anymore. Take a look at the [API Reference](https://asana.com/developers/api-reference/tasks) 
+Creating a task for another assignee than yourself will mark the task as private by
+default. This results in the task not being available for modification through the
+API anymore. Take a look at the [API Reference](https://asana.com/developers/api-reference/tasks)
 for more fields of the Task you can directly pass to `createTask`.
 
 #### Adding task to project
@@ -63,10 +63,10 @@ $asana->getProjects();
 #### Updating project info
 
 ```php
-$asana->updateProject('COOL_PROJECT_ID', array(
+$asana->updateProject('COOL_PROJECT_ID', [
     'name' => 'This is a new cool project!',
     'notes' => 'At first, it wasn\'t cool, but after this name change, it is!'
-));
+]);
 ```
 
 #### Do more
@@ -125,7 +125,7 @@ For a more detailes instructions on how to make oauth work check the example in 
 
 ### Copyright and license
 
-Copyright 2016 Ajimix
+Copyright 2017 Ajimix
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this work except in compliance with the License.
