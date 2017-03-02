@@ -979,7 +979,7 @@ class Asana
     }
 
     /**
-     * Returns users of all workspace.
+     * Returns all users of a workspace.
      *
      * @param string $workspaceId The id of the workspace
      * @return string JSON or null
