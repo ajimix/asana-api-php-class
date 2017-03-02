@@ -36,10 +36,10 @@ class Asana
     private $apiKey;
     private $personalAccessToken;
     private $accessToken;
-    private $taskUrl;
-    private $userUrl;
+    private $tasksUrl;
+    private $usersUrl;
     private $projectsUrl;
-    private $workspaceUrl;
+    private $workspacesUrl;
     private $teamsUrl;
     private $storiesUrl;
     private $tagsUrl;
@@ -79,10 +79,10 @@ class Asana
         }
 
         $this->endPointUrl = 'https://app.asana.com/api/' . $this->asanaApiVersion . '/';
-        $this->taskUrl = $this->endPointUrl . 'tasks';
-        $this->userUrl = $this->endPointUrl . 'users';
+        $this->tasksUrl = $this->endPointUrl . 'tasks';
+        $this->usersUrl = $this->endPointUrl . 'users';
         $this->projectsUrl = $this->endPointUrl . 'projects';
-        $this->workspaceUrl = $this->endPointUrl . 'workspaces';
+        $this->workspacesUrl = $this->endPointUrl . 'workspaces';
         $this->teamsUrl = $this->endPointUrl . 'teams';
         $this->storiesUrl = $this->endPointUrl . 'stories';
         $this->tagsUrl = $this->endPointUrl . 'tags';
@@ -116,7 +116,7 @@ class Asana
             $userId = 'me';
         }
 
-        return $this->askAsana($this->userUrl . '/' . $userId . '?' . $options);
+        return $this->askAsana($this->usersUrl . '/' . $userId . '?' . $options);
     }
 
     /**
@@ -132,7 +132,7 @@ class Asana
      */
     public function getUsers(array $opts = array())
     {
-        return $this->askAsana($this->userUrl . '?' . http_build_query($opts));
+        return $this->askAsana($this->usersUrl . '?' . http_build_query($opts));
     }
 
 
@@ -170,7 +170,7 @@ class Asana
         $data = json_encode($data);
         $options = http_build_query($opts);
 
-        return $this->askAsana($this->taskUrl . '?' . $options, $data, ASANA_METHOD_POST);
+        return $this->askAsana($this->tasksUrl . '?' . $options, $data, ASANA_METHOD_POST);
     }
 
     /**
@@ -185,7 +185,7 @@ class Asana
     {
         $options = http_build_query($opts);
 
-        return $this->askAsana($this->taskUrl . '/' . $taskId . '?' . $options);
+        return $this->askAsana($this->tasksUrl . '/' . $taskId . '?' . $options);
     }
 
     /**
@@ -215,7 +215,7 @@ class Asana
         $data = json_encode($data);
         $options = http_build_query($opts);
 
-        return $this->askAsana($this->taskUrl . '/' . $parentId . '/subtasks?' . $options, $data, ASANA_METHOD_POST);
+        return $this->askAsana($this->tasksUrl . '/' . $parentId . '/subtasks?' . $options, $data, ASANA_METHOD_POST);
     }
 
     /**
@@ -230,7 +230,7 @@ class Asana
     {
         $options = http_build_query($opts);
 
-        return $this->askAsana($this->taskUrl . '/' . $taskId . '/subtasks?' . $options);
+        return $this->askAsana($this->tasksUrl . '/' . $taskId . '/subtasks?' . $options);
     }
 
     /**
@@ -250,7 +250,7 @@ class Asana
         $data = json_encode($data);
         $options = http_build_query($opts);
 
-        return $this->askAsana($this->taskUrl . '/' . $taskId . '/setParent?' . $options, $data, ASANA_METHOD_POST);
+        return $this->askAsana($this->tasksUrl . '/' . $taskId . '/setParent?' . $options, $data, ASANA_METHOD_POST);
     }
 
     /**
@@ -265,7 +265,7 @@ class Asana
         $data = array('data' => $data);
         $data = json_encode($data);
 
-        return $this->askAsana($this->taskUrl . '/' . $taskId, $data, ASANA_METHOD_PUT);
+        return $this->askAsana($this->tasksUrl . '/' . $taskId, $data, ASANA_METHOD_PUT);
     }
 
     /**
@@ -276,7 +276,7 @@ class Asana
      */
     public function deleteTask($taskId)
     {
-        return $this->askAsana($this->taskUrl . '/' . $taskId, null, ASANA_METHOD_DELETE);
+        return $this->askAsana($this->tasksUrl . '/' . $taskId, null, ASANA_METHOD_DELETE);
     }
 
     /**
@@ -300,7 +300,7 @@ class Asana
         }
         $data = json_encode($data);
 
-        return $this->askAsana($this->taskUrl . '/' . $taskToMove . '/addProject', $data, ASANA_METHOD_POST);
+        return $this->askAsana($this->tasksUrl . '/' . $taskToMove . '/addProject', $data, ASANA_METHOD_POST);
     }
 
     /**
@@ -315,7 +315,7 @@ class Asana
     {
         $options = http_build_query($opts);
 
-        return $this->askAsana($this->taskUrl . '/' . $taskId . '/projects?' . $options);
+        return $this->askAsana($this->tasksUrl . '/' . $taskId . '/projects?' . $options);
     }
 
     /**
@@ -332,7 +332,7 @@ class Asana
         $data = array('data' => array_merge($opts, array('project' => $projectId)));
         $data = json_encode($data);
 
-        return $this->askAsana($this->taskUrl . '/' . $taskId . '/addProject', $data, ASANA_METHOD_POST);
+        return $this->askAsana($this->tasksUrl . '/' . $taskId . '/addProject', $data, ASANA_METHOD_POST);
     }
 
     /**
@@ -347,7 +347,7 @@ class Asana
         $data = array('data' => array('project' => $projectId));
         $data = json_encode($data);
 
-        return $this->askAsana($this->taskUrl . '/' . $taskId . '/removeProject', $data, ASANA_METHOD_POST);
+        return $this->askAsana($this->tasksUrl . '/' . $taskId . '/removeProject', $data, ASANA_METHOD_POST);
     }
 
     /**
@@ -384,7 +384,7 @@ class Asana
             $url = '?' . substr($url, 1);
         }
 
-        return $this->askAsana($this->taskUrl . $url);
+        return $this->askAsana($this->tasksUrl . $url);
     }
 
     /**
@@ -402,7 +402,7 @@ class Asana
     {
         $options = http_build_query($opts);
 
-        return $this->askAsana($this->taskUrl . '/' . $taskId . '/stories?' . $options);
+        return $this->askAsana($this->tasksUrl . '/' . $taskId . '/stories?' . $options);
     }
 
     /**
@@ -417,7 +417,7 @@ class Asana
     {
         $options = http_build_query($opts);
 
-        return $this->askAsana($this->taskUrl . '/' . $taskId . '/tags?' . $options);
+        return $this->askAsana($this->tasksUrl . '/' . $taskId . '/tags?' . $options);
     }
 
     /**
@@ -437,7 +437,7 @@ class Asana
         );
         $data = json_encode($data);
 
-        return $this->askAsana($this->taskUrl . '/' . $taskId . '/stories', $data, ASANA_METHOD_POST);
+        return $this->askAsana($this->tasksUrl . '/' . $taskId . '/stories', $data, ASANA_METHOD_POST);
     }
 
     /**
@@ -452,7 +452,7 @@ class Asana
         $data = array('data' => array('tag' => $tagId));
         $data = json_encode($data);
 
-        return $this->askAsana($this->taskUrl . '/' . $taskId . '/addTag', $data, ASANA_METHOD_POST);
+        return $this->askAsana($this->tasksUrl . '/' . $taskId . '/addTag', $data, ASANA_METHOD_POST);
     }
 
     /**
@@ -467,7 +467,7 @@ class Asana
         $data = array('data' => array('tag' => $tagId));
         $data = json_encode($data);
 
-        return $this->askAsana($this->taskUrl . '/' . $taskId . '/removeTag', $data, ASANA_METHOD_POST);
+        return $this->askAsana($this->tasksUrl . '/' . $taskId . '/removeTag', $data, ASANA_METHOD_POST);
     }
 
     /**
@@ -510,7 +510,7 @@ class Asana
              }
          }
 
-         return $this->askAsana($this->taskUrl . '/' . $taskId . '/attachments', $data, ASANA_METHOD_POST);
+         return $this->askAsana($this->tasksUrl . '/' . $taskId . '/attachments', $data, ASANA_METHOD_POST);
      }
 
     /**
@@ -525,7 +525,7 @@ class Asana
     {
         $options = http_build_query($opts);
 
-        return $this->askAsana($this->taskUrl . '/' . $taskId . '/attachments?' . $options);
+        return $this->askAsana($this->tasksUrl . '/' . $taskId . '/attachments?' . $options);
     }
 
     /**
@@ -540,7 +540,7 @@ class Asana
         $data = array('data' => array('followers' => $followerIds));
         $data = json_encode($data);
 
-        return $this->askAsana($this->taskUrl . '/' . $taskId . '/addFollowers', $data, ASANA_METHOD_POST);
+        return $this->askAsana($this->tasksUrl . '/' . $taskId . '/addFollowers', $data, ASANA_METHOD_POST);
     }
 
     /**
@@ -555,7 +555,7 @@ class Asana
         $data = array('data' => array('followers' => $followerIds));
         $data = json_encode($data);
 
-        return $this->askAsana($this->taskUrl . '/' . $taskId . '/removeFollowers', $data, ASANA_METHOD_POST);
+        return $this->askAsana($this->tasksUrl . '/' . $taskId . '/removeFollowers', $data, ASANA_METHOD_POST);
     }
 
     /**
@@ -696,7 +696,7 @@ class Asana
     {
         $options = http_build_query($opts);
 
-        return $this->askAsana($this->taskUrl . '?project=' . $projectId . '&' . $options);
+        return $this->askAsana($this->tasksUrl . '?project=' . $projectId . '&' . $options);
     }
 
     /**
@@ -906,7 +906,7 @@ class Asana
      */
     public function getMyTeams($organizationId)
     {
-        return $this->askAsana($this->userUrl . '/me/teams?organization=' . $organizationId);
+        return $this->askAsana($this->usersUrl . '/me/teams?organization=' . $organizationId);
     }
 
     /**
@@ -945,7 +945,7 @@ class Asana
     {
         $options = http_build_query($opts);
 
-        return $this->askAsana($this->workspaceUrl . '?' . $options);
+        return $this->askAsana($this->workspacesUrl . '?' . $options);
     }
 
     /**
@@ -962,7 +962,7 @@ class Asana
         $data = array('data' => $data);
         $data = json_encode($data);
 
-        return $this->askAsana($this->workspaceUrl . '/' . $workspaceId, $data, ASANA_METHOD_PUT);
+        return $this->askAsana($this->workspacesUrl . '/' . $workspaceId, $data, ASANA_METHOD_PUT);
     }
 
     /**
@@ -980,7 +980,7 @@ class Asana
     {
         $options = http_build_query($opts);
 
-        return $this->askAsana($this->taskUrl . '?workspace=' . $workspaceId . '&assignee=' . $assignee . '&' . $options);
+        return $this->askAsana($this->tasksUrl . '?workspace=' . $workspaceId . '&assignee=' . $assignee . '&' . $options);
     }
 
     /**
@@ -991,7 +991,7 @@ class Asana
      */
     public function getWorkspaceTags($workspaceId)
     {
-        return $this->askAsana($this->workspaceUrl . '/' . $workspaceId . '/tags');
+        return $this->askAsana($this->workspacesUrl . '/' . $workspaceId . '/tags');
     }
 
     /**
@@ -1002,7 +1002,7 @@ class Asana
      */
     public function getWorkspaceUsers($workspaceId)
     {
-        return $this->askAsana($this->workspaceUrl . '/' . $workspaceId . '/users');
+        return $this->askAsana($this->workspacesUrl . '/' . $workspaceId . '/users');
     }
 
     /**
@@ -1014,7 +1014,7 @@ class Asana
      */
     public function getWorkspaceCustomFields($workspaceId)
     {
-        return $this->askAsana($this->workspaceUrl . '/' . $workspaceId . '/custom_fields');
+        return $this->askAsana($this->workspacesUrl . '/' . $workspaceId . '/custom_fields');
     }
 
     /**
@@ -1042,7 +1042,7 @@ class Asana
         ));
         $options = http_build_query($opts);
 
-        return $this->askAsana($this->workspaceUrl . '/' . $workspaceId . '/typeahead?' . $options);
+        return $this->askAsana($this->workspacesUrl . '/' . $workspaceId . '/typeahead?' . $options);
     }
 
 
