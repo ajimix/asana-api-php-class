@@ -342,12 +342,21 @@ class Asana
      * @param string $projectId
      * @return string JSON or null
      */
-    public function removeProjectToTask($taskId, $projectId)
+    public function removeProjectFromTask($taskId, $projectId)
     {
         $data = array('data' => array('project' => $projectId));
         $data = json_encode($data);
 
         return $this->askAsana($this->tasksUrl . '/' . $taskId . '/removeProject', $data, ASANA_METHOD_POST);
+    }
+
+    /**
+     * Deprecated function, please use removeProjectFromTask
+     */
+    public function removeProjectToTask($taskId, $projectId) {
+      trigger_error('Function is deprecated, please use removeProjectFromTask', E_USER_NOTICE);
+
+      return $this->removeProjectFromTask($taskId, $projectId);
     }
 
     /**
