@@ -3,8 +3,6 @@
 A PHP class that acts as wrapper for Asana API.  
 Lets make things easy! :)
 
-It is licensed under the Apache 2 license and is Copyrighted 2018 Ajimix
-
 ## Installing
 
 Choose your favorite flavour
@@ -24,7 +22,7 @@ $asana = new Asana([
 ]);
 ```
 
-*Optionally you can pass an accessToken instead of a personalAccessToken if you use OAuth. Read below for more info.*
+*Optionally you can pass an accessToken instead of a personalAccessToken if you use OAuth. Read [Using Asana Oauth Tokens](#using-asana-oauth-tokens) below for more info.*
 
 #### Creating a task
 
@@ -125,7 +123,7 @@ For a more detailes instructions on how to make oauth work check the example in 
 
 ### Copyright and license
 
-Copyright 2017 Ajimix
+Copyright 2018 Ajimix
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this work except in compliance with the License.
