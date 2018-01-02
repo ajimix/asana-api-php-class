@@ -386,6 +386,17 @@ class Asana
         $url .= $filter['project'] !== '' ? '&project=' . $filter['project'] : '';
         $url .= $filter['workspace'] !== '' ? '&workspace=' . $filter['workspace'] : '';
 
+        $optional_filters = array(
+          'completed',
+          'completed_at',
+          'completed_since',
+          'modified_since',
+        );
+
+        foreach ($optional_filters as $optfilter) {
+          $url .= isset($filter[$optfilter]) ? '&' . $optfilter . '=' . $filter[$optfilter] : '';
+        }
+
         if (count($opts) > 0) {
             $url .= '&' . http_build_query($opts);
         }
