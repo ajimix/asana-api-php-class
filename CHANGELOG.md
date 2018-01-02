@@ -1,3 +1,7 @@
+5.1.0, 2018-01-02
+-----------------
+- getTasksByFilter now allows the following optional filters: 'completed', 'completed_at', 'completed_since', 'modified_since'
+
 5.0.0, 2017-03-02
 -----------------
 - Drop support for PHP 5.3, minimum requirement now is PHP 5.4
