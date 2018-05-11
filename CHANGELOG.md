@@ -1,3 +1,11 @@
+6.0.0, 2018-05-11
+-----------------
+- Adds section methods
+- Enables API calls SSL verification
+- Enables OAuth SSL verification
+- Adds additional optional filters to getTasksByFilter
+- Minor improvements
+
 5.1.1, 2018-05-11
 -----------------
 - Fixes createWebhook method
