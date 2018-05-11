@@ -1,6 +1,6 @@
 # Asana API PHP class
 
-A dependency free, lightweight PHP class that acts as wrapper for Asana API.
+A dependency free, lightweight PHP class that acts as wrapper for Asana API.  
 Lets make things fast and easy! :)
 
 ## Installing
