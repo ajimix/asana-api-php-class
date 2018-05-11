@@ -1,13 +1,13 @@
 # Asana API PHP class
 
-A PHP class that acts as wrapper for Asana API.  
-Lets make things easy! :)
+A dependency free, lightweight PHP class that acts as wrapper for Asana API.
+Lets make things fast and easy! :)
 
 ## Installing
 
-Choose your favorite flavour
+Choose your favourite flavour
 
-- Download the php class from github.
+- Download the php class from Github.
 - Or use [Packagist](https://packagist.org/packages/ajimix/asana-api-php-class) PHP package manager.
 
 Finally require the asana.php file.
@@ -69,9 +69,9 @@ $asana->updateProject('COOL_PROJECT_ID', [
 
 #### Do more
 
-There are a [lot more methods](https://github.com/ajimix/asana-api-php-class/blob/master/asana.php) to do multiple things with asana.
+There are a [lot more methods](https://github.com/ajimix/asana-api-php-class/blob/master/asana.php) to do almost everything with asana.
 
-See the examples [inside examples folder](https://github.com/ajimix/asana-api-php-class/tree/master/examples), read the comments on the [class file]((https://github.com/ajimix/asana-api-php-class/blob/master/asana.php)) for class magic and read [Asana API documentation](http://developer.asana.com/documentation/) if you want to be a master :D
+See the examples [inside examples folder](https://github.com/ajimix/asana-api-php-class/tree/master/examples), read the comments on the [class file]((https://github.com/ajimix/asana-api-php-class/blob/master/asana.php)) for class magic and read [Asana API documentation](http://developer.asana.com/documentation/) if you want to be a master.
 
 If a method returned some data, you can always retrieve it by calling.
 
