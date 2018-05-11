@@ -47,6 +47,7 @@ class Asana
     private $attachmentsUrl;
     private $customFieldsUrl;
     private $webhooksUrl;
+    private $sectionsUrl;
 
     /**
      * Class constructor.
@@ -92,6 +93,7 @@ class Asana
         $this->attachmentsUrl = $this->endPointUrl . 'attachments';
         $this->customFieldsUrl = $this->endPointUrl . 'custom_fields';
         $this->webhooksUrl = $this->endPointUrl . 'webhooks';
+        $this->sectionsUrl = $this->endPointUrl . 'sections';
     }
 
 
@@ -1067,6 +1069,56 @@ class Asana
         $options = http_build_query($opts);
 
         return $this->askAsana($this->workspacesUrl . '/' . $workspaceId . '/typeahead?' . $options);
+    }
+
+
+    /**
+     * **********************************
+     * Section functions
+     * **********************************
+     */
+
+    /**
+     * Returns the full record for a single section.
+     *
+     * @param string $sectionId
+     * @param array $opts Array of options to pass
+     *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
+     * @return string JSON or null
+     */
+    public function getSection($sectionId, array $opts = array())
+    {
+        $options = http_build_query($opts);
+
+        return $this->askAsana($this->sectionsUrl . '/' . $sectionId . '?' . $options);
+    }
+
+    /**
+     * This method modifies the fields of a section provided in the request, then returns the full updated record.
+     *
+     * @param string $sectionId
+     * @param array $data An array containing fields to update, see Asana API if needed.
+     * Example: array('name' => 'Test');
+     *
+     * @return string JSON or null
+     */
+    public function updateSection($sectionId, $data)
+    {
+        $data = array('data' => $data);
+        $data = json_encode($data);
+
+        return $this->askAsana($this->sectionsUrl . '/' . $sectionId, $data, ASANA_METHOD_PUT);
+    }
+
+    /**
+     * Deletes a section.
+     *
+     * @param string $sectionId
+     * @return string Empty if success
+     */
+    public function deleteSection($sectionId)
+    {
+        return $this->askAsana($this->sectionsUrl . '/' . $sectionId, null, ASANA_METHOD_DELETE);
     }
 
 
