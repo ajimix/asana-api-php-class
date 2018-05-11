@@ -684,7 +684,7 @@ class Asana
      *
      * @param string $projectId
      * @param array $data An array containing fields to update, see Asana API if needed.
-     * Example: array("name" => "Test", "notes" => "It's a test project");
+     * Example: array('name' => 'Test', 'notes' => 'It\'s a test project');
      *
      * @return string JSON or null
      */
