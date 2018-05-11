@@ -45,6 +45,8 @@ class Asana
     private $tagsUrl;
     private $organizationsUrl;
     private $attachmentsUrl;
+    private $customFieldsUrl;
+    private $webhooksUrl;
 
     /**
      * Class constructor.
