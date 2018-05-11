@@ -1,3 +1,7 @@
+5.1.1, 2018-05-11
+-----------------
+- Fixes createWebhook method
+
 5.1.0, 2018-01-02
 -----------------
 - getTasksByFilter now allows the following optional filters: 'completed', 'completed_at', 'completed_since', 'modified_since'
