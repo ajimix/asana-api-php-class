@@ -368,9 +368,9 @@ class Asana
      * @param array $filter The filter with optional values.
      *
      * array(
-     *     "assignee" => "",
-     *     "project" => 0,
-     *     "workspace" => 0
+     *     'assignee' => '',
+     *     'project' => 0,
+     *     'workspace' => 0
      * )
      * @param array $opts Array of options to pass
      *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
@@ -391,6 +391,8 @@ class Asana
           'completed_at',
           'completed_since',
           'modified_since',
+          'tag',
+          'section'
         );
 
         foreach ($optional_filters as $optfilter) {
