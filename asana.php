@@ -1141,6 +1141,8 @@ class Asana
 
     /**
      * Creates a webhook.
+     * Please read the documentation (or see webhook-target.php inside examples) as the target must be a valid url and must return a valid header back.
+     * https://asana.com/developers/api-reference/webhooks
      *
      * @param string $resourceId A resource ID to subscribe to. The resource can be a task or project.
      * @param string $target The URL to receive the HTTP POST.
