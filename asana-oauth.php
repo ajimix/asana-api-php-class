@@ -90,7 +90,7 @@ class AsanaAuth
 
         // Decode compressed responses.
         curl_setopt($curl, CURLOPT_ENCODING, 1);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, true);
 
         // Add client ID and client secret to the headers.
         curl_setopt($curl, CURLOPT_HTTPHEADER, array(

@@ -1222,8 +1222,8 @@ class Asana
         curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, $this->timeout);
         curl_setopt($curl, CURLOPT_TIMEOUT, $this->timeout);
         curl_setopt($curl, CURLOPT_FAILONERROR, true);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0); // Don't verify SSL connection
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0); //         ""           ""
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, true); // Verify SSL connection
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2); //         ""           ""
 
         if (!empty($this->apiKey)) {
             // Send with API key.
