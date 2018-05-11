@@ -1148,10 +1148,11 @@ class Asana
      */
     public function createWebhook($resourceId, $target)
     {
-        $data = array(
+        $data = array('data' => array(
             'resource' => $resourceId,
             'target' => $target
-        );
+        ));
+        $data = json_encode($data);
 
         return $this->askAsana($this->webhooksUrl, $data, ASANA_METHOD_POST);
     }
