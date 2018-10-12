@@ -23,6 +23,7 @@ define('ASANA_RETURN_TYPE_ARRAY', 3);
 class Asana
 {
     public $fastAPI = false; // Use Asana fast API version, currently in open beta: https://asana.com/developers/feed/asana-fast-api-open-beta
+    public $newRichText = true; // Use Asana new rich text formatting: https://asana.com/developers/feed/asana-fast-api-open-beta
     public $timeout = 10;
     public $debug = false;
     public $advDebug = false; // Note that enabling advanced debug will include debugging information in the response possibly breaking up your code
@@ -1325,6 +1326,12 @@ class Asana
 
         if ($this->fastAPI) {
             array_push($headerData, 'Asana-Fast-Api: true');
+        }
+
+        if ($this->newRichText) {
+            array_push($headerData, 'Asana-Enable: new_rich_text');
+        } else {
+            array_push($headerData, 'Asana-Disable: new_rich_text');
         }
 
         if (sizeof($headerData) > 0) {
