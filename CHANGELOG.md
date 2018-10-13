@@ -1,3 +1,7 @@
+6.1.0, 2018-10-13
+-----------------
+- Implement "new_rich_text" feature negotiation in headers
+
 6.0.0, 2018-05-11
 -----------------
 - Adds section methods
