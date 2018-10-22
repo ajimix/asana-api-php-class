@@ -516,7 +516,7 @@ class Asana
      * Add attachment to a task
      *
      * @param string $taskId
-     * @param array $data (src of file, mymetype, finalFilename) See, Uploading an attachment to a task function comments for proper parameter info.
+     * @param array $data (src of file, mimetype, finalFilename) See, Uploading an attachment to a task function comments for proper parameter info.
      * @return string JSON or null
      */
      public function addAttachmentToTask($taskId, array $data = array())
