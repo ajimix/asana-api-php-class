@@ -1278,7 +1278,7 @@ class Asana
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // Don't print the result
         curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, $this->timeout);
         curl_setopt($curl, CURLOPT_TIMEOUT, $this->timeout);
-        curl_setopt($curl, CURLOPT_FAILONERROR, true);
+        //curl_setopt($curl, CURLOPT_FAILONERROR, true);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, true); // Verify SSL connection
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2); //         ""           ""
 
@@ -1413,5 +1413,24 @@ class Asana
         }
 
         return null;
+    }
+
+    /**
+    * Decodes the response and returns as an object, array.
+    *
+    * @return object, array, or null
+    */
+    public function getErrors()
+    {
+        $array  = $this->returnType == ASANA_RETURN_TYPE_ARRAY;
+        $return = json_decode($this->response, $array, 512, JSON_BIGINT_AS_STRING);
+
+        if ($array && isset($return['errors'])){
+          return $return['errors'];
+        } elseif ($this->returnType == ASANA_RETURN_TYPE_OBJECT && isset($return->errors)){
+          return $return->errors;
+        } elseif ($this->returnType == ASANA_RETURN_TYPE_JSON){
+          return $this->response;
+        }
     }
 }
