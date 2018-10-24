@@ -25,6 +25,7 @@ class Asana
     public $fastAPI = false; // Use Asana fast API version, currently in open beta: https://asana.com/developers/feed/asana-fast-api-open-beta
     public $newRichText = true; // Use Asana new rich text formatting: https://asana.com/developers/feed/asana-fast-api-open-beta
     public $timeout = 10;
+    public $failOnError = true; // If set to false, API won't fail on error (response code >= 400) and you can retrieve the errors with getErrors() method
     public $debug = false;
     public $advDebug = false; // Note that enabling advanced debug will include debugging information in the response possibly breaking up your code
     private $asanaApiVersion = '1.0';
@@ -1278,7 +1279,7 @@ class Asana
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true); // Don't print the result
         curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, $this->timeout);
         curl_setopt($curl, CURLOPT_TIMEOUT, $this->timeout);
-        //curl_setopt($curl, CURLOPT_FAILONERROR, true);
+        curl_setopt($curl, CURLOPT_FAILONERROR, $this->failOnError);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, true); // Verify SSL connection
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2); //         ""           ""
 
