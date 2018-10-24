@@ -1,3 +1,7 @@
+6.2.0, 2018-10-24
+-----------------
+- Adds the option to retrieve Asana errors
+
 6.1.0, 2018-10-13
 -----------------
 - Implement "new_rich_text" feature negotiation in headers

@@ -79,6 +79,8 @@ If a method returned some data, you can always retrieve it by calling.
 $asana->getData();
 ```
 
+If you miss some functionality, open a pull request and it will be merged as soon as possible.
+
 Enjoy ;D
 
 ## Using Asana OAuth tokens
