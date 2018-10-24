@@ -4,6 +4,7 @@ require_once('../asana.php');
 // See class comments and Asana API for full info
 $asana = new Asana(array('personalAccessToken' => 'xxxxxxxxxxxxxxxxxxxxx')); // Create a personal access token in Asana or use OAuth
 
+$asana->failOnError = false; // Disable failing on API return codes >= 400
 $taskId = 5555555555;  // Something invalid to provoke an error
 $asana->getTask($taskId);
 
@@ -14,7 +15,7 @@ if ($asana->hasError()) {
     foreach ($errors as $key => $error) {
         $key++;
         echo "Error $key: " . $error->message . '<br />'; // The error details, such as "task: Not a recognized ID: 5555555555"
-        echo "Details: " . $error->help . '<br />'; // Details, which seems to just link to the getting-started/errors documentation
+        echo 'Details: ' . $error->help . '<br />'; // Details, which seems to just link to the getting-started/errors documentation
     }
     return;
 }
