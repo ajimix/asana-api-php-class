@@ -1165,7 +1165,7 @@ class Asana
          );
          if (!is_null($insertBefore)) {
            $data['insert_before'] = $insertBefore;
-         } else if (!is_null($insertAfter)) {
+         } elseif (!is_null($insertAfter)) {
            $data['insert_after'] = $insertAfter;
          }
          $data = json_encode(array('data' => $data));
@@ -1394,36 +1394,36 @@ class Asana
     }
 
     /**
-    * Decodes the response and returns as an object, array.
-    *
-    * @return object, array, or null
-    */
+     * Decodes the response and returns as an object, array.
+     *
+     * @return object, array, or null
+     */
     public function getErrors()
     {
-        $array  = $this->returnType == ASANA_RETURN_TYPE_ARRAY;
+        $array = $this->returnType == ASANA_RETURN_TYPE_ARRAY;
         $return = json_decode($this->response, $array, 512, JSON_BIGINT_AS_STRING);
 
-        if ($array && isset($return['errors'])){
-          return $return['errors'];
+        if ($array && isset($return['errors'])) {
+            return $return['errors'];
         } elseif ($this->returnType == ASANA_RETURN_TYPE_OBJECT && isset($return->errors)){
-          return $return->errors;
+            return $return->errors;
         } elseif ($this->returnType == ASANA_RETURN_TYPE_JSON){
-          return $this->response;
+            return $this->response;
         }
     }
 
     /**
      * Decodes the response and returns as an object, array.
      *
-     * @return object, array, string  or null
+     * @return object, array, string or null
      */
     public function getData()
     {
         if (!$this->hasError()) {
-            $array  = $this->returnType == ASANA_RETURN_TYPE_ARRAY;
+            $array = $this->returnType == ASANA_RETURN_TYPE_ARRAY;
             $return = json_decode($this->response, $array, 512, JSON_BIGINT_AS_STRING);
 
-            if ($array && isset($return['data'])){
+            if ($array && isset($return['data'])) {
                 return $return['data'];
             } elseif ($this->returnType == ASANA_RETURN_TYPE_OBJECT && isset($return->data)){
                 return $return->data;
