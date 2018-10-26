@@ -1081,6 +1081,38 @@ class Asana
      */
 
     /**
+     * Creates a section associated with a project.
+     * More about sections (@see https://asana.com/developers/api-reference/sections)
+     *
+     * @param string $projectId
+     * @param array $data Array of data for the task following the Asana API documentation.
+     * Example:
+     *
+     * array(
+     *     "workspace" => "1768",
+     *     "name" => "Hello World!",
+     *     "notes" => "This is a section for testing the Asana API :)",
+     *     "assignee" => "176822166183",
+     *     "followers" => array(
+     *         "37136",
+     *         "59083"
+     *     )
+     * )
+     * @param array $opts Array of options to pass
+     *                   (@see https://asana.com/developers/documentation/getting-started/input-output-options)
+     *
+     * @return string JSON or null
+     */
+    public function createSection($projectId, $data, array $opts = array())
+    {
+        $data = array('data' => $data);
+        $data = json_encode($data);
+        $options = http_build_query($opts);
+
+        return $this->askAsana($this->projectsUrl . '/' . $projectId . '/sections?' . $options, $data, ASANA_METHOD_POST);
+    }
+
+    /**
      * Returns the full record for a single section.
      *
      * @param string $sectionId
