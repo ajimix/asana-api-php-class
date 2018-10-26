@@ -21,10 +21,10 @@ $asana->createTask(array(
     'name'      => 'Section created by createTask:', // Name of task
     'assignee'  => 'bigboss@bigcompany.com', // Assign task to...
     "memberships" => [
-		[
-			"project" => $projectId
-		]
-	]
+        [
+            "project" => $projectId
+        ]
+    ]
 ));
 
 /*
