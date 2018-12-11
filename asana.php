@@ -150,7 +150,7 @@ class Asana
      *                    (@see https://asana.com/developers/api-reference/users)
      *
      *                    Example: Returning additional fields with 'opt_fields'
-     *                    getUsers(['opt_fields' => 'name,email,photo,workspaces'])
+     *                    getUsersInWorkspace(0, ['opt_fields' => 'name,email,photo,workspaces'])
      *
      * @return string JSON or null
      */
