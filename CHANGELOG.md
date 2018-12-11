@@ -1,3 +1,7 @@
+6.3.0, 2018-10-26
+-----------------
+- Adds createSection method
+
 6.2.0, 2018-10-24
 -----------------
 - Adds the option to retrieve Asana errors
