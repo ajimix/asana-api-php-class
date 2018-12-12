@@ -1,3 +1,7 @@
+6.4.0, 2018-12-12
+-----------------
+- Adds getUsersInWorkspace method
+
 6.3.0, 2018-10-26
 -----------------
 - Adds createSection method
