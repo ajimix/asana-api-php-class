@@ -4,7 +4,7 @@
  *
  * Read Asana API documentation for fully use this class https://asana.com/developers/api-reference/
  *
- * Copyright 2018 Ajimix
+ * Copyright 2019 Ajimix
  * Licensed under the Apache License 2.0
  *
  * Author: Ajimix [github.com/ajimix] and the contributors [github.com/ajimix/asana-api-php-class/contributors]
