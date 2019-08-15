@@ -535,13 +535,21 @@ class Asana
      * Add attachment to a task
      *
      * @param string $taskId
-     * @param array $data (src of file, mimetype, finalFilename) See, Uploading an attachment to a task function comments for proper parameter info.
+     * @param array $data (src of file, mimeType, finalFilename)
+     * Example:
+     *
+     * array(
+     *     'file' => 'cats.jpg',
+     *     'mimeType' => 'image/jpeg',
+     *     'finalFilename' => 'cats_final.jpg'
+     * )
+     *
      * @return string JSON or null
      */
      public function addAttachmentToTask($taskId, array $data = array())
      {
          $mimeType = array_key_exists('mimeType', $data) ? $data['mimeType'] : null;
-         $finalFilename = array_key_exists('finalFilename', $data) ? $data["finalFilename"] : null;
+         $finalFilename = array_key_exists('finalFilename', $data) ? $data['finalFilename'] : null;
 
          if (class_exists('CURLFile', false)) {
              $data['file'] = new CURLFile($data['file'], $data['mimeType'], $data['finalFilename']);
