@@ -1,3 +1,7 @@
+6.5.0, 2021-03-02
+-----------------
+- Adds duplicateProject method
+
 6.4.0, 2018-12-12
 -----------------
 - Adds getUsersInWorkspace method

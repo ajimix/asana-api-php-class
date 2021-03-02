@@ -8,7 +8,7 @@
  * Licensed under the Apache License 2.0
  *
  * Author: Ajimix [github.com/ajimix] and the contributors [github.com/ajimix/asana-api-php-class/contributors]
- * Version: 6.4.0
+ * Version: 6.5.0
  */
 
 // Define some constants for later usage.
@@ -639,7 +639,7 @@ class Asana
 
         return $this->askAsana($this->projectsUrl, $data, ASANA_METHOD_POST);
     }
-    
+
     /**
      * Function to duplicate a project (template project) (https://developers.asana.com/docs/duplicate-a-project)
      *
@@ -661,7 +661,7 @@ class Asana
 
         return $this->askAsana($this->projectsUrl . '/' . $projectId . '/duplicate', $data, ASANA_METHOD_POST);
     }
-    
+
     /**
      * Returns the full record for a single project.
      *
