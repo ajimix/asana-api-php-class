@@ -639,7 +639,29 @@ class Asana
 
         return $this->askAsana($this->projectsUrl, $data, ASANA_METHOD_POST);
     }
+    
+    /**
+     * Function to duplicate a project (template project) (https://developers.asana.com/docs/duplicate-a-project)
+     *
+     * @param string $projectId
+     * @param array $data Array of data for the project following the Asana API documentation.
+     * Example:
+     *
+     * array(
+     *     "name" => "Foo Project!",
+     *     "notes" => "This is a test project"
+     * )
+     *
+     * @return string JSON or null
+     */
+    public function duplicateProject($projectId, $data)
+    {
+        $data = array('data' => $data);
+        $data = json_encode($data);
 
+        return $this->askAsana($this->projectsUrl . '/' . $projectId . '/duplicate', $data, ASANA_METHOD_POST);
+    }
+    
     /**
      * Returns the full record for a single project.
      *
